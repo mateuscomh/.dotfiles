@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =1
+let g:netrw_dirhist_1='/gitclones/Vim_Presentation/Roteiro'
+let g:netrw_dirhist_0='/gitclones/Vim_Presentation'
+let g:netrw_dirhist_9='/gitclones/Vim_Presentation/Slides'
+let g:netrw_dirhist_8='/gitclones/slideshell'
+let g:netrw_dirhist_7='/gitclones/OrganizaDownloads'
+let g:netrw_dirhist_6='/gitclones/rofi/1080p'
+let g:netrw_dirhist_5='/gitclones/rofi'
+let g:netrw_dirhist_4='/gitclones/debfetch'
+let g:netrw_dirhist_3='/home/salaam/CONFIGS/scripts/i3scripts'
+let g:netrw_dirhist_2='/home/salaam/.config/rofi/applets/menu'
