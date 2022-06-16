@@ -1,7 +1,7 @@
+### Customized ignore ###
 *.swp
-
-# Created by https://www.toptal.com/developers/gitignore/api/vim,linux,macos
-# Edit at https://www.toptal.com/developers/gitignore?templates=vim,linux,macos
+vim/.vim
+vim/.vim/*
 
 ### Linux ###
 *~
