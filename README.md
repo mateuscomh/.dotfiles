@@ -1,4 +1,4 @@
-# .mydotfiles
+# dotfiles
 ---
 This repo is my personal configs represents dotfiles in my ${HOME}
 
