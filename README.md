@@ -25,9 +25,11 @@ In this example I'm going to demonstrate how you would use my `.bashrc` file as
 your bash configuration file:
 
   ```
-  $ git clone https://github.com/mateuscomh/dotfiles
-  $ cd dotfiles
-  # This install will force a symbolic lynk on a options on each folder
+  $ git clone https://github.com/mateuscomh/dotfiles && cd dotfiles
+  ```
+  
+ _This install will force a symbolic lynk on a options on each folder_
+  ```
   $ bash install.sh
   ```
   
