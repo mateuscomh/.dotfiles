@@ -1,6 +1,6 @@
 # dotfiles
 
-!screenshot
+![screenshot](https://raw.githubusercontent.com/mateuscomh/dotfiles/main/i3/screenshot.jpg)
 
 ## Dotfiles are configuration files that are used to customize your Linux installation.
 
