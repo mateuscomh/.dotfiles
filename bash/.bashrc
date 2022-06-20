@@ -109,4 +109,4 @@ tlr() { [ $# -eq 0 ] && cat $TODO || sed -i "/^$*/d" $TODO ;}
 
 # Header bash debfetch
 # https://git.blauaraujo.com/blau_araujo/debfetch
-/gitclones/debfetch/debfetch
+/gitclones/debfetch/debfetch -dp
