@@ -1,8 +1,6 @@
-! this file:
-!   http://user.it.uu.se/~embe8573/conf/.Xresources
-!   https://dataswamp.org/~incal/conf/.Xresources
-! xterm
+URxvt.letterSpace: 1 
 xterm*autoWrap:        true
+!URxvt.background:      [70]#000000
 !xterm*faceName:        DejaVu Sans Mono Bold:pixelsize=13
 xterm*metaSendsEscape: true
 ! colors (bl re gr ye bl ma cy wh)
@@ -30,13 +28,18 @@ xterm*color15:         #D2B48C
 xterm*foreground:      #DDDDDD
 xterm*background:      #000000
 
+!font
+!URxvt.font:xft:Inconsolata:pixelsize=11
+!URxvt.boldfont:xft:Inconsolata-Bold:pixelsize=11
+!URxvt.italicfont:xft:Inconsolata-Italic:pixelsize=11
+!URxvt.boldItalicfont:xft:Inconsolata-Bold:pixelsize=11
 ! cursor
 xterm*cursorColor:     #000000
 URxvt.urgentOnBell: true
 URxvt.depth: 24
 URxvt.iso14755: true
-URxvt.perl-ext-common: ...,font-size
-URxvt.imLocale: en_US.UTF-8URxvt.imLocale: en_US.UTF-8
+!URxvt.perl-ext-common: font-size
+!URxvt.imLocale: en_US.UTF-8
 
 !! Common Keybinds for Navigations
 URxvt.keysym.Shift-Up: command:\033]720;1\007
@@ -47,7 +50,7 @@ URxvt.keysym.Control-Right: \033[1;5C
 URxvt.keysym.Control-Left: \033[1;5D
 
 !! Copy Paste & Other Extensions
-!! URxvt.perl-ext-common: default,clipboard,url-select,keyboard-select
+URxvt.perl-ext-common: default,clipboard,url-select,keyboard-select,option-popup,block-graphics-to-ascii
 URxvt.copyCommand: xclip -i -selection clipboard
 URxvt.pasteCommand: xclip -o -selection clipboard
 URxvt.keysym.M-c: perl:clipboard:copy
@@ -60,15 +63,11 @@ URxvt.urlLauncher: firefox
 URxvt.underlineURLs: true
 URxvt.urlButton: 1
 
-
-!!test click link
-
 urxvt*perl-lib: /usr/lib/urxvt/perl/
-urxvt*perl-ext-common: default,matcher,tabbed,clipboard
+urxvt*perl-ext-common: default,matcher,tabbed,clipboard,confirm-paste,bell-command
 urxvt*urlLauncher: /usr/bin/firefox
 urxvt*matcher.button: 2
 urxvt*matcher.pattern.1: \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
-
 
 !!TABED
 

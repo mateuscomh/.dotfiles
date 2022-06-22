@@ -1,4 +1,7 @@
 #!/bin/bash
+#export LANG=en_EN.utf8
+export LANG=C.UTF-8
+
 
 [[ "$-" != *i* ]] && return
 
@@ -109,4 +112,4 @@ tlr() { [ $# -eq 0 ] && cat $TODO || sed -i "/^$*/d" $TODO ;}
 
 # Header bash debfetch
 # https://git.blauaraujo.com/blau_araujo/debfetch
-/gitclones/debfetch/debfetch -dp
+/gitclones/debfetch/debfetch -p
