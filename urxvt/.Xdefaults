@@ -57,7 +57,6 @@ URxvt.urgentOnBell: true
 URxvt.depth: 24
 URxvt.iso14755: false
 URxvt.perl-ext-common: ...,font-size
-URxvt.imLocale: en_US.UTF-8
 
 !! Common Keybinds for Navigations
 URxvt.keysym.Shift-Up: command:\033]720;1\007
@@ -85,7 +84,7 @@ URxvt.urlButton: 1
 !!test click link
 
 urxvt*perl-lib: /usr/lib/urxvt/perl/
-urxvt*perl-ext-common: default,matcher,tabbed,clipboard
+urxvt*perl-ext-common: default,matcher,tabbed
 urxvt*urlLauncher: /usr/bin/firefox
 urxvt*matcher.button: 2 
 urxvt*matcher.pattern.1: \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
