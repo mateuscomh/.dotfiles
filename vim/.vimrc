@@ -1,8 +1,9 @@
 "--------Instalador de plugins----------
 call plug#begin('~/.vim/plugged')
- 
- Plug 'johngrib/vim-game-snake'
-" Plug 'vim-scripts/AutoComplPop'
+
+
+ Plug 'vim-scripts/loremipsum'
+ Plug 'vim-scripts/AutoComplPop'
  Plug 'morhetz/gruvbox'
  Plug 'vim-airline/vim-airline'
  Plug 'scrooloose/syntastic'
@@ -12,7 +13,6 @@ call plug#begin('~/.vim/plugged')
  Plug 'sheerun/vim-polyglot'
  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
  Plug 'junegunn/fzf.vim'
- Plug 'vim-scripts/loremipsum'
 
 call plug#end()
 
@@ -21,18 +21,19 @@ colorscheme gruvbox
 set background=dark
 
 "--------Cores de sintaxe--------
-syntax enable
+syntax on
+filetype plugin indent on
 set t_Co=256
 let g:airline_powerline_fonts = 1
 
 "----------Syntastic --------------
-let g:syntastic_check_on_open       = 0
+let g:syntastic_check_on_open       = 1
 let g:syntastic_check_on_wq         = 0
 let g:syntastic_enable_perl_checker = 1
 let g:syntastic_perl_checkers       = ['perl','podchecker']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-set statusline+=%#warningmsg#
+"set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
@@ -40,8 +41,8 @@ set statusline+=%*
 set number
 set relativenumber
 
-"----------Menu suspenso----------
-set wildmenu
+"----------Scroll forward----------
+set scrolloff=1
 
 "----------Cache arquivos----------
 set hidden
@@ -66,12 +67,12 @@ set title
 set cursorline
 set ruler
 
-"--------71 colunas----------
+"--------90 colunas----------
 highlight ColorColumn ctermbg=gray
-"call matchadd('ColorColumn', '\%81v',100)
+call matchadd('ColorColumn', '\%90v',100)
 
 "-------Auto Complete--------
-set complete+=kspell,w,b,u,i,t
+set complete+=kspell
 set shortmess+=c
 set completeopt=menuone,longest
 
@@ -103,18 +104,8 @@ au BufNewFile *.py set fileformat=unix
 "--------Remapear teclas----------
 "nnoremap ; :
 "nnoremap : ;
-nnoremap <tab> .
 
-"--------Autoclose ----------------
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
-
-nnoremap"-----Add ControlD Nerdtree-----
+"-----Add ControlD Nerdtree-----
 nmap <silent> <C-D> :NERDTreeToggle<CR>
 "nnoremap <ESC> :set hlsearch!<CR>
 
@@ -125,21 +116,18 @@ nnoremap <leader>; A;<esc>
 "-----Add ControlP para files-----
 nnoremap <c-f> :Files<cr>
 
-"CUrsor type"
-highlight Cursor guifg=white guibg=black
-highlight iCursor guifg=white guibg=magenta
-set guicursor=n-v-c:block-Cursor
-set guicursor+=i:ver100-iCursor
-set guicursor+=n-v-c:blinkon0
-set guicursor+=i:blinkwait10
+"-----Esc whith s-tab------------
+inoremap <S-Tab> <Esc>
+onoremap <S-Tab> <Esc>
 
-if &term =~ "xterm\\|rxvt"
-  " use an orange cursor in insert mode
-  let &t_SI = "\<Esc>]12;red\x7"
-  " use a red cursor otherwise
-  let &t_EI = "\<Esc>]12;white\x7"
-  silent !echo -ne "\033]12;white\007"
-  " reset cursor when vim exits
-  autocmd VimLeave * silent !echo -ne "\033]112\007"
-  " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
-endif
+"-----Modes on Iterm2------------
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+"-----Keybind selection copy-----
+"noremap <Leader>y "*y
+"noremap <Leader>p "*p
+"noremap <Leader>Y "+y
+"noremap <Leader>P "+p
+set clipboard=unnamed
