@@ -1,4 +1,4 @@
-URxvt*font: xft:Source\ Code \Pro\ for\ Powerline,Source\Code\ Pro\ Medium:size=13
+URxvt*font: xft:Source\ Code \Pro\ for\ Powerline,Source\Code\ Pro\ Medium:size=11
 URxvt.letterSpace: 1 
 xterm*autoWrap:        true
 !URxvt.background:      [70]#000000
