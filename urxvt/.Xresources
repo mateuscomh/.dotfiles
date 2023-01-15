@@ -4,7 +4,7 @@ URxvt*scrollTtyOutput:      false
 URxvt*scrollWithBuffer:     true
 URxvt*scrollTtyKeypress:    true
 
-URxvt.letterSpace: 1 
+URxvt.letterSpace: 0
 xterm*autoWrap:        true
 xterm*metaSendsEscape: true
 
@@ -40,8 +40,8 @@ URxvt.boldFont: xft:bitstream vera sans mono:bold:size=9:antialias=true
 ! cursor
 xterm*cursorColor:     #000000
 URxvt.urgentOnBell: true
-URxvt.depth: 24
-URxvt.iso14755: true
+URxvt.depth: 32
+URxvt.iso14755: False 
 !URxvt.perl-ext-common: font-size
 
 !! Common Keybinds for Navigations
@@ -62,7 +62,7 @@ URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 URxvt.keysym.M-Escape: perl:keyboard-select:activate
 URxvt.keysym.M-s: perl:keyboard-select:search
 URxvt.keysym.M-u: perl:url-select:select_next
-URxvt.urlLauncher: firefox
+URxvt.urlLauncher: brave 
 URxvt.underlineURLs: true
 URxvt.urlButton: 1
 
