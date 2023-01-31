@@ -1,6 +1,5 @@
 "--------Instalador de plugins----------
 call plug#begin('~/.vim/plugged')
- 
  Plug 'johngrib/vim-game-snake'
 " Plug 'vim-scripts/AutoComplPop'
  Plug 'morhetz/gruvbox'

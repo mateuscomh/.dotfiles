@@ -4,7 +4,7 @@ URxvt*scrollTtyOutput:      false
 URxvt*scrollWithBuffer:     true
 URxvt*scrollTtyKeypress:    true
 
-URxvt.letterSpace: 0
+URxvt.letterSpace: -1
 xterm*autoWrap:        true
 xterm*metaSendsEscape: true
 
