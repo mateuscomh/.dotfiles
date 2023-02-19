@@ -35,6 +35,10 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+"--------YAML Recursos----------
+set paste
+set cursorcolumn
+
 "--------Numero de linhas----------
 set number
 set relativenumber
