@@ -2,6 +2,7 @@
 *.swp
 vim/.vim
 vim/.vim/*
+vim/plugged/
 
 ### Linux ###
 *~
