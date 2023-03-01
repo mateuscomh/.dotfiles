@@ -17,6 +17,7 @@ alias orico02t='sshfs -p 10024 modengo@192.168.2.185:/mnt/Orico02T /mnt/Orico02T
 
 #Scripts
 alias postweb='/gitclones/postWebTerminal/postweb.sh'
+alias pomodoro='/gitclones/pomodoro/pomodoro.sh'
 alias yourl='/gitclones/yoURL/yourl.sh'
 alias passgen='/gitclones/shellPass/shellPass.sh'
 alias i3conf='vim ${HOME}/.config/i3/config'

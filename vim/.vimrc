@@ -68,7 +68,7 @@ set ruler
 
 "--------71 colunas----------
 highlight ColorColumn ctermbg=gray
-"call matchadd('ColorColumn', '\%81v',100)
+call matchadd('ColorColumn', '\%81v',100)
 
 "-------Auto Complete--------
 set complete+=kspell,w,b,u,i,t
@@ -125,3 +125,5 @@ nnoremap <leader>; A;<esc>
 "-----Add ControlP para files-----
 nnoremap <c-f> :Files<cr>
 
+"-----Set paste for yml files-----
+set paste

@@ -37,7 +37,7 @@ fi
 
 if ask "Install symlink for urxvt?" Y; then
   ln -svf "${dir}/urxvt/.Xresources" "${HOME}/.Xresources"
-  ln -svf "${dir}/urxvt/.Xdefault" "${HOME}/.Xdefault"
+  ln -svf "${dir}/urxvt/.Xdefaults" "${HOME}/.Xdefaults"
   ln -svf "${dir}/urxvt/.urxvt" "${HOME}/.urxvt"
 fi
 
