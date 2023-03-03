@@ -15,10 +15,10 @@ exec_always --no-startup-id setxkbmap -layout us_intl
 #----Custom desktop settings -----
 
 # Set monitors screen layout
-set $monitorLayout /home/salaam/.screenlayout/2monitorsH.sh
+set $monitorLayout /home/salaam/.screenlayout/dell.sh
 
 # Set i3lockscreen
-set $i3lockscreen i3lock -b --blur 5 --clock --ring-width 7 --time-color=ffffff --date-color=ffffff
+set $i3lockscreen i3lock -b --blur 10 --clock --ring-width 2 --time-color=ffffff --date-color=ffffff
 
 # Set screen wallpaper
 set $setScreenWallpaper /home/salaam/dotfiles/i3/wallpaper/horgalaxyR.jpg /home/salaam/dotfiles/i3/wallpaper/horgalaxyL.jpg 
@@ -33,7 +33,7 @@ workspace "2:Browsers" output HDMI-0
 #--------------------
 
 # Lockscreen set
-exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notifier "notify-send -u normal -t 40000 'Bloqueio de tela...'" -locker '$i3lockscreen && sleep 30' -killtime 20 -killer "xset dpms force off" -detectsleep
+exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notifier "notify-send -u normal -t 20000 'Bloqueio de tela...'" -locker '$i3lockscreen && sleep 30' -killtime 20 -killer "xset dpms force off" -detectsleep
 
 # The middle button and a modifer over any part of the window kills the window
 bindsym --whole-window $mod+button2 kill
@@ -116,7 +116,7 @@ for_window [class="VirtualBox Manager"] floating enable resize set 640 550
 for_window [class="Terminator"] floating enable resize set 640 550
 for_window [class="URxvt"] floating enable resize set 640 450
 for_window [class="Blueman-manager"] floating enable resize set 640 450
-for_window [class="Tilix"] floating enable resize set 840 550
+for_window [class="terminator"] floating enable resize set 840 550
 for_window [class="Xmessage"] floating enable resize set 200 90 title_align center
 for_window [class="Yad"] floating enable resize set 690 500 title_align center
 
@@ -190,7 +190,8 @@ default_border pixel 2
 # finds out, if available)
 bar {
   status_command /scripts/i3scripts/i3custom.sh
-  tray_output HDMI-0
+#  tray_output HDMI-0
+  tray_output DP-1
 
 # Status_command i3status 
   colors {
@@ -218,8 +219,8 @@ bindsym $mod+Shift+r restart
 # Reload the configuration file
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+q kill
-bindsym $mod+Return exec /usr/bin/tilix
-bindsym $mod+shift+Return exec /usr/bin/urxvt
+bindsym $mod+shift+Return exec /usr/bin/terminator
+bindsym $mod+Return exec /usr/bin/urxvt
 bindsym $mod+q exec /usr/bin/xfce4-appfinder
 bindsym $mod+g exec /usr/bin/brave-browser "https://meutimao.com.br"
 bindsym $mod+e exec /usr/bin/pcmanfm
@@ -230,8 +231,8 @@ bindsym $mod+shift+b exec /usr/bin/gnome-calculator
 bindsym $mod+shift+m exec --no-startup-id sudo systemctl restart logid
 
 # Mouse horizontal scroll
-bindsym  --whole-window button6 exec /home/salaam/dotfiles/Logid/mousetab.sh down 
-bindsym  --whole-window button7 exec /home/salaam/dotfiles/Logid/mousetab.sh up
+bindsym  --whole-window button6 exec /home/salaam/mydotfiles/logid/mousetab.sh down 
+bindsym  --whole-window button7 exec /home/salaam/mydotfiles/logid/mousetab.sh up
 
 # Screen brightness adjust
 bindsym $mod+shift+i exec /scripts/i3scripts/brilho.sh "-"
@@ -299,60 +300,60 @@ bindsym $mod+x mode "exit: [L]ogout, [R]eboot, [S]hutdown, loc[K]"
 # Disable window titlebars
 for_window [class="^.*"] border pixel 0
 
-# Set gaps between menu
-bindsym $mod+Shift+g gaps inner all set 6; gaps outer all set 2
-bindsym $mod+Shift+n gaps inner all set 0; gaps outer all set 0
-gaps inner 6
-gaps outer 2
-
-# Only enable gaps on a workspace when there is at least one container
-smart_gaps on
-
-# Activate smart borders (always)
-#smart_borders on
-
-# Activate smart borders (only when there are effectively no gaps)
-smart_borders no_gaps
-
-# Hide edge borders only if there is one window with no gaps
-hide_edge_borders smart
-
-# Press $mod1+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps.
-# Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace).
-# If you also press Shift with these keys, the change will be global for all workspaces.
-set $mode_gaps Gaps: (o) outer, (i) inner
-set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-#bindsym $mod+Shift+g mode "$mode_gaps"
-
-mode "$mode_gaps" {
-        bindsym o mode "$mode_gaps_outer"
-        bindsym i mode "$mode_gaps_inner"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0 gaps inner current set 0
-
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer current plus 5
-        bindsym minus gaps outer current minus 5
-        bindsym 0     gaps outer current set 0
-
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
+## Set gaps between menu
+#bindsym $mod+Shift+g gaps inner all set 6; gaps outer all set 2
+#bindsym $mod+Shift+n gaps inner all set 0; gaps outer all set 0
+#gaps inner 6
+#gaps outer 2
+#
+## Only enable gaps on a workspace when there is at least one container
+#smart_gaps on
+#
+## Activate smart borders (always)
+##smart_borders on
+#
+## Activate smart borders (only when there are effectively no gaps)
+#smart_borders no_gaps
+#
+## Hide edge borders only if there is one window with no gaps
+#hide_edge_borders smart
+#
+## Press $mod1+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps.
+## Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace).
+## If you also press Shift with these keys, the change will be global for all workspaces.
+#set $mode_gaps Gaps: (o) outer, (i) inner
+#set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+#set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+##bindsym $mod+Shift+g mode "$mode_gaps"
+#
+#mode "$mode_gaps" {
+#        bindsym o mode "$mode_gaps_outer"
+#        bindsym i mode "$mode_gaps_inner"
+#        bindsym Return mode "default"
+#        bindsym Escape mode "default"
+#}
+#
+#mode "$mode_gaps_inner" {
+#        bindsym plus  gaps inner current plus 5
+#        bindsym minus gaps inner current minus 5
+#        bindsym 0 gaps inner current set 0
+#
+#        bindsym Shift+plus  gaps inner all plus 5
+#        bindsym Shift+minus gaps inner all minus 5
+#        bindsym Shift+0     gaps inner all set 0
+#
+#        bindsym Return mode "default"
+#        bindsym Escape mode "default"
+#}
+#mode "$mode_gaps_outer" {
+#        bindsym plus  gaps outer current plus 5
+#        bindsym minus gaps outer current minus 5
+#        bindsym 0     gaps outer current set 0
+#
+#        bindsym Shift+plus  gaps outer all plus 5
+#        bindsym Shift+minus gaps outer all minus 5
+#        bindsym Shift+0     gaps outer all set 0
+#
+#        bindsym Return mode "default"
+#        bindsym Escape mode "default"
+#}

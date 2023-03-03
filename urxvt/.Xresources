@@ -53,7 +53,7 @@ URxvt.keysym.Control-Right: \033[1;5C
 URxvt.keysym.Control-Left: \033[1;5D
 
 !! Copy Paste & Other Extensions
-URxvt.perl-ext-common: tabbed,confirm-paste,default,clipboard,url-select,option-popup,block-graphics-to-ascii
+URxvt.perl-ext-common: tabbed,confirm-paste,default,selection-to-clipboard,option-popup,block-graphics-to-ascii
 URxvt.copyCommand: xclip -i -selection clipboard
 URxvt.pasteCommand: xclip -o -selection clipboard
 URxvt.keysym.M-c: perl:clipboard:copy

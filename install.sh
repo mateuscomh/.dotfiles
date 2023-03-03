@@ -43,6 +43,7 @@ fi
 
 if ask "Install symlink for vim" Y; then
    ln -svf "${dir}/vim/.vimrc" "${HOME}/.vimrc"
+   mkdir "~/.vim/autoload/"
    echo "PlugInstall: curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 fi
