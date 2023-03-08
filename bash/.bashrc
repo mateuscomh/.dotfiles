@@ -104,9 +104,9 @@ export TODO="${HOME}/.todo.txt"
 [ ! -f "$TODO" ] && touch "$TODO"
 
 # Create item to-do list
-tla() { [ $# -eq 0 ] && cat $TODO || echo "$(echo $* | md5sum | cut -c 1-3) → $*" >> $TODO ;}
+tla() { [ $# -eq 0 ] && echo "------" || echo "$(echo $* | md5sum | cut -c 1-3) → $*" >> $TODO && cat $TODO;}
 # Remove item on to-do list
-tlr() { [ $# -eq 0 ] && cat $TODO || sed -i "/^$*/d" $TODO ;}
+tlr() { [ $# -eq 0 ] && echo "------" || sed -i "/^$*/d" $TODO && cat $TODO;}
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
@@ -114,4 +114,4 @@ tlr() { [ $# -eq 0 ] && cat $TODO || sed -i "/^$*/d" $TODO ;}
 # https://git.blauaraujo.com/blau_araujo/debfetch
 /gitclones/debfetch/debfetch -p
 setxkbmap -layout us -variant intl
-
+#setxkbmap -model abnt -layout us -variant intl
