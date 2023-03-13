@@ -1,3 +1,4 @@
+set nocompatible
 "--------Instalador de plugins----------
 call plug#begin('~/.vim/plugged')
  

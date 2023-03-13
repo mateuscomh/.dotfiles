@@ -1,4 +1,7 @@
 #!/bin/bash
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  exec tmux
+fi
 #export LANG=en_EN.utf8
 export LANG=C.UTF-8
 

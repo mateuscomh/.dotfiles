@@ -16,7 +16,8 @@ alias orico01s='sshfs -p 10024 modengo@192.168.2.185:/mnt/Orico01S /mnt/Orico01S
 alias orico02t='sshfs -p 10024 modengo@192.168.2.185:/mnt/Orico02T /mnt/Orico02T/'
 
 #Scripts
-alias postweb='/gitclones/postWebTerminal/postweb.sh'
+alias pressao='bash /gitclones/pressao/pressao'
+alias shelltimer='bash /gitclones/shelltimer/shelltimer.sh'
 alias pomodoro='/gitclones/pomodoro/pomodoro.sh'
 alias yourl='/gitclones/yoURL/yourl.sh'
 alias passgen='/gitclones/shellPass/shellPass.sh'
