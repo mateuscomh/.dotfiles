@@ -101,9 +101,16 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Header bash debfetch
+# https://git.blauaraujo.com/blau_araujo/debfetch
+/gitclones/debfetch/debfetch -p
+setxkbmap -layout us -variant intl
+#setxkbmap -model abnt -layout us -variant intl
+export PATH="$PATH:/usr/bin/Postman"
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
 # To-do function
 export TODO="${HOME}/.todo.txt"
-
 [ ! -f "$TODO" ] && touch "$TODO"
 
 # Create item to-do list
@@ -111,10 +118,71 @@ tla() { [ $# -eq 0 ] && echo "------" || echo "$(echo $* | md5sum | cut -c 1-3) 
 # Remove item on to-do list
 tlr() { [ $# -eq 0 ] && echo "------" || sed -i "/^$*/d" $TODO && cat $TODO;}
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+gd() {
+    # Mantendo as variáveis locais à função...
+    local sel dir dirs dirs_hist dirs_home IFS fzf
+    
+    # Invocação e opções do fuzzy finder...
+    fzf=(
+        fzf
+        --reverse -e -i -1
+        --prompt=': '
+        --height=15%
+        --border=horizontal
+    )
 
-# Header bash debfetch
-# https://git.blauaraujo.com/blau_araujo/debfetch
-/gitclones/debfetch/debfetch -p
-setxkbmap -layout us -variant intl
-#setxkbmap -model abnt -layout us -variant intl
+    # Testar a quantidade de argumentos: se houver mais de um,
+    # termina com erro...
+    [[ $# -le 1 ]] || { echo 'gd: Excesso de argumentos!' 1>&2; return 1; }
+
+    # Sem argumentos, o diretório será $HOME...
+    dir="${1:-$HOME}"
+
+    # Argumentos especiais...
+    case "$dir" in
+        -)  # Muda para o último diretório visitado...
+            dir=
+            ;;
+        --) # Abre a busca para todos os diretórios em $HOME (até 4 níveis)...
+            dir=$(find $HOME -maxdepth 4 -type d | ${fzf[@]} || return 0)
+            ;;
+    esac
+
+    # Se $dir não vier de uma seleção ou de uma predefinição especial,
+    # o comando 'pushd' tentará localizá-lo no diretório corrente...
+    pushd ${dir:+"$dir"} &> /dev/null && return
+
+    # Se não encontrar, as listas de busca serão montadas.
+
+    # Montar lista de diretórios visitados na sessão...
+    dirs_hist=$(dirs -l -p | grep "$dir")
+
+    # Montar lista de diretórios em `~/' que casam com o padrão...
+    dirs_home=$(find ~ -maxdepth 4 -type d -wholename "*$dir*")
+
+    # Outras listas podem ser definidas segundo o modelo de 'dirs_home'.
+
+    # Mudar localmente o separador de campos para uma quebra de linha...
+    IFS=$'\n'
+
+    # Unir as listas montadas...
+    dirs=(
+        ${dirs_hist:+"$dirs_hist"}
+        ${dirs_home:+"$dirs_home"}
+    )
+
+    # Caso nenhum padrão correspondente ao argumento seja encontrado
+    # na montagem das listas, termina com erro...
+    ((${#dirs[@]})) || {
+        echo "gd: $dir: Diretório não encontrado" 1>&2
+        return 2
+    }
+
+    # Caso contrário, inicia uma busca "fuzzy"...
+    sel=$(printf '%s\n' "${dirs[@]}" | awk '!i[$0]++' | ${fzf[@]} || return 0)
+     
+    # Se algo for selecionado, muda de diretório...
+    pushd "$sel" > /dev/null
+}
+# Autocomplete para o gd...
+complete -F _cd gd
