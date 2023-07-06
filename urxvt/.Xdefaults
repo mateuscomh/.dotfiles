@@ -56,7 +56,7 @@ URxvt.scrollBar_right: false
 URxvt.urgentOnBell: true
 URxvt.depth: 24
 URxvt.iso14755: false
-URxvt.perl-ext-common: ...,font-size
+!URxvt.perl-ext-common: ...,font-size
 URxvt.imLocale: en_US.UTF-8
 
 !! Common Keybinds for Navigations

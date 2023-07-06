@@ -103,7 +103,7 @@ fi
 
 # Header bash debfetch
 # https://git.blauaraujo.com/blau_araujo/debfetch
-/gitclones/debfetch/debfetch -p
+/gitclones/debfetch/debfetch -p -d
 setxkbmap -layout us -variant intl
 #setxkbmap -model abnt -layout us -variant intl
 export PATH="$PATH:/usr/bin/Postman"
