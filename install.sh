@@ -42,7 +42,7 @@ fi
 
 if ask "Install symlink for I3status?:" Y; then
   ln -svf "${dir}/i3/i3status/config" "${HOME}/.config/i3status/config"
-  ln -svf "${dir}/i3/i3status/i3status_custom.sh" "${HOME}/.config/i3status/i3statusi3status_custom.sh"
+  ln -svf "${dir}/i3/i3status/i3status_custom.sh" "${HOME}/.config/i3status/i3status_custom.sh"
 fi
 
 if ask "Install symlink for urxvt?" Y; then
