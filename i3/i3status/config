@@ -18,9 +18,9 @@ order += "cpu_temperature 0"
 order += "disk /"
 order += "wireless _first_"
 #order += "ethernet _first_"
-#order += "battery all"
+order += "battery all"
 order += "tztime local"
-#order += "volume master"
+order += "volume master"
 cpu_temperature 0 {
 		format = "%degrees°C"
 		path = /sys/devices/platform/coretemp.0/hwmon/hwmon5/temp1_input }
