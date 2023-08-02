@@ -1,4 +1,6 @@
-# dotfiles 
+# My dotfiles
+
+- on debian 12 Bookworm
 
 ![screenshot](https://raw.githubusercontent.com/mateuscomh/dotfiles/main/i3/screenshot.jpg)
 
