@@ -12,34 +12,19 @@ font pango:monospace 8
 exec_always --no-startup-id sleep 15 && setxkbmap -layout us -variant intl
 #exec_always --no-startup-id setxkbmap -option 'grp:alt_shift_toggle'
 
-#----Custom desktop settings -----
-
-# Set monitors screen layout
-set $monitorLayout /home/salaam/.screenlayout/dell.sh
-
 # Set i3lockscreen
 #set $i3lockscreen i3lock -b 
 set $i3lockscreen i3lock -n -b --blur 32 --clock --ring-width 2 --time-color=#A659DE --date-color=B077D9 --indicator --ring-color=000000 --ring-width 2 --line-uses-ring --verif-text="and..."  
 
-
 # Set screen wallpaper
 set $setScreenWallpaper /home/salaam/dotfiles/i3/wallpaper/horgalaxyR.jpg /home/salaam/dotfiles/i3/wallpaper/horgalaxyL.jpg 
 
-# Set 2 monitors adjust
-exec --no-startup-id $monitorLayout 
-#exec --no-startup-id /usr/bin/xrandr --output DP-3 --mode 1920x1080 --pos 1920x0 --rotate left --output HDMI-1 --primary --mode 1920x1080 --pos 0x448 --rotate normal --output DVI-I-1 --off --output DP-2 --off --output DP-1 --off
-
-# Customization workspace
-workspace "2:Browsers" output HDMI-0
-
 #--------------------
-
 # Lockscreen set
 exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notifier "notify-send -u critical -t 20000 'Bloqueio de tela...'" -locker '$i3lockscreen && sleep 30' -killtime 20 -killer "xset dpms force off" -detectsleep
 
 # The middle button and a modifer over any part of the window kills the window
 bindsym --whole-window $mod+button2 kill
-
 
 # Use the cursor keys:
 bindsym $mod+Down focus down
@@ -63,8 +48,8 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # Change container layout (stacked, tabbed, toggle split)
-bindsym $mod+i layout stacking
 #bindsym $mod+w layout tabbed
+bindsym $mod+i layout stacking
 bindsym $mod+t layout toggle split
 
 # Toggle tiling / floating
@@ -192,8 +177,6 @@ default_border pixel 2
 # finds out, if available)
 bar {
   status_command /scripts/i3scripts/i3custom.sh
-#  tray_output HDMI-0
-  tray_output DP-0
   tray_output primary
 
 # Status_command i3status 
@@ -237,7 +220,6 @@ bindsym $mod+shift+b exec /usr/bin/gnome-calculator
 bindsym $mod+shift+m exec --no-startup-id sudo systemctl restart logid
 bindsym $mod+shift+c exec /usr/bin/speedcrunch
 bindsym $mod+Shift+v /usr/bin/pavucontrol
-
 
 # Mouse horizontal scroll
 bindsym  --whole-window button6 exec /home/salaam/mydotfiles/logid/mousetab.sh down 
@@ -309,7 +291,8 @@ for_window [class="^.*"] border pixel 0
 
 # Carregar configs orientadas
 # Carregar atalhos de media
-exec_always --no-startup-id cat ~/.config/i3/i3_media_config
+exec_always --no-startup-id cat ~/.config/i3/i3_media_config >> ~/.config/i3/config
 
 # Carregar configuracao i3 Gaps
-exec_always --no-startup-id cat ~/.config/i3/i3_gaps_config
+exec_always --no-startup-id cat ~/.config/i3/i3_gaps_config >> ~/.config/i3/config
+
