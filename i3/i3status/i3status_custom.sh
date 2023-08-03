@@ -92,5 +92,5 @@ do
     weather
     ram
 #printf "%s\n" "$clima | ${rate} | DT:($downtotal) UT:($uptotal) | $ipext $used | U:$utime | $line" || exit 1
-printf "%s\n" "$clima | ${rate} | DT:($downtotal) UT:($uptotal) | $used | U:$utime | $line" || exit 1
+printf "%s\n" " $clima | ${rate} | D:($downtotal) U:($uptotal) | M:$used | UT:$utime | $line" || exit 1
 done
