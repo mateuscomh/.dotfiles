@@ -1,8 +1,6 @@
-# My dotfiles
+### My dotfiles
 
-- on debian 12 Bookworm
-
-![screenshot](https://raw.githubusercontent.com/mateuscomh/dotfiles/main/i3/screenshot.jpg)
+- Debian 12 Bookworm
 
 ## Dotfiles are configuration files that are used to customize your Linux installation.
 
@@ -46,3 +44,6 @@ gonna work it out easily! Have a nice day!
 This repo is my personal configs represents dotfiles in my ${HOME}
 
 *Atention: some deps may be necessary to full working*
+
+![screenshot](https://raw.githubusercontent.com/mateuscomh/dotfiles/main/i3/screenshot.jpg)
+
