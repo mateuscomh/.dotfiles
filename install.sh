@@ -58,6 +58,6 @@ if ask "Install vim configs?" Y; then
 
   if [ ! -f "$HOME/.vim/autoload/plug.vim" ] || [ ! -s "$HOME/.vim/autoload/plug.vim" ]; then
     echo "PlugInstall: curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    https://raw.githubusercontent.com/mateuscomh/dotfiles/main/vim/autoload/autoload"
   fi
 fi
