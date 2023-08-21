@@ -4,6 +4,7 @@ call plug#begin('~/.vim/plugged')
  
  Plug 'johngrib/vim-game-snake'
 " Plug 'vim-scripts/AutoComplPop'
+ Plug 'mboughaba/i3config.vim'
  Plug 'morhetz/gruvbox'
  Plug 'vim-airline/vim-airline'
  Plug 'scrooloose/syntastic'
@@ -128,3 +129,9 @@ nnoremap <c-f> :Files<cr>
 
 "-----Set paste for yml files-----
 set paste
+
+"-----Set i3 font highlight-----
+aug i3config_ft_detection
+  au!
+  au BufNewFile,BufRead ~/.config/i3/config set filetype=i3config
+aug end

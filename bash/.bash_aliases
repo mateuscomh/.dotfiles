@@ -21,6 +21,7 @@ alias shelltimer='bash /gitclones/shelltimer/shelltimer.sh'
 alias pomodoro='/gitclones/pomodoro/pomodoro.sh'
 alias yourl='/gitclones/yoURL/yourl.sh'
 alias passgen='/gitclones/shellPass/shellPass.sh'
+alias shellPass='/gitclones/shellPass/shellPass.sh'
 alias i3conf='vim ${HOME}/.config/i3/config'
 alias i3conf='vim ${HOME}/.config/i3/config'
 
