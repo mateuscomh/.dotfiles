@@ -52,9 +52,14 @@ if ask "Install symlink for urxvt?" Y; then
 fi
 
 if ask "Install vim configs?" Y; then
+  ln -svf "${dir}/vim/vimrc" "${HOME}/.vim/vimrc"
+
   if [ ! -d "$HOME/.vim/autoload/" ]; then
     mkdir -p "$HOME/.vim/autoload/"
   fi
+  
+  ln -svf "${dir}/vim/autoload/autoload" "${HOME}/.vim/autoload/autoload"
+  ln -svf "${dir}/vim/autoload/plug.vim" "${HOME}/.vim/autoload/plugvim" 
 
   if [ ! -f "$HOME/.vim/autoload/plug.vim" ] || [ ! -s "$HOME/.vim/autoload/plug.vim" ]; then
     echo "PlugInstall: curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
