@@ -59,7 +59,7 @@ if ask "Install vim configs?" Y; then
   fi
   
   ln -svf "${dir}/vim/autoload/autoload" "${HOME}/.vim/autoload/autoload"
-  ln -svf "${dir}/vim/autoload/plug.vim" "${HOME}/.vim/autoload/plugvim" 
+  ln -svf "${dir}/vim/autoload/plug.vim" "${HOME}/.vim/autoload/plug.vim" 
 
   if [ ! -f "$HOME/.vim/autoload/plug.vim" ] || [ ! -s "$HOME/.vim/autoload/plug.vim" ]; then
     echo "PlugInstall: curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
