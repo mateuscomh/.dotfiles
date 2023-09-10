@@ -36,13 +36,19 @@ if ask "Install symlink for tmux" Y; then
 fi
 
 if ask "Install symlink for I3WM?:" Y; then
+  ln -svf "${dir}/i3/config/config" "${HOME}/.config/i3/config"
   ln -svf "${dir}/i3/config/i3_gaps_config" "${HOME}/.config/i3/i3_gaps_config"
   ln -svf "${dir}/i3/config/i3_media_config" "${HOME}/.config/i3/i3_media_config"
+  ln -svf "${dir}/i3/scripts" "${HOME}/scripts"
 fi
 
 if ask "Install symlink for I3status?:" Y; then
-  ln -svf "${dir}/i3/i3status/config" "${HOME}/.config/i3status/config"
+  if [ ! -d "$HOME/.config/i3status/" ]; then
+    mkdir -p "$HOME/.config/i3status/"
+  fi
+
   ln -svf "${dir}/i3/i3status/i3status_custom.sh" "${HOME}/.config/i3status/i3status_custom.sh"
+  ln -svf "${dir}/i3/i3status/config" "${HOME}/.config/i3status/config"
 fi
 
 if ask "Install symlink for urxvt?" Y; then

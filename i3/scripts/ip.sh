@@ -4,10 +4,10 @@
 
 #sleep 20
 
-[ ! -d "/scripts/Output" ] && mkdir -p /scripts/Output
-[ ! -f "/scritps/Output/meuip" ] && touch /scripts/Output/meuip
+[ ! -d "/$HOME/scripts/Output" ] && mkdir -p "$HOME/scripts/Output"
+[ ! -f "$HOME/scritps/Output/meuip" ] && touch "$HOME/scripts/Output/meuip"
 
-caminho="/scripts/Output/meuip"
+caminho="$HOME/scripts/Output/meuip"
 ping -c 1 8.8.8.8 > /dev/null
 if [ "$?" -ne "0" ]; then
 	echo 0.0.0.0 > $caminho
