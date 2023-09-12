@@ -221,7 +221,7 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym $mod+Shift+r restart
 # Reload the configuration file
 bindsym $mod+k exec /home/salaam/.screenlayout/dell.sh 
-bindsym $mod+Shift+k exec /home/salaam/.screenlayout/2monitors.sh && feh --bg-fill $setScreenWallpaper
+bindsym $mod+Shift+k exec /home/salaam/.screenlayout/2monitorsH.sh && feh --bg-fill $setScreenWallpaper
 #bindsym $mod+Shift+c reload
 bindsym $mod+Shift+t exec setxkbmap -layout us -variant intl
 bindsym $mod+Shift+q kill

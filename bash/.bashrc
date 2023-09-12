@@ -102,11 +102,9 @@ if ! shopt -oq posix; then
 fi
 
 # Header bash debfetch
-# https://git.blauaraujo.com/blau_araujo/debfetch
 /gitclones/debfetch/debfetch -p -d
+
 setxkbmap -layout us -variant intl
-#setxkbmap -model abnt -layout us -variant intl
-export PATH="$PATH:/usr/bin/Postman"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # To-do function
@@ -157,3 +155,7 @@ gd() {
     pushd "$sel" > /dev/null
 }
 complete -F _cd gd
+PATH="$HOME/.local/bin:$PATH"
+
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+eval "$(atuin init bash)"

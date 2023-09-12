@@ -1,6 +1,8 @@
 
 !Scroll dinamic stop
 URxvt*scrollTtyOutput:      false
+URxvt*scrollBar:false
+URxvt*scrollBar_right: false
 URxvt*scrollWithBuffer:     true
 URxvt*scrollTtyKeypress:    true
 
