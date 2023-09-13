@@ -158,4 +158,4 @@ complete -F _cd gd
 PATH="$HOME/.local/bin:$PATH"
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
-eval "$(atuin init bash)"
+eval "$(atuin init bash --disable-up-arrow)"

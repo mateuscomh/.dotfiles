@@ -288,7 +288,7 @@ set $statussig SSIGRTMIN+10
 #set $statussig SIGUSR1
 
 # Desktop effects transparency
-exec --no-startup-id compton -f --backend glx --vsync opengl
+#exec --no-startup-id compton -f --backend glx --vsync opengl
 
 exec_always --no-startup-id cat ~/.config/i3/i3_media_config
 
