@@ -1,15 +1,16 @@
 #!/bin/bash
+# Set config TMUX
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   exec tmux
 fi
-#export LANG=en_EN.utf8
+
 export LANG=C.UTF-8
+setxkbmap -layout us -variant intl
 
-
+# Validate if is shell interativo
 [[ "$-" != *i* ]] && return
 
-#History options
-
+# History options
 # https://meleu.sh/bash-history
 export EDITOR='vim'
 export VISUAL="$EDITOR"
@@ -23,8 +24,6 @@ export HISTFILESIZE=
 # shopt options
 shopt -s histappend
 shopt -s cmdhist
-
-# update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
 # make less more friendly for non-text input files, see lesspipe(1)
@@ -42,7 +41,6 @@ esac
 
 # colored options 
 force_color_prompt=yes
-
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
 	color_prompt=yes
@@ -54,19 +52,15 @@ fi
 # Validate if the git are installed on system and change color on PS1
 git --version > /dev/null 
 GIT_IS_AVAILABLE=$?
-
 if [ "$GIT_IS_AVAILABLE" -eq 0 ]; then
   parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
   }
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[01;31m\]$(parse_git_branch)\[\033[00m\]\$ '
-
 elif [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
-
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
-
 fi
 
 unset color_prompt force_color_prompt
@@ -85,8 +79,6 @@ if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     LS_COLORS=$LS_COLORS:'ow=40;97' ; export LS_COLORS
 fi
-/usr/bin/setxkbmap -layout us_intl
-
 # Alias definitions.
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
@@ -104,7 +96,6 @@ fi
 # Header bash debfetch
 /gitclones/debfetch/debfetch -p -d
 
-setxkbmap -layout us -variant intl
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # To-do function
@@ -116,8 +107,9 @@ tla() { [ $# -eq 0 ] && echo "------" || echo "$(echo $* | md5sum | cut -c 1-3) 
 # Remove item on to-do list
 tlr() { [ $# -eq 0 ] && echo "------" || sed -i "/^$*/d" $TODO && cat $TODO;}
 
+# GD function for search and go folders
+# gd on https://codeberg.org/blau_araujo/gd-function
 gd() {
-#gd on https://codeberg.org/blau_araujo/gd-function
     local sel dir dirs dirs_hist dirs_home IFS fzf
     fzf=(
         fzf
@@ -155,6 +147,7 @@ gd() {
     pushd "$sel" > /dev/null
 }
 complete -F _cd gd
+
 PATH="$HOME/.local/bin:$PATH"
 
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
