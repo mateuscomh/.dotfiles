@@ -1,0 +1,5 @@
+
+
+
+xinput set-prop 'Logitech Rechargeable Touchpad T650' 'libinput Tapping Enabled' 1
+
