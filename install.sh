@@ -28,7 +28,7 @@ dir=$(pwd)
 
 if ask "Install symlink for bash" Y; then
  ln -svf "${dir}/bash/.bashrc" "${HOME}/.bashrc"
- ln -svf "${dir}/bash/.bash_aliases" "${HOME}/.bash_aliases"
+ ln -svf "${dir}/bash/.bash_logout" "${HOME}/.bash_logout"
 fi
 
 if ask "Install symlink for tmux" Y; then
