@@ -11,7 +11,7 @@ get_weather_info() {
 
 # Main function
 main() {
-    FILE="$HOME/scripts/Output/i3clima"
+    FILE="/home/salaam/scripts/Output/i3clima"
 
     # Fetch weather information and write to file
     get_weather_info

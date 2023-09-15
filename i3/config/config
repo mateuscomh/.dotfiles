@@ -274,8 +274,9 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightne
 # Applets sysbar
 exec --no-startup-id /usr/bin/volumeicon
 exec --no-startup-id /usr/bin/nm-applet
-#exec_always --no-startup-id pasystray
-#exec --no-startup-id /usr/bin/clipit
+
+# Mouse Logitech
+exec_always --no-startup-id /usr/bin/xinput set-prop 'Logitech Rechargeable Touchpad T650' 'libinput Tapping Enabled' 1 
 
 # Path to volume control, without trailing slash
 set $volumepath ~/i3-volume
