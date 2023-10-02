@@ -85,7 +85,7 @@ set list
 set tabstop=2
 set shiftwidth=2
 set expandtab
-set softtabstop=2 expandtab
+set softtabstop=2 
 set autoindent
 set smartindent
 
@@ -135,3 +135,12 @@ aug i3config_ft_detection
   au!
   au BufNewFile,BufRead ~/.config/i3/config set filetype=i3config
 aug end
+
+"-----Go to last position-----
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif
+"autocmd BufReadPost *
+ "    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  "   \   exe "normal! g`\"" |
+   "   endif
