@@ -26,7 +26,6 @@ shopt -s cmdhist
 
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-
 # make less more friendly for non-text input files, see lesspipe(1)
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
@@ -158,3 +157,6 @@ gd() {
 }
 complete -F _cd gd
 
+
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+eval "$(atuin init bash --disable-up-arrow)"

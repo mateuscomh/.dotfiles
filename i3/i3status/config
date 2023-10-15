@@ -7,8 +7,12 @@
 # If the above line is not correctly displayed, fix your editor first!
 
 general {
-        colors = true
-        interval = 1
+  colors = true
+  interval = 1
+  color_good 	=	"#6BDAB4"
+  color_bad 	=	"#E7A92E"
+  color_degraded 	=	"#A52D39"
+  color_separator	=	"#F2ECFF"
 }
 
 #order += "ipv6"
@@ -22,45 +26,55 @@ order += "battery all"
 order += "tztime local"
 order += "volume master"
 cpu_temperature 0 {
-		format = "%degrees°C"
-		path = /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input }
+  format = "🌡️%degrees°C"
+  path = /sys/devices/platform/coretemp.0/hwmon/hwmon5/temp1_input 
+}
 
 cpu_usage {
-		format = "%cpu0"
-		max_threshold = 75
+  format = "🧠%usage"
+  degraded_threshold = "70"
 }
 
 volume master {
-        format = "VOL %volume"
-        format_muted = "VOL muted"
-        device = "default"
-        mixer = "Master"
-        mixer_idx = 0
+  format = "♪:%volume"
+  format_muted = "♪: muted (%volume)"
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
 }
 
 wireless _first_ {
-        format_up = "W:%quality"
-        format_down = "W:"
+  format_up = "W:%quality"
+  format_down = "W:"
 }
 
 ethernet _first_ {
-        # if you use %speed, i3status requires root privileges
-        format_up = "E:UP"
-        format_down = "E:DW"
+  format_up = "E:UP"
+  format_down = "E:DW"
 }
 
 battery all {
-        format = "%status %percentage %remaining"
+  format = "%status %percentage %remaining"
+  format_down = "No battery"
+  last_full_capacity = true
+  integer_battery_capacity = true
+  status_chr = "⚡ CHR"
+  status_bat = "🔋 BAT"
+  status_unk = "? UNK"
+  status_full = "☻ FULL"
+  low_threshold = 10
+  threshold_type = time
+  path = "/sys/class/power_supply/BAT%d/uevent"
 }
 
 tztime local {
-        format = "%d/\%m %H:%M:%S"
+  format = "%d/\%m %H:%M:%S"
 }
 
 load {
-        format = "L:%1min|%5min"
+  format = "L:%1min|%5min"
 }
 
 disk "/" {
-        format = "S:%avail" 
+  format = "S:%avail" 
 }

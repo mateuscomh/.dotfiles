@@ -128,3 +128,6 @@ nnoremap <c-f> :Files<cr>
 
 "-----Set paste for yml files-----
 set paste
+
+"-----Last postion-------
+set viminfo+='1000
