@@ -57,6 +57,14 @@ if ask "Install symlink for urxvt?" Y; then
   ln -svf "${dir}/urxvt/.urxvt" "${HOME}/.urxvt"
 fi
 
+if ask "Install ranger configs" Y; then
+  if [ ! -d "$HOME/.config/ranger/" ]; then
+    mkdir -p "$HOME/.config/ranger/"
+  fi
+
+  ln -svf "${dir}/ranger" "{$HOME}/.config/ranger"
+fi
+
 if ask "Install vim configs?" Y; then
   ln -svf "${dir}/vim/vimrc" "${HOME}/.vim/vimrc"
 
@@ -72,3 +80,4 @@ if ask "Install vim configs?" Y; then
     https://raw.githubusercontent.com/mateuscomh/dotfiles/main/vim/autoload/autoload"
   fi
 fi
+
