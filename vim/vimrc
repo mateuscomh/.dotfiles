@@ -1,10 +1,10 @@
 "--------Instalador de plugins----------
 call plug#begin('~/.vim/plugged')
- Plug 'johngrib/vim-game-snake'
+" Plug 'johngrib/vim-game-snake'
  Plug 'mboughaba/i3config.vim'
  Plug 'morhetz/gruvbox'
  Plug 'vim-airline/vim-airline'
- Plug 'scrooloose/syntastic'
+ Plug 'scrooloose/Syntastic'
  Plug 'vim-airline/vim-airline-themes'
  Plug 'junegunn/vim-easy-align'
  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -12,6 +12,7 @@ call plug#begin('~/.vim/plugged')
  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
  Plug 'junegunn/fzf.vim'
  Plug 'vim-scripts/loremipsum'
+ Plug 'ekalinin/dockerfile.vim'
 "Plug 'vim-scripts/AutoComplPop'
 call plug#end()
 
@@ -154,3 +155,13 @@ endif
 
 "-----Terminal abaixo-----
 set splitbelow
+
+"----Alternar numeros de linhas------
+map <F2> :set number!<cr>
+
+"----Alternar numeros relativos----
+map <F3> :set relativenumber!<cr>
+
+"----Alternar caracteres invisíveis----
+map <f4> :set list!<cr>
+

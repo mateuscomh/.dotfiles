@@ -8,19 +8,15 @@ floating_modifier $mod
 # Set font style
 font pango:monospace 8 
 
-# EUA layout 
-exec_always --no-startup-id sleep 15 && setxkbmap -layout us -variant intl
-#exec_always --no-startup-id setxkbmap -option 'grp:alt_shift_toggle'
-
 #----Custom desktop settings -----
+#Screen setting
+#---------
 
 # Set monitors screen layout
 set $monitorLayout /home/salaam/.screenlayout/dell.sh
 
 # Set i3lockscreen
-#set $i3lockscreen i3lock -b 
 set $i3lockscreen i3lock -n -b --blur 32 --clock --ring-width 2 --time-color=#A659DE --date-color=B077D9 --indicator --ring-color=000000 --ring-width 2 --line-uses-ring --verif-text="and..."  
-
 
 # Set screen wallpaper
 set $setScreenWallpaper /home/salaam/dotfiles/i3/wallpaper/horgalaxyR.jpg /home/salaam/dotfiles/i3/wallpaper/horgalaxyL.jpg 
@@ -29,10 +25,44 @@ set $setScreenWallpaper /home/salaam/dotfiles/i3/wallpaper/horgalaxyR.jpg /home/
 exec --no-startup-id $monitorLayout 
 #exec --no-startup-id /usr/bin/xrandr --output DP-3 --mode 1920x1080 --pos 1920x0 --rotate left --output HDMI-1 --primary --mode 1920x1080 --pos 0x448 --rotate normal --output DVI-I-1 --off --output DP-2 --off --output DP-1 --off
 
+# Set lockscreen
+bindsym $mod+l exec $i3lockscreen 
+
+# Set wallpaper
+#exec --no-startup-id /usr/bin/nitrogen --restore
+exec --no-startup-id feh --bg-fill $setScreenWallpaper 
+
+# Desktop effects transparency
+exec --no-startup-id compton -f --backend glx --vsync opengl
+
+# Screen brightness adjust
+bindsym $mod+shift+i exec /scripts/i3scripts/brilho.sh "-"
+bindsym $mod+shift+o exec /scripts/i3scripts/brilho.sh "+"
+bindsym $mod+shift+p exec /scripts/i3scripts/brilho.sh "r"
+bindsym $mod+shift+s exec --no-startup-id xautolock -disable && notify-send -u low -t 4000 'Bloqueio Suspenso'
+bindsym $mod+s exec --no-startup-id xautolock -enable && notify-send -u normal -t 4000 'Bloqueio Ativo'
+
+#------
+#Mouse setting
+#------
+# Scroll Mouse
+exec_always --no-startup-id /usr/bin/imwheel
+
+# Mouse Logitech
+exec_always --no-startup-id /usr/bin/xinput set-prop 'Logitech Rechargeable Touchpad T650' 'libinput Tapping Enabled' 1 
+
+# Move container to another window
+bindsym $mod+n move workspace to output right
+
+# EUA layout 
+exec_always --no-startup-id sleep 15 && setxkbmap -layout us -variant intl
+#exec_always --no-startup-id setxkbmap -option 'grp:alt_shift_toggle'
+
+#Repeticao teclado
+exec_always --no-startup-id xset r rate 250 20
+
 # Customization workspace
 workspace "2:Browsers" output HDMI-0
-
-#--------------------
 
 # Lockscreen set
 exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notifier "notify-send -u critical -t 20000 'Bloqueio de tela...'" -locker '$i3lockscreen && sleep 30' -killtime 20 -killer "xset dpms force off" -detectsleep
@@ -40,6 +70,13 @@ exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersi
 # The middle button and a modifer over any part of the window kills the window
 bindsym --whole-window $mod+button2 kill
 
+# Mouse horizontal scroll
+bindsym  --whole-window button6 exec /home/salaam/mydotfiles/logid/mousetab.sh down 
+bindsym  --whole-window button7 exec /home/salaam/mydotfiles/logid/mousetab.sh up
+
+#-------
+#Shortcuts
+#-------
 
 # Use the cursor keys:
 bindsym $mod+Down focus down
@@ -63,8 +100,8 @@ bindsym $mod+Shift+v split v
 bindsym $mod+f fullscreen toggle
 
 # Change container layout (stacked, tabbed, toggle split)
-bindsym $mod+i layout stacking
 #bindsym $mod+w layout tabbed
+bindsym $mod+i layout stacking
 bindsym $mod+t layout toggle split
 
 # Toggle tiling / floating
@@ -76,6 +113,30 @@ bindsym $mod+w scratchpad show
 
 # Focus the parent container
 bindsym $mod+a focus parent
+
+# Switch to workspace
+bindsym $mod+1 workspace $ws1  
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
 
 # Set workspace names 
 set $ws1 "1:Terminals" 
@@ -127,30 +188,6 @@ for_window [class="SpeedCrunch"] floating enable
 for_window [class="VirtualBox Machine"] floating enable
 for_window [class="gnome-calculator"] floating enable
 
-# Switch to workspace
-bindsym $mod+1 workspace $ws1  
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace $ws6
-bindsym $mod+7 workspace $ws7
-bindsym $mod+8 workspace $ws8
-bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace $ws10
-
-# Move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
-
 
 # Resize window (you can also use the mouse for that)
 mode "resize" {
@@ -188,6 +225,10 @@ client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-col
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #00ff00
 default_border pixel 2 
 
+# Applets sysbar
+exec --no-startup-id /usr/bin/volumeicon
+exec --no-startup-id /usr/bin/nm-applet
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
@@ -211,20 +252,22 @@ bar {
 bindsym $mod+d exec rofi -theme Arc-Dark.rasi -modi combi -show combi -lines 5 -eh 2 -width 800 -padding 800 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "bg-color" -hlfg "#9575cd" -font "monospace 12"
 bindsym $mod+shift+d exec rofi -theme Arc-Dark.rasi -show drun -lines 10 -eh 2 -width 1000 -padding 800 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "bg-color" -hlfg "#9575cd" -font "monospace 12"
 
-# Set lockscreen
-bindsym $mod+l exec $i3lockscreen 
-
 # Exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# Reload the configuration file
+
+# Reload Display screen
 bindsym $mod+k exec /home/salaam/.screenlayout/dell.sh 
 bindsym $mod+Shift+k exec /home/salaam/.screenlayout/2monitorsH.sh && feh --bg-fill $setScreenWallpaper
-#bindsym $mod+Shift+c reload
+# Set layoyt keyboar
 bindsym $mod+Shift+t exec setxkbmap -layout us -variant intl
+
+# Kill window
 bindsym $mod+Shift+q kill
+
+# Apps Shortcut
 bindsym $mod+shift+Return exec /usr/bin/terminator
 bindsym $mod+Return exec /usr/bin/urxvt
 bindsym $mod+q exec /usr/bin/xfce4-appfinder
@@ -237,34 +280,12 @@ bindsym $mod+shift+b exec /usr/bin/gnome-calculator
 bindsym $mod+shift+m exec --no-startup-id sudo systemctl restart logid
 bindsym $mod+shift+c exec /usr/bin/speedcrunch
 
-
-# Mouse horizontal scroll
-bindsym  --whole-window button6 exec /home/salaam/mydotfiles/logid/mousetab.sh down 
-bindsym  --whole-window button7 exec /home/salaam/mydotfiles/logid/mousetab.sh up
-
-# Screen brightness adjust
-bindsym $mod+shift+i exec /scripts/i3scripts/brilho.sh "-"
-bindsym $mod+shift+o exec /scripts/i3scripts/brilho.sh "+"
-bindsym $mod+shift+p exec /scripts/i3scripts/brilho.sh "r"
-bindsym $mod+shift+s exec --no-startup-id xautolock -disable && notify-send -u low -t 4000 'Bloqueio Suspenso'
-bindsym $mod+s exec --no-startup-id xautolock -enable && notify-send -u normal -t 4000 'Bloqueio Ativo'
-
 # Move container to the current position of the cursor
 bindsym $mod+m move position mouse
-
-# Move container to another window
-bindsym $mod+n move workspace to output right
 
 # Logitech Solar
 #bindsym $mod+z exec /usr/bin/solaar config "MX Master 2S" change-host 2
 bindsym $mod+shift+z exec /usr/bin/solaar config "MX Master 2S" change-host 3
-
-# Scroll Mouse
-exec_always --no-startup-id /usr/bin/imwheel
-
-# Set wallpaper
-#exec --no-startup-id /usr/bin/nitrogen --restore
-exec --no-startup-id feh --bg-fill $setScreenWallpaper 
 
 # Sreen brightness controls
 bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
@@ -275,13 +296,6 @@ bindsym XF86AudioPrev exec playerctl -a previous
 bindsym F86AudioLowerVolume exec amixer -q sset Master 10%-
 bindsym F86AudioRaiseVolume exec amixer -q sset Master 10%+
 
-# Applets sysbar
-exec --no-startup-id /usr/bin/volumeicon
-exec --no-startup-id /usr/bin/nm-applet
-
-# Mouse Logitech
-exec_always --no-startup-id /usr/bin/xinput set-prop 'Logitech Rechargeable Touchpad T650' 'libinput Tapping Enabled' 1 
-
 # Path to volume control, without trailing slash
 set $volumepath ~/i3-volume
 set $volumestep 5
@@ -291,9 +305,6 @@ set $statussig SIGUSR1
 #i3blocks uses SIGRTMIN+10 by default
 #i3status uses SIGUSR1 by default
 #set $statussig SIGUSR1
-
-# Desktop effects transparency
-exec --no-startup-id compton -f --backend glx --vsync opengl
 
 # Shutdown menu $mod+x
 mode "exit: [L]ogout, [R]eboot, [S]hutdown, loc[K]" {
@@ -310,7 +321,6 @@ bindsym $mod+x mode "exit: [L]ogout, [R]eboot, [S]hutdown, loc[K]"
 # Disable window titlebars
 for_window [class="^.*"] border pixel 0
 
-# Carregar configs orientadas
 # Carregar atalhos de media
 #exec_always --no-startup-id cat ~/.config/i3/i3_media_config
 
