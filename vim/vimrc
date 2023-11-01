@@ -118,29 +118,41 @@ au BufNewFile *.py set fileformat=unix
 
 "--------Remapear teclas----------
 nnoremap <tab> .
+nnoremap ; :
+vnoremap ; :
+
+map j gj
+map k gk
+map <down> gj
+map <up> gk
+inoremap <down> <c-o>gj
+inoremap <up> <c-o>gk
 
 "--------Autoclose ----------------
-inoremap " ""<left>
+inoremap " ""\<left>
 inoremap ' ''<left>
 inoremap ( ()<left>
 inoremap [ []<left>
 inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
+"inoremap {<CR> {<CR>}<ESC>O
+"inoremap {;<CR> {<CR>};<ESC>O
 
 "-----Add ControlD Nerdtree-----
 nmap <silent> <C-D> :NERDTreeToggle<CR>
-"nnoremap <ESC> :set hlsearch!<CR>
 
 "--------Add ; com space no fim arquivo----
-let mapleader="\<space>"
+let mapleader="<space>"
 nnoremap <leader>; A;<esc>
 
-"-----Add ControlF para files-----
+"-----Copiar area de transf-------
+vmap <silent> <leader>yy "+y
+vmap <silent> <leader>dd "+c
+
+""-----Add ControlF para files-----
 nnoremap <c-f> :Files<cr>
 
 "-----Set paste for yml files-----
-set paste
+"set paste
 
 "-----Set i3 font highlight-----
 aug i3config_ft_detection
@@ -165,3 +177,11 @@ map <F3> :set relativenumber!<cr>
 "----Alternar caracteres invisíveis----
 map <f4> :set list!<cr>
 
+"-----Corretor ortografico-------
+map <f5> :set spell!<cr>
+
+"-----Alternar quebra de linha------
+map <f6> :set wrap!<cr>
+
+"-----Executar o terminal-----
+map <f7> :term bash ./%<cr> 
