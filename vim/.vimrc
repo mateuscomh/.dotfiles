@@ -1,12 +1,10 @@
-set nocompatible
 "--------Instalador de plugins----------
 call plug#begin('~/.vim/plugged')
- 
- Plug 'johngrib/vim-game-snake'
-" Plug 'vim-scripts/AutoComplPop'
+" Plug 'johngrib/vim-game-snake'
+ Plug 'mboughaba/i3config.vim'
  Plug 'morhetz/gruvbox'
  Plug 'vim-airline/vim-airline'
- Plug 'scrooloose/syntastic'
+ Plug 'scrooloose/Syntastic'
  Plug 'vim-airline/vim-airline-themes'
  Plug 'junegunn/vim-easy-align'
  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -14,7 +12,8 @@ call plug#begin('~/.vim/plugged')
  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
  Plug 'junegunn/fzf.vim'
  Plug 'vim-scripts/loremipsum'
-
+ Plug 'ekalinin/dockerfile.vim'
+"Plug 'vim-scripts/AutoComplPop'
 call plug#end()
 
 "------------Tema do vim------------
@@ -40,9 +39,22 @@ set statusline+=%*
 "--------Numero de linhas----------
 set number
 set relativenumber
+set scrolloff=5
+
+" ------!Insert Mode Relative-------
+autocmd InsertEnter * set norelativenumber
+
+" ------Insert Mode Relative-------
+autocmd InsertLeave * set relativenumber
+
+"------Insert Mode Cursor--------
+let &t_SI="\e[6 q"
+let &t_EI="\e[2 q"
 
 "----------Menu suspenso----------
 set wildmenu
+set wildmode=longest,full
+set wildoptions=pum
 
 "----------Cache arquivos----------
 set hidden
@@ -59,6 +71,9 @@ set title
 "--------Highlight em pesquisas--------
 set hlsearch
 set ignorecase
+set smartcase
+set incsearch
+let @/ = ""
 
 "--------Codificação--------
 set encoding=utf-8
@@ -77,20 +92,20 @@ set shortmess+=c
 set completeopt=menuone,longest
 
 "--------Caracteres Ocultos----------
-set listchars=tab:>˜,nbsp:_,trail:.
+"set listchars=tab:>˜,nbsp:_,trail:.
 set list
+set listchars=tab:›-,space:·,trail:◀,eol:↲
+set fillchars=vert:│,fold:-,eob:~,lastline:@
 
 "--------Tabulacao----------
 set tabstop=2
 set shiftwidth=2
 set expandtab
-set softtabstop=2 expandtab
+set softtabstop=2 
 set autoindent
 set smartindent
 
 "--------Compatibilidade.py-----
-set nocompatible
-
 au BufNewFile,BufRead *.py
         \ set tabstop=4     |
         \ set softtabstop=4 |
@@ -102,32 +117,70 @@ au BufNewFile,BufRead *.py
 au BufNewFile *.py set fileformat=unix
 
 "--------Remapear teclas----------
-"nnoremap ; :
-"nnoremap : ;
 nnoremap <tab> .
+nnoremap ; :
+vnoremap ; :
+
+map j gj
+map k gk
+map <down> gj
+map <up> gk
+inoremap <down> <c-o>gj
+inoremap <up> <c-o>gk
 
 "--------Autoclose ----------------
-inoremap " ""<left>
+inoremap " ""\<left>
 inoremap ' ''<left>
 inoremap ( ()<left>
 inoremap [ []<left>
 inoremap { {}<left>
 inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
 
-nnoremap"-----Add ControlD Nerdtree-----
+"-----Add ControlD Nerdtree-----
 nmap <silent> <C-D> :NERDTreeToggle<CR>
-"nnoremap <ESC> :set hlsearch!<CR>
 
 "--------Add ; com space no fim arquivo----
-let mapleader="\<space>"
+let mapleader="<space>"
 nnoremap <leader>; A;<esc>
 
-"-----Add ControlP para files-----
+"-----Copiar area de transf-------
+vmap <silent> <leader>yy "+y
+vmap <silent> <leader>dd "+c
+
+""-----Add ControlF para files-----
 nnoremap <c-f> :Files<cr>
 
 "-----Set paste for yml files-----
-set paste
+"set paste
 
-"-----Last postion-------
-set viminfo+='1000
+"-----Set i3 font highlight-----
+aug i3config_ft_detection
+  au!
+  au BufNewFile,BufRead ~/.config/i3/config set filetype=i3config
+aug end
+
+"-----Go to last position-----
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+endif
+
+"-----Terminal abaixo-----
+set splitbelow
+
+"----Alternar numeros de linhas------
+map <F2> :set number!<cr>
+
+"----Alternar numeros relativos----
+map <F3> :set relativenumber!<cr>
+
+"----Alternar caracteres invisíveis----
+map <f4> :set list!<cr>
+
+"-----Corretor ortografico-------
+map <f5> :set spell!<cr>
+
+"-----Alternar quebra de linha------
+map <f6> :set wrap!<cr>
+
+"-----Executar o terminal-----
+map <f7> :term bash ./%<cr> 
