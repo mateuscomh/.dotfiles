@@ -120,7 +120,6 @@ au BufNewFile *.py set fileformat=unix
 nnoremap <tab> .
 nnoremap ; :
 vnoremap ; :
-
 map j gj
 map k gk
 map <down> gj
@@ -129,7 +128,7 @@ inoremap <down> <c-o>gj
 inoremap <up> <c-o>gk
 
 "--------Autoclose ----------------
-inoremap " ""\<left>
+inoremap " ""<left>
 inoremap ' ''<left>
 inoremap ( ()<left>
 inoremap [ []<left>
@@ -185,3 +184,7 @@ map <f6> :set wrap!<cr>
 
 "-----Executar o terminal-----
 map <f7> :term bash ./%<cr> 
+
+"-----Indentar visual mode----
+vmap < <gv
+vmap > >gv
