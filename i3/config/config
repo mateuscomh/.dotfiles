@@ -6,7 +6,7 @@ set $mod Mod4
 floating_modifier $mod
 
 # Set font style
-font pango:monospace 8 
+font pango:monospace 10
 
 #----Custom desktop settings -----
 #Screen setting
@@ -234,7 +234,7 @@ exec --no-startup-id /usr/bin/nm-applet
 bar {
   status_command /$HOME/scripts/i3scripts/i3custom.sh
 #  tray_output HDMI-0
-  tray_output DP-0
+  tray_output DP-2
   tray_output primary
 
 # Status_command i3status 
