@@ -4,6 +4,7 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
   exec tmux
 fi
 
+xset r rate 225 15
 export LANG=C.UTF-8
 setxkbmap -layout us -variant intl
 

@@ -58,8 +58,8 @@ update_rate() {
 }
 
 function network(){
-  downtotal=$(/usr/bin/vnstat -s | grep today | awk {'print $2$3'})
-  uptotal=$(/usr/bin/vnstat -s | grep today | awk {'print $5$6'})
+  downtotal=$(/usr/bin/vnstat -s -i eth0 | grep today | awk {'print $2$3'})
+  uptotal=$(/usr/bin/vnstat -s -i eth0 | grep today | awk {'print $5$6'})
 #  ipext=$(cat /scripts/Output/meuip)
 }
 
