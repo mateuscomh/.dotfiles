@@ -83,6 +83,10 @@ function ram() {
   used=$(free -gh | grep "Mem" | awk {'print $3'})
 }
 
+function cpu_temp(){
+  temp_line=$( sensors | grep "Tctl:"| grep -oP '\+\K\d+\.\d+')
+}
+
 i3status | while :
 do
   read line
@@ -91,6 +95,7 @@ do
     network
     weather
     ram
+    cpu_temp
 #printf "%s\n" "$clima | ${rate} | DT:($downtotal) UT:($uptotal) | $ipext $used | U:$utime | $line" || exit 1
-printf "%s\n" "$clima | ${rate} | DT:($downtotal) UT:($uptotal) | $used | U:$utime | $line" || exit 1
+printf "%s\n" "$clima | ${rate} | DT:($downtotal) UT:($uptotal) | $used | $temp_line°C | U:$utime | $line" || exit 1
 done

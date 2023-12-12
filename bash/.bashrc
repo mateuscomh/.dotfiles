@@ -95,7 +95,7 @@ if ! shopt -oq posix; then
 fi
 
 # Header bash debfetch
-/gitclones/debfetch/debfetch -p -d
+/gitclones/debfetch/debfetch -p 
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 

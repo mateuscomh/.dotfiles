@@ -79,6 +79,11 @@ function timeup(){
     fi
 }
 
+function cpu_temp(){
+   temp_line=$(sensors·|·grep·"Tctl:")
+   temp_value=$(echo·"$temp_line"·|·grep·-oP·'\+\K\d+\.\d+')↲
+}
+
 function ram() {
   used=$(free -gh | grep "Mem" | awk {'print $3'})
 }
@@ -91,6 +96,8 @@ do
     network
     weather
     ram
+    cpu_temp
 #printf "%s\n" "$clima | ${rate} | DT:($downtotal) UT:($uptotal) | $ipext $used | U:$utime | $line" || exit 1
-printf "%s\n" "$clima | ${rate} | DT:($downtotal) UT:($uptotal) | $used | U:$utime | $line" || exit 1
+printf "%s\n" "$clima | ${rate} | DT:($downtotal) UT:($uptotal) | $used | $temp_value °C |  U:$utime | $line" || exit 1
+
 done

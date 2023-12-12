@@ -35,8 +35,8 @@ xterm*foreground:      #DDDDDD
 xterm*background:      #000000
 
 !font
-URxvt.font:     xft:bitstream vera sans mono:size=10:antialias=true
-URxvt.boldFont: xft:bitstream vera sans mono:bold:size=10:antialias=true
+URxvt.font:     xft:bitstream vera sans mono:size=10:antialias=true,xft:Symbola:style=Regular:size=10
+URxvt.boldFont: xft:bitstream vera sans mono:bold:size=10:antialias=true,xft:Symbola:style=Regular:size=10
 
 ! cursor
 xterm*cursorColor:     #000000
