@@ -169,9 +169,9 @@ assign [class="Signal"] $ws9
 assign [class="transmission-gtk"] $ws9
 assign [class="discord"] $ws9
 assign [class="Slack"] $ws9
+assign [class="Spotify"] $ws10
 
 # Moving Apps to respective Workspace
-for_window [class="Spotify"] move to workspace $ws10
 for_window [class="konsole"] floating enable resize set 640 550
 for_window [class="Xfce4-appfinder"] floating enable resize set 640 550
 for_window [class="VirtualBox Machine"] floating enable resize set 640 550
@@ -179,7 +179,7 @@ for_window [class="VirtualBox Manager"] floating enable resize set 640 550
 for_window [class="Terminator"] floating enable resize set 640 550
 for_window [class="URxvt"] floating enable resize set 840 550
 for_window [class="Blueman-manager"] floating enable resize set 640 450
-for_window [class="terminator"] floating enable resize set 840 550
+for_window [class="xfce4-terminal"] floating enable resize set 840 550
 for_window [class="Xmessage"] floating enable resize set 200 90 title_align center
 for_window [class="Yad"] floating enable resize set 690 500 title_align center
 
@@ -260,7 +260,7 @@ bindsym $mod+Shift+r restart
 
 # Reload Display screen
 bindsym $mod+k exec /home/salaam/.screenlayout/dell.sh 
-bindsym $mod+Shift+k exec /home/salaam/.screenlayout/2monitorsH.sh && feh --bg-fill $setScreenWallpaper
+bindsym $mod+Shift+k exec /home/salaam/.screenlayout/2dell_vert.sh && feh --bg-fill $setScreenWallpaper
 # Set layoyt keyboar
 bindsym $mod+Shift+t exec setxkbmap -layout us -variant intl
 
@@ -268,7 +268,7 @@ bindsym $mod+Shift+t exec setxkbmap -layout us -variant intl
 bindsym $mod+Shift+q kill
 
 # Apps Shortcut
-bindsym $mod+shift+Return exec /usr/bin/terminator
+bindsym $mod+shift+Return exec /usr/bin/xfce4-terminal
 bindsym $mod+Return exec /usr/bin/urxvt
 bindsym $mod+q exec /usr/bin/xfce4-appfinder
 bindsym $mod+g exec /usr/bin/brave-browser "https://meutimao.com.br"
