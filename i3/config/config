@@ -62,7 +62,7 @@ exec_always --no-startup-id sleep 15 && setxkbmap -layout us -variant intl
 exec_always --no-startup-id xset r rate 250 20
 
 # Customization workspace
-workspace "2:Browsers" output HDMI-0
+workspace "2:Browsers" output DP-4
 
 # Lockscreen set
 exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notifier "notify-send -u critical -t 20000 'Bloqueio de tela...'" -locker '$i3lockscreen && sleep 30' -killtime 20 -killer "xset dpms force off" -detectsleep
