@@ -260,6 +260,7 @@ bindsym $mod+Shift+r restart
 
 # Reload Display screen
 bindsym $mod+k exec /home/salaam/.screenlayout/dell.sh 
+bindsym $mod+j exec /home/salaam/.screenlayout/dell_vert.sh 
 bindsym $mod+Shift+k exec /home/salaam/.screenlayout/2dell_vert.sh && feh --bg-fill $setScreenWallpaper
 # Set layoyt keyboar
 bindsym $mod+Shift+t exec setxkbmap -layout us -variant intl

@@ -16,7 +16,7 @@ setxkbmap -layout us -variant intl
 export EDITOR='vim'
 export VISUAL="$EDITOR"
 export HISTTIMEFORMAT="%d/%m/%y %T "
-export HISTCONTROL='ignoreboth:erasedups'
+export HISTCONTROL='ignoreboth:erasedups:ignorespace:ignoredups'
 export HISTIGNORE='ll:cd ..:cd -:ls:ls -lah:history:pwd:bg:fg:clear'
 export PROMPT_COMMAND='history -a'
 export HISTSIZE=
