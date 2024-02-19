@@ -35,6 +35,30 @@ if ask "Install symlink for tmux" Y; then
   ln -svf "${dir}/tmux/.tmux.conf" "${HOME}/.tmux.conf"
 fi
 
+if ask "Install symlink for htop?:" Y; then
+  if [ ! -d "$HOME/.config/htop/" ]; then
+    mkdir -p "$HOME/.config/htop/"
+  fi
+
+  ln -svf "${dir}/htop/.config/htop/htoprc" "${HOME}/.config/htop/htoprc"
+fi
+
+if ask "Install symlink for atuin?:" Y; then
+  if [ ! -d "$HOME/.config/atuin/" ]; then
+    mkdir -p "$HOME/.config/atuin/"
+  fi
+
+  ln -svf "${dir}/atuin/config.toml" "${HOME}/.config/atuin/config.toml"
+fi
+
+if ask "Install symlink for solaar?:" Y; then
+  if [ ! -d "$HOME/.config/solaar/" ]; then
+    mkdir -p "$HOME/.config/solaar/"
+  fi
+
+  ln -svf "${dir}/solaar/config.yaml" "${HOME}/.config/solaar/config.yaml"
+fi
+
 if ask "Install symlink for I3WM?:" Y; then
   ln -svf "${dir}/i3/config/config" "${HOME}/.config/i3/config"
   ln -svf "${dir}/i3/config/i3_gaps_config" "${HOME}/.config/i3/i3_gaps_config"
