@@ -105,3 +105,11 @@ if ask "Install vim configs?" Y; then
   fi
 fi
 
+if ask "Install alacritty configs" Y; then
+  if [ ! -d "$HOME/.config/alacritty/" ]; then
+    mkdir -p "$HOME/.config/alacritty/"
+  fi
+
+  ln -svf "${dir}/alacritty" "{$HOME}/.config/alacritty"
+fi
+

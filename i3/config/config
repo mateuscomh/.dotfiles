@@ -178,6 +178,7 @@ for_window [class="VirtualBox Machine"] floating enable resize set 640 550
 for_window [class="VirtualBox Manager"] floating enable resize set 640 550
 for_window [class="Terminator"] floating enable resize set 640 550
 for_window [class="URxvt"] floating enable resize set 840 550
+for_window [class="Alacritty"] floating enable resize set 840 550
 for_window [class="Blueman-manager"] floating enable resize set 640 450
 for_window [class="xfce4-terminal"] floating enable resize set 840 550
 for_window [class="Xmessage"] floating enable resize set 200 90 title_align center
@@ -226,7 +227,7 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 default_border pixel 2 
 
 # Applets sysbar
-exec --no-startup-id /usr/bin/volumeicon
+exec --no-startup-id /usr/bin/sleep 5 && /usr/bin/volumeicon
 exec --no-startup-id /usr/bin/nm-applet
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -269,11 +270,11 @@ bindsym $mod+Shift+t exec setxkbmap -layout us -variant intl
 bindsym $mod+Shift+q kill
 
 # Apps Shortcut
-bindsym $mod+shift+Return exec /usr/bin/xfce4-terminal
+bindsym $mod+shift+Return exec /usr/bin/alacritty
 bindsym $mod+Return exec /usr/bin/urxvt
 bindsym $mod+q exec /usr/bin/xfce4-appfinder
 bindsym $mod+g exec /usr/bin/brave-browser "https://meutimao.com.br"
-bindsym $mod+e exec /usr/bin/pcmanfm
+bindsym $mod+e exec /usr/bin/nemo
 bindsym $mod+p exec /usr/bin/flameshot gui
 bindsym $mod+c exec /usr/bin/zenity --calendar
 bindsym $mod+u exec /scripts/i3scripts/DesligaSistema.sh
@@ -286,7 +287,6 @@ bindsym $mod+shift+p exec ${HOME}/.config/ocr/flameshot_ocr.sh
 bindsym $mod+m move position mouse
 
 # Logitech Solar
-#bindsym $mod+z exec /usr/bin/solaar config "MX Master 2S" change-host 2
 bindsym $mod+shift+z exec /usr/bin/solaar config "MX Master 2S" change-host 3
 
 # Sreen brightness controls
@@ -328,3 +328,4 @@ for_window [class="^.*"] border pixel 0
 
 # Carregar configuracao i3 Gaps
 exec_always --no-startup-id cat ~/.config/i3/i3_gaps_config
+
