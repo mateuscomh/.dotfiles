@@ -157,6 +157,7 @@ assign [class="Google-chrome"] $ws2
 assign [class="Brave-browser"] $ws2
 assign [class="Firefox-esr"] $ws3
 assign [class="Thunar"] $ws4
+assign [class="Nemo"] $ws4
 assign [class="Nautilus"] $ws4
 assign [class="Pcmanfm"] $ws4
 assign [class="Wine"] $ws5
@@ -325,7 +326,64 @@ for_window [class="^.*"] border pixel 0
 
 # Carregar atalhos de media
 #exec_always --no-startup-id cat ~/.config/i3/i3_media_config
+###########
+# I3 GAPS #
+###########
 
-# Carregar configuracao i3 Gaps
-exec_always --no-startup-id cat ~/.config/i3/i3_gaps_config
+# Set gaps between menu
+bindsym $mod+Shift+g gaps inner all set 7; gaps outer all set 0
+bindsym $mod+Shift+n gaps inner all set 1; gaps outer all set 0
+gaps inner 3
+gaps outer 3
 
+# Only enable gaps on a workspace when there is at least one container
+smart_gaps on
+
+# Activate smart borders (always)
+smart_borders on
+
+# Activate smart borders (only when there are effectively no gaps)
+smart_borders no_gaps
+
+# Hide edge borders only if there is one window with no gaps
+hide_edge_borders smart
+
+# Press $mod1+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps.
+# Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace).
+# If you also press Shift with these keys, the change will be global for all workspaces.
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|1 (local), Shift + +|-|0 (global)
+#bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o mode "$mode_gaps_outer"
+        bindsym i mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0 gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
