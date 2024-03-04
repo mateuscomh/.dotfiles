@@ -168,7 +168,7 @@ assign [class="steam"] $ws8
 assign [class="TelegramDesktop"] $ws9
 assign [class="Signal"] $ws9
 assign [class="transmission-gtk"] $ws9
-assign [class="discord"] $ws9
+assign [class="discord"] $ws5
 assign [class="Slack"] $ws9
 assign [class="Spotify"] $ws10
 
