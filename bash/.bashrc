@@ -158,3 +158,6 @@ PATH="$HOME/.local/bin:$PATH"
 # Inicializa Atuin (se disponível)
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 eval "$(atuin init bash --disable-up-arrow)"
+
+# Seta repeticao de teclado
+xset r rate 325 30

@@ -276,6 +276,7 @@ bindsym $mod+shift+Return exec /usr/bin/alacritty
 bindsym $mod+Return exec /usr/bin/urxvt
 bindsym $mod+q exec /usr/bin/xfce4-appfinder
 bindsym $mod+g exec /usr/bin/brave-browser "https://meutimao.com.br"
+bindsym $mod+shift+g exec /usr/bin/firefox
 bindsym $mod+e exec /usr/bin/nemo
 bindsym $mod+p exec /usr/bin/flameshot gui
 bindsym $mod+c exec /usr/bin/zenity --calendar
@@ -332,7 +333,7 @@ for_window [class="^.*"] border pixel 0
 ###########
 
 # Set gaps between menu
-bindsym $mod+Shift+g gaps inner all set 7; gaps outer all set 0
+bindsym $mod+Shift+h gaps inner all set 7; gaps outer all set 0
 bindsym $mod+Shift+n gaps inner all set 1; gaps outer all set 0
 gaps inner 3
 gaps outer 3
