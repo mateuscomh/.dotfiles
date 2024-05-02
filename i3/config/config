@@ -19,8 +19,8 @@ set $monitorLayout /home/salaam/.screenlayout/dell.sh
 set $i3lockscreen i3lock -n -b --blur 32 --clock --ring-width 2 --time-color=#A659DE --date-color=B077D9 --indicator --ring-color=000000 --ring-width 2 --line-uses-ring --verif-text="and..."  
 
 # Set screen wallpaper
-set $setScreenWallpaper /home/salaam/dotfiles/i3/wallpaper/horwallpaperL.jpg /home/salaam/dotfiles/i3/wallpaper/vertwallpaperR.jpg 
-#set $setScreenWallpaper /home/salaam/dotfiles/i3/wallpaper/horgalaxyR.jpg /home/salaam/dotfiles/i3/wallpaper/horgalaxyL.jpg 
+#set $setScreenWallpaper /home/salaam/dotfiles/i3/wallpaper/horwallpaperL.jpg /home/salaam/dotfiles/i3/wallpaper/vertwallpaperR.jpg 
+set $setScreenWallpaper /home/salaam/dotfiles/i3/wallpaper/horgalaxyR.jpg /home/salaam/dotfiles/i3/wallpaper/horgalaxyL.jpg 
 
 # Set 2 monitors adjust
 exec --no-startup-id $monitorLayout 
@@ -162,6 +162,7 @@ assign [class="Nemo"] $ws4
 assign [class="Nautilus"] $ws4
 assign [class="Pcmanfm"] $ws4
 assign [class="Wine"] $ws5
+assign [class="obsidian"] $ws5
 assign [class="Solaar"] $ws7
 assign [class="vlc"] $ws6
 assign [class="zoom"] $ws6

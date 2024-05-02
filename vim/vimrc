@@ -126,6 +126,9 @@ map <down> gj
 map <up> gk
 inoremap <down> <c-o>gj
 inoremap <up> <c-o>gk
+"--------Inserir linha-------------
+nnoremap <silent> [ :normal O<CR>
+nnoremap <silent> ] :normal o<CR>
 
 "--------Autoclose ----------------
 inoremap " ""<left>
