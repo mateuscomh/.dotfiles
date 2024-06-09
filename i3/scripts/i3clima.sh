@@ -3,7 +3,7 @@
 get_weather_info() {
     local result
     result=$(curl -s wttr.in\?format=1 | sed 's/ //g')
-    if [[ $result =~ [Uu]nknown || $result != *C ]]; then
+    if [[ $result =~ [Uu]nknown || ! $result =~ [0-9]+.*C$ ]]; then
         result="."
     fi
     echo "$result"
