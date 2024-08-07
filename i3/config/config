@@ -16,7 +16,8 @@ font pango:monospace 8
 set $monitorLayout /home/salaam/.screenlayout/dell.sh
 
 # Set i3lockscreen
-set $i3lockscreen i3lock -n -b --blur 32 --clock --ring-width 2 --time-color=#A659DE --date-color=B077D9 --indicator --ring-color=000000 --ring-width 2 --line-uses-ring --verif-text="and..."  
+#set $i3lockscreen i3lock -n -b --blur 22 --clock --ring-width 2 --time-color=#A659DE --date-color=B077D9 --indicator --ring-color=000000 --ring-width 2 --line-uses-ring --verif-text="and..."  
+set $i3lockscreen bash /home/salaam/dotfiles/i3/scripts/lockscreen.sh 
 
 # Set screen wallpaper
 #set $setScreenWallpaper /home/salaam/dotfiles/i3/wallpaper/horwallpaperL.jpg /home/salaam/dotfiles/i3/wallpaper/vertwallpaperR.jpg 
