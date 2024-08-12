@@ -16,7 +16,6 @@ font pango:monospace 8
 set $monitorLayout /home/salaam/.screenlayout/dell.sh
 
 # Set i3lockscreen
-#set $i3lockscreen i3lock -n -b --blur 22 --clock --ring-width 2 --time-color=#A659DE --date-color=B077D9 --indicator --ring-color=000000 --ring-width 2 --line-uses-ring --verif-text="and..."  
 set $i3lockscreen bash /home/salaam/dotfiles/i3/scripts/lockscreen.sh 
 
 # Set screen wallpaper
@@ -67,7 +66,7 @@ exec_always --no-startup-id xset r rate 250 20
 workspace "2:Browsers" output DP-4
 
 # Lockscreen set
-exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notifier "notify-send -u critical -t 20000 'Bloqueio de tela...'" -locker "pgrep i3lock || $i3lockscreen" -killtime 20 -killer "xset dpms force off" -detectsleep
+exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notifier "bash /home/salaam/dotfiles/i3/scripts/fade_brightness.sh" -locker 'pgrep i3lock || $i3lockscreen' -killtime 15 -killer "xset dpms force off" 
 #exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notifier "notify-send -u critical -t 20000 'Bloqueio de tela...'" -locker '$i3lockscreen && sleep 30' -killtime 20 -killer "xset dpms force off" -detectsleep
 
 # The middle button and a modifer over any part of the window kills the window
