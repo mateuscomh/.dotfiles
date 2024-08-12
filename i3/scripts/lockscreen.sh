@@ -25,7 +25,6 @@
 # Exemplo: ./i3lock-blur-screen.sh
 # Ou configure no i3wm: bindsym $mod+Shift+L exec ~/scripts/i3lock-blur-screen.sh
 
-
 # Caminho para a imagem de fundo temporária
 TEMP_BG='/tmp/lockscreen.png'
 
@@ -35,6 +34,7 @@ scrot $TEMP_BG
 # Aplica o desfoque na captura de tela
 convert $TEMP_BG -filter Gaussian -blur 0x55 $TEMP_BG
 
+# Remove print criado após desbloqueio
 cleanup(){
     rm -f $TEMP_BG
 }
