@@ -23,7 +23,7 @@ trap restore_brightness SIGINT SIGTERM SIGHUP SIGABRT
 # Captura interrupções e restaura o brilho original
 # Envia uma notificação antes de começar a escurecer a tela
 sleep 1
-notify-send -u critical -t 7000 'Bloqueio de tela...' && sleep 2 
+notify-send -u critical -t 7000 'Bloqueio de tela...' && sleep 1
 
 # Calcula a diferença de brilho por passo
 brightness_step=$(echo "($start_brightness - $end_brightness) / $steps" | bc -l)
@@ -40,7 +40,7 @@ done
 xrandr --output $output --brightness $end_brightness
 
 # Aguarda um pouco antes de restaurar o brilho (opcional)
-sleep 2.0
+sleep 1.5
 
 # Restaura o brilho original
 restore_brightness
