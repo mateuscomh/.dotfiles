@@ -13,14 +13,14 @@ font pango:monospace 8
 #---------
 
 # Set monitors screen layout
-set $monitorLayout /home/salaam/.screenlayout/dell.sh
+set $monitorLayout ~/.screenlayout/dell.sh
 
 # Set i3lockscreen
-set $i3lockscreen bash /home/salaam/dotfiles/i3/scripts/lockscreen.sh 
+set $i3lockscreen bash ~/dotfiles/i3/scripts/lockscreen.sh 
 
 # Set screen wallpaper
 #set $setScreenWallpaper /home/salaam/dotfiles/i3/wallpaper/horwallpaperL.jpg /home/salaam/dotfiles/i3/wallpaper/vertwallpaperR.jpg 
-set $setScreenWallpaper /home/salaam/dotfiles/i3/wallpaper/horgalaxyR.jpg /home/salaam/dotfiles/i3/wallpaper/horgalaxyL.jpg 
+set $setScreenWallpaper ~/dotfiles/i3/wallpaper/horgalaxyR.jpg /home/salaam/dotfiles/i3/wallpaper/horgalaxyL.jpg 
 
 # Set 2 monitors adjust
 exec --no-startup-id $monitorLayout 
@@ -66,15 +66,15 @@ exec_always --no-startup-id xset r rate 250 20
 workspace "2:Browsers" output DP-4
 
 # Lockscreen set
-exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notifier "bash /home/salaam/dotfiles/i3/scripts/fade_brightness.sh" -locker 'pgrep i3lock || $i3lockscreen' -killtime 15 -killer "xset dpms force off" -detectsleep 
+exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notifier "bash ~/dotfiles/i3/scripts/fade_brightness.sh" -locker 'pgrep i3lock || $i3lockscreen' -killtime 15 -killer "xset dpms force off" -detectsleep 
 #exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notifier "notify-send -u critical -t 20000 'Bloqueio de tela...'" -locker '$i3lockscreen && sleep 30' -killtime 20 -killer "xset dpms force off" -detectsleep
 
 # The middle button and a modifer over any part of the window kills the window
 bindsym --whole-window $mod+button2 kill
 
 # Mouse horizontal scroll
-bindsym  --whole-window button6 exec /home/salaam/mydotfiles/logid/mousetab.sh down 
-bindsym  --whole-window button7 exec /home/salaam/mydotfiles/logid/mousetab.sh up
+bindsym  --whole-window button6 exec ~/mydotfiles/logid/mousetab.sh down 
+bindsym  --whole-window button7 exec ~/mydotfiles/logid/mousetab.sh up
 
 #-------
 #Shortcuts
@@ -264,9 +264,9 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bindsym $mod+Shift+r restart
 
 # Reload Display screen
-bindsym $mod+k exec /home/salaam/.screenlayout/dell.sh 
-bindsym $mod+j exec /home/salaam/.screenlayout/dell_vert.sh 
-bindsym $mod+Shift+k exec /home/salaam/.screenlayout/2dell_vert.sh && feh --bg-fill $setScreenWallpaper
+bindsym $mod+k exec ~/.screenlayout/dell.sh 
+bindsym $mod+j exec ~/.screenlayout/dell_vert.sh 
+bindsym $mod+Shift+k exec ~/.screenlayout/2dell_vert.sh && feh --bg-fill $setScreenWallpaper
 # Set layoyt keyboar
 bindsym $mod+Shift+t exec setxkbmap -layout us -variant intl
 
