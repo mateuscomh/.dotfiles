@@ -93,7 +93,7 @@ set completeopt=menuone,longest
 
 "--------Caracteres Ocultos----------
 "set listchars=tab:>˜,nbsp:_,trail:.
-set list
+set nolist
 set listchars=tab:›-,space:·,trail:◀,eol:↲
 set fillchars=vert:│,fold:-,eob:~,lastline:@
 
