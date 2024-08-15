@@ -60,6 +60,8 @@ if ask "Install symlink for solaar?:" Y; then
 fi
 
 if ask "Install symlink for I3WM?:" Y; then
+  mkdir -p "$HOME/.config/systemd/user/"
+  ln -svf "${dir}/i3/config/scripts/systemd/xautolock.service" "${HOME}/.config/systemd/user/xautolock.service"
   ln -svf "${dir}/i3/config/config" "${HOME}/.config/i3/config"
   ln -svf "${dir}/i3/config/i3_gaps_config" "${HOME}/.config/i3/i3_gaps_config"
   ln -svf "${dir}/i3/config/i3_media_config" "${HOME}/.config/i3/i3_media_config"

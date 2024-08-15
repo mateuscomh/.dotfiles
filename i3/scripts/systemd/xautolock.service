@@ -1,4 +1,4 @@
-#~/.config/systemd/user/xautolock.service
+
 [Unit]
 Description=Auto locker using xautolock
 
