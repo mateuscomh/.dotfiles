@@ -32,8 +32,8 @@ exec --no-startup-id compton -f --backend glx --vsync opengl
 #bindsym $mod+shift+p exec /scripts/i3scripts/brilho.sh "r"
 bindsym $mod+shift+i exec /scripts/i3scripts/brilho.sh "-"
 bindsym $mod+shift+o exec /scripts/i3scripts/brilho.sh "+"
-bindsym $mod+shift+s exec --no-startup-id xautolock -disable && notify-send -u low -t 4000 'Bloqueio Suspenso'
-bindsym $mod+s exec --no-startup-id xautolock -enable && notify-send -u normal -t 4000 'Bloqueio Ativo'
+bindsym $mod+shift+s exec systemctl --user stop xautolock.service && notify-send -u low -t 4000 'Bloqueio Suspenso' && systemctl --user daemon-reload
+bindsym $mod+s exec systemctl --user start xautolock.service && notify-send -u low -t 4000 'Bloqueio Ativo' 
 
 #------
 #Mouse setting
