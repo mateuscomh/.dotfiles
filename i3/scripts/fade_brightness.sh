@@ -1,7 +1,22 @@
 #!/bin/bash
+
+############################### 
+# Script de controle de brilho da tela com detecção de movimento do mouse
+# 
+# Descrição:
+# Este script reduz gradualmente o brilho da tela, restaurando-o ao valor original
+# se detectar movimento do mouse durante a execução. Ele foi projetado para ambientes
+# Linux com suporte a xrandr e xdotool.
+#
+# Requisitos:
+# - xrandr: Ferramenta para configurar e manipular as saídas de vídeo.
+# - xdotool: Ferramenta para simular entradas de teclado e mouse, além de monitorar
+#            a posição do mouse.
+############################### 
+
 set -e
 
-# Função para obter a lista de saídas conectadas e ativas
+# Obter a lista de saídas conectadas e ativas
 get_active_outputs() {
     xrandr --query | awk '/ connected / { 
         if ($0 ~ /[0-9]+mm x [0-9]+mm$/) 
@@ -14,21 +29,37 @@ outputs=($(get_active_outputs))
 
 # Brilho inicial e final
 start_brightness=1.0
-end_brightness=0.3
+end_brightness=0.1
 
-# Quantidade de passos para o fade
+# Etapas de Fade
 steps=15
+delay=0.08
 
-# Tempo entre cada passo (em segundos)
-delay=0.05
-
-# Função para restaurar o brilho original
+# Restaurar o brilho original e encerrar o script
 restore_brightness() {
     for output in "${outputs[@]}"; do
         xrandr --output "$output" --brightness $start_brightness
     done
     exit 0
 }
+
+# Função para obter a posição atual do mouse
+get_mouse_position() {
+    xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f 2
+}
+
+check_mouse_movement() {
+    current_x=$(get_mouse_position)
+    current_y=$(get_mouse_position)
+
+    if [ "$initial_x" != "$current_x" ] || [ "$initial_y" != "$current_y" ]; then
+        restore_brightness
+    fi
+}
+
+# Pega a posição inicial do mouse
+initial_x=$(get_mouse_position)
+initial_y=$(get_mouse_position)
 
 # Captura interrupções e restaura o brilho original
 trap restore_brightness SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
@@ -43,6 +74,8 @@ while [ "$current" -le 100 ]; do
         --timeout=500 "Bloqueio de Tela ..." "$(date '+%Y-%m-%d %H:%M:%S')"
     sleep 0.05
     current=$((current + 2))
+    
+    check_mouse_movement
 done
 
 # Calcula a diferença de brilho por passo
@@ -58,6 +91,8 @@ while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
     done
     current_brightness=$(echo "$current_brightness - $brightness_step" | bc -l)
     sleep $delay
+
+    check_mouse_movement
 done
 
 # Mantém o brilho no valor final
@@ -65,7 +100,6 @@ for output in "${outputs[@]}"; do
     xrandr --output "$output" --brightness $end_brightness
 done
 
-# Aguarda um pouco antes de restaurar o brilho (opcional)
 sleep 1.0
 
 # Restaura o brilho original
