@@ -10,7 +10,7 @@ get_active_outputs() {
 }
 
 # Obtenha a lista de saídas ativas
-output=($(get_active_outputs))
+outputs=($(get_active_outputs))
 
 # Brilho inicial e final
 start_brightness=1.0
@@ -24,12 +24,16 @@ delay=0.05
 
 # Função para restaurar o brilho original
 restore_brightness() {
-    xrandr --output $output --brightness $start_brightness
+    for output in "${outputs[@]}"; do
+        xrandr --output "$output" --brightness $start_brightness
+    done
     exit 0
 }
 
-trap restore_brightness SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
 # Captura interrupções e restaura o brilho original
+trap restore_brightness SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
+
+# Notificação de progresso
 current=0
 while [ "$current" -le 100 ]; do
     dunstify --icon preferences-desktop-screensaver \
@@ -44,19 +48,26 @@ done
 # Calcula a diferença de brilho por passo
 brightness_step=$(echo "($start_brightness - $end_brightness) / $steps" | bc -l)
 
-# Loop para diminuir o brilho gradualmente
+# Define o brilho atual como o inicial
 current_brightness=$start_brightness
+
+# Loop para diminuir o brilho gradualmente
 while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
-    xrandr --output "$output" --brightness "$current_brightness"
+    for output in "${outputs[@]}"; do
+        xrandr --output "$output" --brightness "$current_brightness"
+    done
     current_brightness=$(echo "$current_brightness - $brightness_step" | bc -l)
     sleep $delay
 done
 
 # Mantém o brilho no valor final
-xrandr --output $output --brightness $end_brightness
+for output in "${outputs[@]}"; do
+    xrandr --output "$output" --brightness $end_brightness
+done
 
 # Aguarda um pouco antes de restaurar o brilho (opcional)
 sleep 1.0
 
 # Restaura o brilho original
 restore_brightness
+
