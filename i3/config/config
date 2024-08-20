@@ -32,8 +32,11 @@ exec --no-startup-id compton -f --backend glx --vsync opengl
 #bindsym $mod+shift+p exec /scripts/i3scripts/brilho.sh "r"
 bindsym $mod+shift+i exec /scripts/i3scripts/brilho.sh "-"
 bindsym $mod+shift+o exec /scripts/i3scripts/brilho.sh "+"
-bindsym $mod+shift+s exec systemctl --user stop xautolock.service && notify-send -u low -t 4000 'Bloqueio Suspenso' && systemctl --user daemon-reload
-bindsym $mod+s exec systemctl --user start xautolock.service && notify-send -u low -t 4000 'Bloqueio Ativo' 
+bindsym $mod+Shift+s exec xautolock -disable && notify-send -u low -t 4000 'Bloqueio Suspenso'
+bindsym $mod+s exec xautolock -enable && notify-send -u low -t 4000 'Bloqueio Ativo'
+
+#bindsym $mod+shift+s exec systemctl --user stop xautolock.service && notify-send -u low -t 4000 'Bloqueio Suspenso' && systemctl --user daemon-reload
+#bindsym $mod+s exec systemctl --user start xautolock.service && notify-send -u low -t 4000 'Bloqueio Ativo' 
 
 #------
 #Mouse setting
@@ -64,8 +67,8 @@ set $i3lockscreen bash ~/dotfiles/i3/scripts/lockscreen.sh
 set $setScreenWallpaper ~/dotfiles/i3/wallpaper/horgalaxyR.jpg /home/salaam/dotfiles/i3/wallpaper/horgalaxyL.jpg 
 
 # Lockscreen set
+exec --no-startup-id /usr/bin/xautolock -time 3 -corners +--- -cornersize 20 -cornerredelay 15 -notify 5 -notifier "~/dotfiles/i3/scripts/fade_brightness.sh" -locker "pgrep i3lock || ~/dotfiles/i3/scripts/lockscreen.sh" -killtime 15 -killer "xset dpms force off" 
 #exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notifier "notify-send -u critical -t 20000 'Bloqueio de tela...'" -locker '$i3lockscreen && sleep 30' -killtime 20 -killer "xset dpms force off" -detectsleep
-#exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notify 10 -notifier "bash ~/dotfiles/i3/scripts/fade_brightness.sh" -locker 'pgrep i3lock || $i3lockscreen' -killtime 15 -killer "xset dpms force off" -detectsleep 
 
 # The middle button and a modifer over any part of the window kills the window
 bindsym --whole-window $mod+button2 kill

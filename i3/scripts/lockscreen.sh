@@ -36,8 +36,14 @@ convert $TEMP_BG -filter Gaussian -blur 0x55 $TEMP_BG
 
 # Remove print criado após desbloqueio
 cleanup(){
-    rm -f $TEMP_BG
+    if [ -f "$TEMP_BG" ]; then
+      rm -f "$TEMP_BG"
+    fi
 }
+
+if pgrep -x "i3lock" > /dev/null; then
+    exit 0
+fi
 
 trap cleanup EXIT
 
@@ -51,3 +57,4 @@ i3lock -i $TEMP_BG \
     --ring-color=#000000 \
     --ring-width=2 \
     --verif-text="and..."
+

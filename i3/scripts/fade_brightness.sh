@@ -9,9 +9,7 @@
 # Linux com suporte a xrandr e xdotool.
 #
 # Requisitos:
-# - xrandr: Ferramenta para configurar e manipular as saídas de vídeo.
-# - xdotool: Ferramenta para simular entradas de teclado e mouse, além de monitorar
-#            a posição do mouse.
+# - xrandr, xdotool, dunst
 ############################### 
 
 set -e
