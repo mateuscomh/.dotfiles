@@ -26,7 +26,13 @@
 # Ou configure no i3wm: bindsym $mod+Shift+L exec ~/scripts/i3lock-blur-screen.sh
 
 # Caminho para a imagem de fundo temporária
+if pgrep -x "i3lock" > /dev/null; then
+    exit 0
+fi
+
 TEMP_BG='/tmp/lockscreen.png'
+
+echo "$(date): Executando lockscreen.sh" >> /tmp/lockscreen.log
 
 # Tira uma captura de tela
 scrot $TEMP_BG
@@ -37,13 +43,10 @@ convert $TEMP_BG -filter Gaussian -blur 0x55 $TEMP_BG
 # Remove print criado após desbloqueio
 cleanup(){
     if [ -f "$TEMP_BG" ]; then
+      echo "$(date): Removendo $TEMP_BG" >> /tmp/lockscreen.log
       rm -f "$TEMP_BG"
     fi
 }
-
-if pgrep -x "i3lock" > /dev/null; then
-    exit 0
-fi
 
 trap cleanup EXIT
 
@@ -57,4 +60,4 @@ i3lock -i $TEMP_BG \
     --ring-color=#000000 \
     --ring-width=2 \
     --verif-text="and..."
-
+exit 0

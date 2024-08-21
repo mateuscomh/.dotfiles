@@ -14,6 +14,10 @@
 
 set -e
 
+if pgrep -x "i3lock" > /dev/null; then
+    exit 0
+fi
+
 # Obter a lista de saídas conectadas e ativas
 get_active_outputs() {
     xrandr --query | awk '/ connected / { 
@@ -31,7 +35,7 @@ end_brightness=0.1
 
 # Etapas de Fade
 steps=15
-delay=0.08
+delay=0.07
 
 # Restaurar o brilho original e encerrar o script
 restore_brightness() {
