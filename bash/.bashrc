@@ -51,22 +51,58 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 # Validate if the git are installed on system and change color on PS1
-git --version > /dev/null 
+# Verifica se o Git está disponível
+git --version > /dev/null 2>&1
 GIT_IS_AVAILABLE=$?
 
 if [ "$GIT_IS_AVAILABLE" -eq 0 ]; then
+  # Função para obter o nome do branch do Git
   parse_git_branch() {
-    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+    if git rev-parse --is-inside-work-tree &>/dev/null; then
+      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+    fi
   }
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[01;31m\]$(parse_git_branch)\[\033[00m\]\$ '
+
+  # Função para verificar se há alterações no Git
+  parse_git_status() {
+    if git rev-parse --is-inside-work-tree &>/dev/null; then
+      if ! git diff --quiet || ! git diff --cached --quiet; then
+        echo '*'
+      else
+        echo ''
+      fi
+    fi
+  }
+
+  # Atualiza o prompt do Bash
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[01;31m\]$(parse_git_branch)$(parse_git_status)\[\033[00m\]\$ '
 
 elif [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
+  # Caso o Git não esteja disponível, usa o prompt padrão com cores
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
 
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
+  # Caso o Git não esteja disponível e cores não estejam habilitadas
+  PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
 
 fi
+
+
+#GIT_IS_AVAILABLE=$?
+#
+#if [ "$GIT_IS_AVAILABLE" -eq 0 ]; then
+#  parse_git_branch() {
+#    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+#  }
+#    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[01;31m\]$(parse_git_branch)\[\033[00m\]\$ '
+#
+#elif [ "$color_prompt" = yes ]; then
+#    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
+#
+#else
+#    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
+#
+#fi
 
 unset color_prompt force_color_prompt
 
