@@ -36,7 +36,7 @@ check_mouse_movement() {
     current_y=$(get_mouse_position)
 
     if [ "$initial_x" != "$current_x" ] || [ "$initial_y" != "$current_y" ]; then
-        restore_brightness
+       exit 0 
     fi
 }
 
@@ -45,7 +45,7 @@ initial_x=$(get_mouse_position)
 initial_y=$(get_mouse_position)
 
 # Captura interrupções e restaura o brilho original
-trap restore_brightness SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
+trap SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
 
 # Notificação de progresso
 current=0
