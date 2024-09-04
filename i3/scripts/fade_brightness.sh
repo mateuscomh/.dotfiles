@@ -34,8 +34,8 @@ start_brightness=1.0
 end_brightness=0.1
 
 # Etapas de Fade
-steps=30
-delay=0.09
+steps=38
+delay=0.1
 
 # Restaurar o brilho original e encerrar o script
 restore_brightness() {
@@ -75,7 +75,7 @@ while [ "$current" -le 100 ]; do
         -h string:x-dunst-stack-tag:progress-lock \
         --timeout=500 "Bloqueio de Tela ..." "$(date '+%Y-%m-%d %H:%M:%S')"
     sleep 0.05
-    current=$((current + 2))
+    current=$((current + 1))
     
     check_mouse_movement
 done
