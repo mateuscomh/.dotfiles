@@ -34,7 +34,7 @@ start_brightness=1.0
 end_brightness=0.1
 
 # Etapas de Fade
-steps=15
+steps=30
 delay=0.09
 
 # Restaurar o brilho original e encerrar o script
