@@ -118,7 +118,7 @@ au BufNewFile *.py set fileformat=unix
 
 "--------Remapear teclas----------
 nnoremap <tab> .
-nnoremap ; :
+"nnoremap ; :
 vnoremap ; :
 map j gj
 map k gk
@@ -143,7 +143,7 @@ inoremap { {}<left>
 nmap <silent> <C-D> :NERDTreeToggle<CR>
 
 "--------Add ; com space no fim arquivo----
-let mapleader="<space>"
+let mapleader="\<space>"
 nnoremap <leader>; A;<esc>
 
 "-----Copiar area de transf-------
