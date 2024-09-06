@@ -13,6 +13,7 @@ call plug#begin('~/.vim/plugged')
  Plug 'junegunn/fzf.vim'
  Plug 'vim-scripts/loremipsum'
  Plug 'ekalinin/dockerfile.vim'
+ Plug 'mg979/vim-visual-multi'
 "Plug 'vim-scripts/AutoComplPop'
 call plug#end()
 
@@ -145,6 +146,9 @@ nmap <silent> <C-D> :NERDTreeToggle<CR>
 "--------Add ; com space no fim arquivo----
 let mapleader="\<space>"
 nnoremap <leader>; A;<esc>
+vnoremap <leader>/ :norm i#<CR>
+vnoremap <leader>? :norm ^x<CR>
+
 
 "-----Copiar area de transf-------
 vmap <silent> <leader>yy "+y
