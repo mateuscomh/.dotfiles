@@ -4,7 +4,6 @@
 ########################
 
 # TMUX (desativado)
-# Caso deseje habilitar, remova o '#' do início das linhas abaixo
 # if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
 #     exec tmux
 # fi
@@ -13,7 +12,9 @@
 ########################
 
 # Configuração do teclado e idioma
-xset r rate 225 15 #Define velocidade de repeticao dos caracteres
+# Seta repeticao de teclado
+xset r rate 325 15
+#xset r rate 225 15 #Define velocidade de repeticao dos caracteres
 export LANG=C.UTF-8 #Variavel LANG UTF8
 setxkbmap -layout us -variant intl #Layout teclado US-Internacional
 
@@ -159,5 +160,3 @@ PATH="$HOME/.local/bin:$PATH"
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 eval "$(atuin init bash --disable-up-arrow)"
 
-# Seta repeticao de teclado
-xset r rate 325 30
