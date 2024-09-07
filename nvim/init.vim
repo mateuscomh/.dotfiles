@@ -7,6 +7,8 @@ call plug#begin('~/.vim/plugged')
  Plug 'junegunn/vim-easy-align'
  Plug 'ekalinin/dockerfile.vim'
  Plug 'sainnhe/sonokai'
+ Plug 'ryanoasis/vim-devicons'
+ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 call plug#end()
 
 "------------Tema do nvim------------
@@ -148,7 +150,7 @@ inoremap [ []<left>
 inoremap { {}<left>
 
 "-----Add ControlD Nerdtree-----
-"nmap <silent> <C-D> :NERDTreeToggle<CR>
+nmap <silent> <C-a> :NERDTreeToggle<CR>
 
 "--------Funcoes macro----
 let mapleader="\<space>"

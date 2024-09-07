@@ -275,8 +275,8 @@ bindsym $mod+Shift+t exec setxkbmap -layout us -variant intl
 bindsym $mod+Shift+q kill
 
 # Apps Shortcut
-bindsym $mod+shift+Return exec /usr/bin/alacritty
-bindsym $mod+Return exec /usr/bin/urxvt
+bindsym $mod+Return exec /usr/bin/alacritty
+bindsym $mod+shift+Return exec /usr/bin/urxvt
 bindsym $mod+q exec /usr/bin/xfce4-appfinder
 bindsym $mod+g exec /usr/bin/brave-browser "https://meutimao.com.br"
 bindsym $mod+shift+g exec /usr/bin/firefox
