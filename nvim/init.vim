@@ -1,9 +1,37 @@
-"------------Tema do vim------------
-""colorscheme gruvbox
-set background=dark
+call plug#begin('~/.vim/plugged')
+ Plug 'mboughaba/i3config.vim'
+ Plug 'mg979/vim-visual-multi'
+ Plug 'vim-airline/vim-airline'
+ Plug 'scrooloose/Syntastic'
+ Plug 'vim-airline/vim-airline-themes'
+ Plug 'junegunn/vim-easy-align'
+ Plug 'ekalinin/dockerfile.vim'
+ Plug 'sainnhe/sonokai'
+call plug#end()
+
+"------------Tema do nvim------------
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+let g:sonokai_style = 'andromeda'
+let g:sonokai_enable_italic = 1
+let g:sonokai_disable_italic_comment = 0
+let g:sonokai_diagnostic_line_highlight = 0
+let g:sonokai_current_word = 'bold'
+colorscheme sonokai
+
+if (has("nvim")) "Transparent background. Only for nvim
+    highlight Normal guibg=NONE ctermbg=NONE
+    highlight EndOfBuffer guibg=NONE ctermbg=NONE
+endif
 
 "--------Cores de sintaxe--------
 syntax enable
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme = 'sonokai'
 let g:airline_powerline_fonts = 1
 
 "----------Syntastic --------------
@@ -20,7 +48,7 @@ let g:airline_powerline_fonts = 1
 "--------Numero de linhas----------
 set number
 set relativenumber
-set scrolloff=5
+set scrolloff=8
 
 " ------!Insert Mode Relative-------
 autocmd InsertEnter * set norelativenumber
@@ -39,6 +67,7 @@ set wildoptions=pum
 
 "----------Cache arquivos----------
 set hidden
+set updatetime=100
 
 "--------Pesquisa recursiva--------
 set path+=**
@@ -121,7 +150,7 @@ inoremap { {}<left>
 "-----Add ControlD Nerdtree-----
 "nmap <silent> <C-D> :NERDTreeToggle<CR>
 
-"--------Add ; com space no fim arquivo----
+"--------Funcoes macro----
 let mapleader="\<space>"
 nnoremap <leader>; A;<esc>
 vnoremap <leader>/ :norm i#<CR>
