@@ -124,6 +124,10 @@ inoremap { {}<left>
 "--------Add ; com space no fim arquivo----
 let mapleader="\<space>"
 nnoremap <leader>; A;<esc>
+vnoremap <leader>/ :norm i#<CR>
+vnoremap <leader>? :norm ^x<CR>
+nnoremap <leader>? :silent s/^#//<CR>
+nnoremap <leader>/ :silent s/^/#/<CR>:nohlsearch<CR>
 
 "-----Copiar area de transf-------
 vmap <silent> <leader>yy "+y
