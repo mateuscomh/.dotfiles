@@ -1,46 +1,61 @@
-"--------Instalador de plugins----------
 call plug#begin('~/.vim/plugged')
-" Plug 'johngrib/vim-game-snake'
  Plug 'mboughaba/i3config.vim'
- Plug 'morhetz/gruvbox'
+ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
  Plug 'vim-airline/vim-airline'
  Plug 'scrooloose/Syntastic'
  Plug 'vim-airline/vim-airline-themes'
  Plug 'junegunn/vim-easy-align'
- Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
- Plug 'sheerun/vim-polyglot'
- Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
- Plug 'junegunn/fzf.vim'
- Plug 'vim-scripts/loremipsum'
  Plug 'ekalinin/dockerfile.vim'
- Plug 'mg979/vim-visual-multi'
-"Plug 'vim-scripts/AutoComplPop'
+ Plug 'sainnhe/sonokai'       "Tema sonokay
+ Plug 'ryanoasis/vim-devicons' "Icones dev
+ Plug 'sheerun/vim-polyglot' "Highligh de várias lang
+ Plug 'Xuyuanp/nerdtree-git-plugin'
+ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 call plug#end()
 
-"------------Tema do vim------------
-colorscheme gruvbox
-set background=dark
+
+"------------Tema do nvim------------
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+let g:sonokai_style = 'andromeda'
+let g:sonokai_enable_italic = 1
+let g:sonokai_disable_italic_comment = 0
+let g:sonokai_diagnostic_line_highlight = 0
+let g:sonokai_current_word = 'bold'
+colorscheme sonokai
+
+if (has("nvim")) "Transparent background. Only for nvim
+    highlight Normal guibg=NONE ctermbg=NONE
+    highlight EndOfBuffer guibg=NONE ctermbg=NONE
+    highlight Visual guibg=#5e8d87 ctermbg=LightYellow 
+endif
 
 "--------Cores de sintaxe--------
 syntax enable
-set t_Co=256
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme = 'sonokai'
 let g:airline_powerline_fonts = 1
 
 "----------Syntastic --------------
-let g:syntastic_check_on_open       = 0
-let g:syntastic_check_on_wq         = 0
-let g:syntastic_enable_perl_checker = 1
-let g:syntastic_perl_checkers       = ['perl','podchecker']
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"let g:syntastic_check_on_open       = 0
+"let g:syntastic_check_on_wq         = 0
+"let g:syntastic_enable_perl_checker = 1
+"let g:syntastic_perl_checkers       = ['perl','podchecker']
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 "--------Numero de linhas----------
 set number
 set relativenumber
-set scrolloff=5
+set scrolloff=8
 
 " ------!Insert Mode Relative-------
 autocmd InsertEnter * set norelativenumber
@@ -59,6 +74,7 @@ set wildoptions=pum
 
 "----------Cache arquivos----------
 set hidden
+set updatetime=100
 
 "--------Pesquisa recursiva--------
 set path+=**
@@ -75,6 +91,7 @@ set ignorecase
 set smartcase
 set incsearch
 let @/ = ""
+set inccommand=split
 
 "--------Codificação--------
 set encoding=utf-8
@@ -93,10 +110,10 @@ set shortmess+=c
 set completeopt=menuone,longest
 
 "--------Caracteres Ocultos----------
-"set listchars=tab:>˜,nbsp:_,trail:.
 set nolist
 set listchars=tab:›-,space:·,trail:◀,eol:↲
-set fillchars=vert:│,fold:-,eob:~,lastline:@
+set fillchars=vert:│,fold:-,eob:~
+
 
 "--------Tabulacao----------
 set tabstop=2
@@ -118,18 +135,18 @@ au BufNewFile,BufRead *.py
 au BufNewFile *.py set fileformat=unix
 
 "--------Remapear teclas----------
-nnoremap <tab> .
+"nnoremap <tab> :
 "nnoremap ; :
-vnoremap ; :
+"vnoremap ; :
 map j gj
 map k gk
 map <down> gj
 map <up> gk
 inoremap <down> <c-o>gj
 inoremap <up> <c-o>gk
-"--------Inserir linha-------------
 nnoremap <silent> [ :normal O<CR>
 nnoremap <silent> ] :normal o<CR>
+
 
 "--------Autoclose ----------------
 inoremap " ""<left>
@@ -137,13 +154,16 @@ inoremap ' ''<left>
 inoremap ( ()<left>
 inoremap [ []<left>
 inoremap { {}<left>
-"inoremap {<CR> {<CR>}<ESC>O
-"inoremap {;<CR> {<CR>};<ESC>O
 
-"-----Add ControlD Nerdtree-----
-nmap <silent> <C-D> :NERDTreeToggle<CR>
+"----- Nerdtree Options -----
+"nmap <silent> <C-a> :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
+" Close the tab if NERDTree is the only window remaining in it.
+nmap <silent> <Right> l
+nmap <silent> <Left> h
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
 
-"--------Add ; com space no fim arquivo----
+"---- Funcoes macro ----
 let mapleader="\<space>"
 nnoremap <leader>; A;<esc>
 vnoremap <leader>/ :norm i#<CR>
@@ -155,17 +175,8 @@ nnoremap <leader>/ :silent s/^/#/<CR>:nohlsearch<CR>
 vmap <silent> <leader>yy "+y
 vmap <silent> <leader>dd "+c
 
-""-----Add ControlF para files-----
-nnoremap <c-f> :Files<cr>
-
-"-----Set paste for yml files-----
-"set paste
-
-"-----Set i3 font highlight-----
-aug i3config_ft_detection
-  au!
-  au BufNewFile,BufRead ~/.config/i3/config set filetype=i3config
-aug end
+"-----Executar o terminal-----
+map <f7> :term bash %<cr>
 
 "-----Go to last position-----
 if has("autocmd")
@@ -190,9 +201,7 @@ map <f5> :set spell!<cr>
 "-----Alternar quebra de linha------
 map <f6> :set wrap!<cr>
 
-"-----Executar o terminal-----
-map <f7> :term bash ./%<cr> 
-
 "-----Indentar visual mode----
 vmap < <gv
 vmap > >gv
+
