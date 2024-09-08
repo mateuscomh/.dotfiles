@@ -31,11 +31,11 @@ colorscheme sonokai
 
 if (has("nvim")) "Transparent background. Only for nvim
     highlight Normal guibg=NONE ctermbg=NONE
-    highlight EndOfBuffer guibg=NONE ctermbg=NONE
+    highlight EndOfBuffer guibg=NONE ctermbg=gray
     highlight Visual guibg=#5e8d87 ctermbg=LightYellow 
 endif
 highlight CursorWord cterm=bold ctermbg=yellow guibg=yellow " Palavra sob o cursor
-highlight OtherWords cterm=NONE ctermbg=gray guibg=None    " Outras ocorrências
+highlight OtherWords cterm=NONE ctermbg=gray guibg=gray    " Outras ocorrências
 
 "--------Cores de sintaxe--------
 syntax enable
