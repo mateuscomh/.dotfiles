@@ -12,9 +12,9 @@ call plug#begin('~/.vim/plugged')
  Plug 'Xuyuanp/nerdtree-git-plugin'
  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+ Plug 'dense-analysis/ale'
+ Plug 'jiangmiao/auto-pairs'
 call plug#end()
-
-
 "------------Tema do nvim------------
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -135,7 +135,7 @@ au BufNewFile,BufRead *.py
 au BufNewFile *.py set fileformat=unix
 
 "--------Remapear teclas----------
-"nnoremap <tab> :
+nnoremap <tab> :
 "nnoremap ; :
 "vnoremap ; :
 map j gj
@@ -147,17 +147,15 @@ inoremap <up> <c-o>gk
 nnoremap <silent> [ :normal O<CR>
 nnoremap <silent> ] :normal o<CR>
 
-
 "--------Autoclose ----------------
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
+"inoremap " ""<left>
+"inoremap ' ''<left>
+"inoremap ( ()<left>
+"inoremap [ []<left>
+"inoremap { {}<left>
 
 "----- Nerdtree Options -----
 "nmap <silent> <C-a> :NERDTreeToggle<CR>
-nnoremap <leader>n :NERDTreeToggle<CR>
 " Close the tab if NERDTree is the only window remaining in it.
 nmap <silent> <Right> l
 nmap <silent> <Left> h
@@ -166,6 +164,7 @@ autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTa
 "---- Funcoes macro ----
 let mapleader="\<space>"
 nnoremap <leader>; A;<esc>
+nnoremap <leader>a :NERDTreeToggle<CR>
 vnoremap <leader>/ :norm i#<CR>
 vnoremap <leader>? :norm ^x<CR>
 nnoremap <leader>? :silent s/^#//<CR>
@@ -205,3 +204,24 @@ map <f6> :set wrap!<cr>
 vmap < <gv
 vmap > >gv
 
+" Habilita linters para cada linguagem
+let g:ale_linters = {
+\   'yaml': ['yamllint'],
+\   'sh': ['shellcheck'],
+\   'ansible': ['ansible_lint'],
+\   'go': ['golangci-lint'],
+\   'json': ['jsonlint'],
+\}
+let g:ale_sign_error = '>>'       " Sinal para erros
+let g:ale_sign_warning = '--'     " Sinal para avisos
+
+"-----Selecao highlight palavras-----
+function! HighlightWordUnderCursor()
+    if getline(".")[col(".")-1] !~# '[[:punct:][:blank:]]'
+        exec 'match' 'Search' '/\V\<'.expand('<cword>').'\>/'
+    else
+        match none
+    endif
+endfunction
+
+autocmd! CursorHold,CursorHoldI * call HighlightWordUnderCursor()
