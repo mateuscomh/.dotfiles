@@ -31,11 +31,11 @@ colorscheme sonokai
 
 if (has("nvim")) "Transparent background. Only for nvim
     highlight Normal guibg=NONE ctermbg=NONE
-    highlight EndOfBuffer guibg=NONE ctermbg=gray
+    highlight EndOfBuffer guibg=NONE ctermbg=Gray
     highlight Visual guibg=#5e8d87 ctermbg=LightYellow 
 endif
-highlight CursorWord cterm=bold ctermbg=yellow guibg=yellow " Palavra sob o cursor
-highlight OtherWords cterm=NONE ctermbg=gray guibg=gray    " Outras ocorrências
+highlight CursorWord cterm=bold ctermbg=lightyellow guibg=#686b6d
+highlight OtherWords cterm=NONE ctermbg=gray guibg=Gray    " Outras ocorrências
 
 "--------Cores de sintaxe--------
 syntax enable
@@ -219,7 +219,7 @@ let g:ale_sign_warning = '--'     " Sinal para avisos
 function! HighlightWordUnderCursor()
     " Limpa os destaques anteriores
     match none
-    2match none
+"    2match none
 
     " Verifica se o caractere sob o cursor não é pontuação ou espaço
     if getline(".")[col(".")-1] !~# '[[:punct:][:blank:]]'
@@ -227,7 +227,7 @@ function! HighlightWordUnderCursor()
         exec 'match CursorWord /\V\<'.expand('<cword>').'\>/'
 
         " Realça as outras ocorrências com 'OtherWords'
-        exec '2match OtherWords /\V\<'.expand('<cword>').'\>/'
+"        exec '2match OtherWords /\V\<'.expand('<cword>').'\>/'
     endif
 endfunction
 autocmd! CursorHold,CursorHoldI * call HighlightWordUnderCursor()
