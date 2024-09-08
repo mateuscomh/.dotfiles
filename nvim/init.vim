@@ -1,15 +1,19 @@
 call plug#begin('~/.vim/plugged')
  Plug 'mboughaba/i3config.vim'
- Plug 'mg979/vim-visual-multi'
+ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
  Plug 'vim-airline/vim-airline'
  Plug 'scrooloose/Syntastic'
  Plug 'vim-airline/vim-airline-themes'
  Plug 'junegunn/vim-easy-align'
  Plug 'ekalinin/dockerfile.vim'
- Plug 'sainnhe/sonokai'
- Plug 'ryanoasis/vim-devicons'
+ Plug 'sainnhe/sonokai'       "Tema sonokay
+ Plug 'ryanoasis/vim-devicons' "Icones dev
+ Plug 'sheerun/vim-polyglot' "Highligh de várias lang
+ Plug 'Xuyuanp/nerdtree-git-plugin'
+ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 call plug#end()
+
 
 "------------Tema do nvim------------
 if exists('+termguicolors')
@@ -28,6 +32,7 @@ colorscheme sonokai
 if (has("nvim")) "Transparent background. Only for nvim
     highlight Normal guibg=NONE ctermbg=NONE
     highlight EndOfBuffer guibg=NONE ctermbg=NONE
+    highlight Visual guibg=#5e8d87 ctermbg=LightYellow 
 endif
 
 "--------Cores de sintaxe--------
@@ -130,7 +135,7 @@ au BufNewFile,BufRead *.py
 au BufNewFile *.py set fileformat=unix
 
 "--------Remapear teclas----------
-nnoremap <tab> .
+"nnoremap <tab> :
 "nnoremap ; :
 "vnoremap ; :
 map j gj
@@ -142,6 +147,7 @@ inoremap <up> <c-o>gk
 nnoremap <silent> [ :normal O<CR>
 nnoremap <silent> ] :normal o<CR>
 
+
 "--------Autoclose ----------------
 inoremap " ""<left>
 inoremap ' ''<left>
@@ -149,10 +155,15 @@ inoremap ( ()<left>
 inoremap [ []<left>
 inoremap { {}<left>
 
-"-----Add ControlD Nerdtree-----
-nmap <silent> <C-a> :NERDTreeToggle<CR>
+"----- Nerdtree Options -----
+"nmap <silent> <C-a> :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
+" Close the tab if NERDTree is the only window remaining in it.
+nmap <silent> <Right> l
+nmap <silent> <Left> h
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
 
-"--------Funcoes macro----
+"---- Funcoes macro ----
 let mapleader="\<space>"
 nnoremap <leader>; A;<esc>
 vnoremap <leader>/ :norm i#<CR>
