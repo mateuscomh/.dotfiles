@@ -34,6 +34,8 @@ if (has("nvim")) "Transparent background. Only for nvim
     highlight EndOfBuffer guibg=NONE ctermbg=NONE
     highlight Visual guibg=#5e8d87 ctermbg=LightYellow 
 endif
+highlight CursorWord cterm=bold ctermbg=yellow guibg=yellow " Palavra sob o cursor
+highlight OtherWords cterm=NONE ctermbg=gray guibg=None    " Outras ocorrências
 
 "--------Cores de sintaxe--------
 syntax enable
@@ -63,9 +65,17 @@ autocmd InsertEnter * set norelativenumber
 " ------Insert Mode Relative-------
 autocmd InsertLeave * set relativenumber
 
-"------Insert Mode Cursor--------
+"------Nvim copy selection-------
+set clipboard=unnamedplus
+set guioptions+=a
+
+"--------Adicionar interacao mouse--------
+set mouse=a
+
+"------Change Cursor Mode--------
 let &t_SI="\e[6 q"
 let &t_EI="\e[2 q"
+let &t_SR="\e[4 q"
 
 "----------Menu suspenso----------
 set wildmenu
@@ -78,9 +88,6 @@ set updatetime=100
 
 "--------Pesquisa recursiva--------
 set path+=**
-
-"--------Adicionar interacao mouse--------
-set mouse=a
 
 "--------Definir titulo editor--------
 set title
@@ -114,7 +121,6 @@ set nolist
 set listchars=tab:›-,space:·,trail:◀,eol:↲
 set fillchars=vert:│,fold:-,eob:~
 
-
 "--------Tabulacao----------
 set tabstop=2
 set shiftwidth=2
@@ -136,30 +142,23 @@ au BufNewFile *.py set fileformat=unix
 
 "--------Remapear teclas----------
 nnoremap <tab> :
-"nnoremap ; :
-"vnoremap ; :
-map j gj
-map k gk
-map <down> gj
-map <up> gk
-inoremap <down> <c-o>gj
-inoremap <up> <c-o>gk
+"map j gj
+"map k gk
+"map <down> gj
+"map <up> gk
+"inoremap <down> <c-o>gj
+"inoremap <up> <c-o>gk
 nnoremap <silent> [ :normal O<CR>
 nnoremap <silent> ] :normal o<CR>
 
-"--------Autoclose ----------------
-"inoremap " ""<left>
-"inoremap ' ''<left>
-"inoremap ( ()<left>
-"inoremap [ []<left>
-"inoremap { {}<left>
-
 "----- Nerdtree Options -----
-"nmap <silent> <C-a> :NERDTreeToggle<CR>
 " Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let NERDTreeShowHidden=1
 nmap <silent> <Right> l
 nmap <silent> <Left> h
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
 
 "---- Funcoes macro ----
 let mapleader="\<space>"
@@ -211,17 +210,25 @@ let g:ale_linters = {
 \   'ansible': ['ansible_lint'],
 \   'go': ['golangci-lint'],
 \   'json': ['jsonlint'],
+\   'vim': ['vimt']
 \}
 let g:ale_sign_error = '>>'       " Sinal para erros
 let g:ale_sign_warning = '--'     " Sinal para avisos
 
 "-----Selecao highlight palavras-----
 function! HighlightWordUnderCursor()
+    " Limpa os destaques anteriores
+    match none
+    2match none
+
+    " Verifica se o caractere sob o cursor não é pontuação ou espaço
     if getline(".")[col(".")-1] !~# '[[:punct:][:blank:]]'
-        exec 'match' 'Search' '/\V\<'.expand('<cword>').'\>/'
-    else
-        match none
+        " Realça a palavra sob o cursor com 'CursorWord'
+        exec 'match CursorWord /\V\<'.expand('<cword>').'\>/'
+
+        " Realça as outras ocorrências com 'OtherWords'
+        exec '2match OtherWords /\V\<'.expand('<cword>').'\>/'
     endif
 endfunction
-
 autocmd! CursorHold,CursorHoldI * call HighlightWordUnderCursor()
+
