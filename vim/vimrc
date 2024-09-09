@@ -17,7 +17,7 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 "------------Tema do vim------------
-colorscheme gruvbox
+"colorscheme gruvbox
 set background=dark
 
 "--------Cores de sintaxe--------

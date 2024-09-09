@@ -22,12 +22,12 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
-let g:sonokai_style = 'andromeda'
+let g:sonokai_style = 'default'
 let g:sonokai_enable_italic = 1
 let g:sonokai_disable_italic_comment = 0
 let g:sonokai_diagnostic_line_highlight = 0
 let g:sonokai_current_word = 'bold'
-colorscheme sonokai
+colorscheme default 
 
 if (has("nvim")) "Transparent background. Only for nvim
     highlight Normal guibg=NONE ctermbg=NONE
@@ -43,11 +43,14 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme = 'sonokai'
 let g:airline_powerline_fonts = 1
 
+"-------- Vim heath check ------
+let g:loaded_perl_provider = 0
+let g:loaded_ruby_provider = 0
 "----------Syntastic --------------
 "let g:syntastic_check_on_open       = 0
 "let g:syntastic_check_on_wq         = 0
 "let g:syntastic_enable_perl_checker = 1
-"let g:syntastic_perl_checkers       = ['perl','podchecker']
+"let g:syntastic_perl_checkers      = ['perl','podchecker']
 "let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_auto_loc_list = 1
 "set statusline+=%#warningmsg#
@@ -164,6 +167,7 @@ nmap <silent> <Left> h
 let mapleader="\<space>"
 nnoremap <leader>; A;<esc>
 nnoremap <leader>a :NERDTreeToggle<CR>
+nnoremap <leader>n :tabnew<CR>
 vnoremap <leader>/ :norm i#<CR>
 vnoremap <leader>? :norm ^x<CR>
 nnoremap <leader>? :silent s/^#//<CR>
