@@ -22,7 +22,7 @@ outputs=($(get_active_outputs))
 
 # Brilho inicial e final
 start_brightness=1.0
-end_brightness=0.1
+end_brightness=0.3
 
 # Etapas de Fade
 steps=40
