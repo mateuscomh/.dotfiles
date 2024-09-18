@@ -59,6 +59,15 @@ get_mouse_position() {
 initial_x=$(get_mouse_position)
 initial_y=$(get_mouse_position)
 
+get_key_press() {
+    
+    local device_id="9"
+    key_press=$(timeout 0.05s xinput test $device_id | grep --line-buffered -E 'key press' | awk '{ print $3 }')
+    if [[ "$key_press" =~ ^[0-9]+$ ]]; then
+        restore_brightness
+    fi
+}
+
 # Captura interrupções e restaura o brilho original
 trap restore_brightness SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
 
@@ -79,6 +88,7 @@ while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
     sleep $delay
 
     check_mouse_movement
+    get_key_press
 done
 
 # Mantém o brilho no valor final

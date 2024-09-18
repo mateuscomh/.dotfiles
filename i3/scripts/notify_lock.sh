@@ -25,10 +25,17 @@ get_active_outputs() {
     }'
 }
 
-
 # Função para obter a posição atual do mouse
 get_mouse_position() {
     xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f 2
+}
+
+get_key_press() {
+    local device_id="9"
+    key_press=$(timeout 0.05s xinput test $device_id | grep --line-buffered -E 'key press' | awk '{ print $3 }')
+    if [[ "$key_press" =~ ^[0-9]+$ ]]; then
+        exit 0
+    fi
 }
 
 check_mouse_movement() {
@@ -59,4 +66,5 @@ while [ "$current" -le 100 ]; do
     current=$((current + 1))
     
     check_mouse_movement
+    get_key_press
 done
