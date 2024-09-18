@@ -60,6 +60,8 @@ initial_x=$(get_mouse_position)
 initial_y=$(get_mouse_position)
 
 get_key_press() {
+    # Get list of keyboard
+    #local device_id=$(xinput list | grep -i 'keyboard' | grep -o 'id=[0-9]*' | cut -d= -f2 | head -n 1)
     
     local device_id="9"
     key_press=$(timeout 0.05s xinput test $device_id | grep --line-buffered -E 'key press' | awk '{ print $3 }')
