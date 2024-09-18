@@ -14,7 +14,10 @@ call plug#begin('~/.vim/plugged')
  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
  Plug 'dense-analysis/ale'
  Plug 'jiangmiao/auto-pairs'
+ Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 call plug#end()
+
+
 "------------Tema do nvim------------
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -22,20 +25,22 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
-let g:sonokai_style = 'default'
-let g:sonokai_enable_italic = 1
-let g:sonokai_disable_italic_comment = 0
-let g:sonokai_diagnostic_line_highlight = 0
-let g:sonokai_current_word = 'bold'
-colorscheme default 
-
 if (has("nvim")) "Transparent background. Only for nvim
     highlight Normal guibg=NONE ctermbg=NONE
     highlight EndOfBuffer guibg=NONE ctermbg=Gray
     highlight Visual guibg=#5e8d87 ctermbg=LightYellow 
 endif
-highlight CursorWord cterm=bold ctermbg=lightyellow guibg=#686b6d
-highlight OtherWords cterm=NONE ctermbg=gray guibg=Gray    " Outras ocorrências
+
+"let g:sonokai_style = 'default'
+"let g:sonokai_enable_italic = 1
+"let g:sonokai_disable_italic_comment = 0
+"let g:sonokai_diagnostic_line_highlight = 0
+"let g:sonokai_current_word = 'bold'
+"colorscheme default 
+"highlight CursorWord cterm=bold ctermbg=lightyellow guibg=#686b6d
+"highlight OtherWords cterm=NONE ctermbg=gray guibg=Gray    " Outras ocorrências
+
+colorscheme catppuccin-frappe " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 
 "--------Cores de sintaxe--------
 syntax enable
@@ -46,6 +51,7 @@ let g:airline_powerline_fonts = 1
 "-------- Vim heath check ------
 let g:loaded_perl_provider = 0
 let g:loaded_ruby_provider = 0
+
 "----------Syntastic --------------
 "let g:syntastic_check_on_open       = 0
 "let g:syntastic_check_on_wq         = 0
@@ -220,19 +226,19 @@ let g:ale_sign_error = '>>'       " Sinal para erros
 let g:ale_sign_warning = '--'     " Sinal para avisos
 
 "-----Selecao highlight palavras-----
-function! HighlightWordUnderCursor()
-    " Limpa os destaques anteriores
-    match none
-"    2match none
-
-    " Verifica se o caractere sob o cursor não é pontuação ou espaço
-    if getline(".")[col(".")-1] !~# '[[:punct:][:blank:]]'
-        " Realça a palavra sob o cursor com 'CursorWord'
-        exec 'match CursorWord /\V\<'.expand('<cword>').'\>/'
-
-        " Realça as outras ocorrências com 'OtherWords'
-"        exec '2match OtherWords /\V\<'.expand('<cword>').'\>/'
-    endif
-endfunction
-autocmd! CursorHold,CursorHoldI * call HighlightWordUnderCursor()
+"function! HighlightWordUnderCursor()
+"    " Limpa os destaques anteriores
+"    match none
+""    2match none
+"
+"    " Verifica se o caractere sob o cursor não é pontuação ou espaço
+"    if getline(".")[col(".")-1] !~# '[[:punct:][:blank:]]'
+"        " Realça a palavra sob o cursor com 'CursorWord'
+"        exec 'match CursorWord /\V\<'.expand('<cword>').'\>/'
+"
+"        " Realça as outras ocorrências com 'OtherWords'
+""        exec '2match OtherWords /\V\<'.expand('<cword>').'\>/'
+"    endif
+"endfunction
+"autocmd! CursorHold,CursorHoldI * call HighlightWordUnderCursor()
 
