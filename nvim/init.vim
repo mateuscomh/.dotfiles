@@ -17,7 +17,6 @@ call plug#begin('~/.vim/plugged')
  Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 call plug#end()
 
-
 "------------Tema do nvim------------
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -37,8 +36,8 @@ endif
 "let g:sonokai_diagnostic_line_highlight = 0
 "let g:sonokai_current_word = 'bold'
 "colorscheme default 
-"highlight CursorWord cterm=bold ctermbg=lightyellow guibg=#686b6d
-"highlight OtherWords cterm=NONE ctermbg=gray guibg=Gray    " Outras ocorrências
+highlight CursorWord cterm=bold ctermbg=lightyellow guibg=#686b6d
+highlight OtherWords cterm=NONE ctermbg=gray guibg=Gray    " Outras ocorrências
 
 colorscheme catppuccin-frappe " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 
