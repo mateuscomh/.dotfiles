@@ -64,8 +64,8 @@ get_key_press() {
     #local device_id=$(xinput list | grep -i 'keyboard' | grep -o 'id=[0-9]*' | cut -d= -f2 | head -n 1)
     
     local device_id="9"
-    key_press=$(timeout 0.05s xinput test $device_id | grep --line-buffered -E 'key press' | awk '{ print $3 }')
-    if [[ "$key_press" =~ ^[0-9]+$ ]]; then
+    key_code=$(timeout 0.05s xinput test $device_id | awk '/key press/ { print $3 }') 
+    if [[ "$key_code" =~ ^[0-9]+$ ]]; then
         restore_brightness
     fi
 }
