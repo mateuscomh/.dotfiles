@@ -4,7 +4,6 @@ stty -icanon -echo
 # Nome: i3lock-blur-screen
 # Descrição: Script para bloquear a tela usando i3lock com uma imagem de fundo desfocada.
 
-# Caminho para a imagem de fundo temporária
 if pgrep -x "i3lock" > /dev/null; then
     exit 0
 fi
@@ -17,7 +16,6 @@ get_active_outputs() {
     }'
 }
 
-# Obtenha a lista de saídas ativas
 outputs=($(get_active_outputs))
 
 # Brilho inicial e final
@@ -34,9 +32,6 @@ restore_brightness() {
         xrandr --output "$output" --brightness $start_brightness
     done
     # Matar o processo de monitoramento de teclado se ele estiver em execução
-    if [ -n "$keyboard_pid" ] && ps -p "$keyboard_pid" > /dev/null; then
-        kill "$keyboard_pid"
-    fi
     exit 0
 }
 
@@ -60,12 +55,9 @@ initial_x=$(get_mouse_position)
 initial_y=$(get_mouse_position)
 
 get_key_press() {
-    # Get list of keyboard
-    #local device_id=$(xinput list | grep -i 'keyboard' | grep -o 'id=[0-9]*' | cut -d= -f2 | head -n 1)
-    
-    local device_id="9"
-    local key_press=""
-    key_press=$(timeout 0.05s xinput test $device_id | awk '/key press/ { print $3 }') 
+    device_id=$(xinput list | awk -F 'id=' '/liliums Lily58/ && !/Consumer Control|Mouse|System Control/ {print $2}' | awk '{print $1}')
+ 
+    key_press=$(timeout 0.05s xinput test "$device_id" | awk '/key press/ { print $3 }') 
     if [[ "$key_press" =~ ^[0-9]+$ ]]; then
         restore_brightness
     fi
@@ -79,8 +71,6 @@ brightness_step=$(echo "($start_brightness - $end_brightness) / $steps" | bc -l)
 
 # Define o brilho atual como o inicial
 current_brightness=$start_brightness
-
-# Inicia monitoramento de eventos de teclado em segundo plano
 
 # Loop para diminuir o brilho gradualmente
 while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
@@ -102,20 +92,18 @@ done
 sleep 1.0
 
 TEMP_BG='/tmp/lockscreen.png'
-
-# Tira uma captura de tela
 scrot $TEMP_BG
 
 # Aplica o desfoque na captura de tela
 convert $TEMP_BG -filter Gaussian -blur 0x55 $TEMP_BG
 
 # Remove print criado após desbloqueio
-cleanup(){
+cleanup() {
   if [ -f "$TEMP_BG" ]; then
     rm -f "$TEMP_BG"
   fi
 }
-trap cleanup EXIT
+trap cleanup EXIT SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
 
 # Bloqueia a tela com i3lock-color
 i3lock -i $TEMP_BG \
@@ -130,5 +118,3 @@ i3lock -i $TEMP_BG \
 
 # Restaura o brilho original
 restore_brightness
-exit 0
-
