@@ -1,8 +1,17 @@
-#!/bin/bash
-stty -icanon -echo
+#!/usr/bin/env bash
 
-# Nome: i3lock-blur-screen
-# Descrição: Script para bloquear a tela usando i3lock com uma imagem de fundo desfocada.
+############################### 
+# Script de notificação com detecção de movimento do mouse
+# 
+# Descrição:
+# Este script exibe notificação com progress bar se detectar e interrompe se
+# detectar movimento do mouse durante a execução.
+#
+# Requisitos:
+# - xrandr, xdotool, dunst
+############################### 
+set -e
+#stty -icanon -echo
 
 if pgrep -x "i3lock" > /dev/null; then
     exit 0
@@ -50,7 +59,6 @@ get_mouse_position() {
     xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f 2
 }
 
-# Pega a posição inicial do mouse
 initial_x=$(get_mouse_position)
 initial_y=$(get_mouse_position)
 
@@ -63,15 +71,27 @@ get_key_press() {
     fi
 }
 
-# Captura interrupções e restaura o brilho original
 trap restore_brightness SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
+
+# Notifica bloqueio de tela
+current=0
+while [ "$current" -le 100 ]; do
+    dunstify --icon preferences-desktop-screensaver \
+        -h int:value:"$current" \
+        -h 'string:hlcolor:#ff4444' \
+        -h string:x-dunst-stack-tag:progress-lock \
+        --timeout=500 "Bloqueio de Tela ..." "$(date '+%Y-%m-%d %H:%M:%S')"
+    sleep 0.05
+    current=$((current + 1))
+    
+    check_mouse_movement
+    get_key_press
+done
 
 # Calcula a diferença de brilho por passo
 brightness_step=$(echo "($start_brightness - $end_brightness) / $steps" | bc -l)
-
 # Define o brilho atual como o inicial
 current_brightness=$start_brightness
-
 # Loop para diminuir o brilho gradualmente
 while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
     for output in "${outputs[@]}"; do
