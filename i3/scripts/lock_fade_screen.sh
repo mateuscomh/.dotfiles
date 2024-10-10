@@ -29,22 +29,21 @@ outputs=($(get_active_outputs))
 
 # Brilho inicial e final
 start_brightness=1.0
-end_brightness=0.3
+end_brightness=0.2
 
 # Etapas de Fade
-steps=40
-delay=0.1
+steps=35
+delay=0.08
 
 # Restaurar o brilho original e encerrar o script
 restore_brightness() {
     for output in "${outputs[@]}"; do
         xrandr --output "$output" --brightness $start_brightness
     done
-    # Matar o processo de monitoramento de teclado se ele estiver em execução
     exit 0
 }
 
-# Função para capturar eventos de movimentação do mouse
+# Função capturar eventos de movimentação do mouse
 check_mouse_movement() {
     current_x=$(get_mouse_position)
     current_y=$(get_mouse_position)
@@ -54,7 +53,7 @@ check_mouse_movement() {
     fi
 }
 
-# Função para obter a posição inicial do mouse
+# Função obter a posição inicial do mouse
 get_mouse_position() {
     xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f 2
 }
@@ -62,6 +61,7 @@ get_mouse_position() {
 initial_x=$(get_mouse_position)
 initial_y=$(get_mouse_position)
 
+# Função obter interrupcao por teclado
 get_key_press() {
     device_id=$(xinput list | awk -F 'id=' '/liliums Lily58/ && !/Consumer Control|Mouse|System Control/ {print $2}' | awk '{print $1}')
  
@@ -90,8 +90,10 @@ done
 
 # Calcula a diferença de brilho por passo
 brightness_step=$(echo "($start_brightness - $end_brightness) / $steps" | bc -l)
+
 # Define o brilho atual como o inicial
 current_brightness=$start_brightness
+
 # Loop para diminuir o brilho gradualmente
 while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
     for output in "${outputs[@]}"; do
@@ -119,9 +121,9 @@ convert $TEMP_BG -filter Gaussian -blur 0x55 $TEMP_BG
 
 # Remove print criado após desbloqueio
 cleanup() {
-  if [ -f "$TEMP_BG" ]; then
-    rm -f "$TEMP_BG"
-  fi
+    if [ -n "$TEMP_BG" ] && [ -f "$TEMP_BG" ]; then
+      rm -f "$TEMP_BG"
+    fi
 }
 trap cleanup EXIT SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
 
