@@ -67,7 +67,7 @@ set $i3lockscreen bash ~/dotfiles/i3/scripts/lockscreen.sh
 set $setScreenWallpaper ~/dotfiles/i3/wallpaper/horgalaxyR.jpg /home/salaam/dotfiles/i3/wallpaper/horgalaxyL.jpg 
 
 # Lockscreen set
-exec --no-startup-id /usr/bin/xautolock -time 3 -corners +--- -cornersize 20 -cornerredelay 25 -notify 50 -notifier "~/dotfiles/i3/scripts/notify_lock.sh && wait" -locker "pgrep i3lock || ~/dotfiles/i3/scripts/lock_fade_screen.sh" -killtime 15 -killer "xset dpms force off" 
+exec --no-startup-id /usr/bin/xautolock -time 3 -corners +--- -cornersize 20 -cornerredelay 15 -locker "pgrep i3lock || ~/dotfiles/i3/scripts/lock_fade_screen.sh" -killtime 15 -killer "xset dpms force off" 
 #exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notifier "notify-send -u critical -t 20000 'Bloqueio de tela...'" -locker '$i3lockscreen && sleep 30' -killtime 20 -killer "xset dpms force off" -detectsleep
 
 # The middle button and a modifer over any part of the window kills the window

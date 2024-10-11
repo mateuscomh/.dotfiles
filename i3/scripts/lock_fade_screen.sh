@@ -45,8 +45,8 @@ restore_brightness() {
 
 # Função capturar eventos de movimentação do mouse
 check_mouse_movement() {
-    current_x=$(get_mouse_position)
-    current_y=$(get_mouse_position)
+    current_x=$(get_mouse_position | sed -n '1p')
+    current_y=$(get_mouse_position | sed -n '2p')
 
     if [ "$initial_x" != "$current_x" ] || [ "$initial_y" != "$current_y" ]; then
         restore_brightness
@@ -58,8 +58,8 @@ get_mouse_position() {
     xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f 2
 }
 
-initial_x=$(get_mouse_position)
-initial_y=$(get_mouse_position)
+initial_x=$(get_mouse_position | sed -n '1p')
+initial_y=$(get_mouse_position | sed -n '2p')
 
 # Função obter interrupcao por teclado
 get_key_press() {
