@@ -63,11 +63,18 @@ initial_y=$(get_mouse_position | sed -n '2p')
 # Função obter interrupcao por teclado
 get_key_press() {
     device_id=$(xinput list | awk -F 'id=' '/liliums Lily58/ && !/Consumer Control|Mouse|System Control/ {print $2}' | awk '{print $1}')
-    key_press=$(timeout 0.05s xinput test "$device_id" | awk '/key press/ { print $3 }') 
-    if [[ "$key_press" =~ ^[0-9]+$ ]]; then
-        restore_brightness
-    fi
+    while true; do
+
+        key_press=$(timeout 0.05s xinput test "$device_id" | awk '/key press/ { print $3 }') 
+        if [[ "$key_press" =~ ^[0-9]+$ ]]; then
+            restore_brightness
+        fi
+        sleep 0.05
+    done
 }
+
+get_key_press &
+key_monitor_pid=$!
 
 trap restore_brightness SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
 
@@ -80,18 +87,19 @@ while [ "$current" -le 100 ]; do
         -h string:x-dunst-stack-tag:progress-lock \
         --timeout=500 "Bloqueio de Tela ..." "$(date '+%Y-%m-%d %H:%M:%S')"
     current=$((current +1 ))
+    sleep 0.05
     
     check_mouse_movement
-    get_key_press
+    #get_key_press
+    if ! kill -0 $key_monitor_pid 2>/dev/null; then
+        break
+    fi
 done
 
-# Calcula a diferença de brilho por passo
+# Loop para diminuir o brilho gradualmente
 brightness_step=$(echo "($start_brightness - $end_brightness) / $steps" | bc -l)
-
-# Define o brilho atual como o inicial
 current_brightness=$start_brightness
 
-# Loop para diminuir o brilho gradualmente
 while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
     for output in "${outputs[@]}"; do
         xrandr --output "$output" --brightness "$current_brightness"
@@ -100,8 +108,13 @@ while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
     sleep 0.1
 
     check_mouse_movement
-    get_key_press
+    if ! kill -0 $key_monitor_pid 2>/dev/null; then
+        echo "Key press detected, exiting brightness loop."
+        break
+    fi
 done
+
+kill $key_monitor_pid 2>/dev/null
 
 # Mantém o brilho no valor final
 for output in "${outputs[@]}"; do
