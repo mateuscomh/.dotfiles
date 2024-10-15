@@ -6,7 +6,6 @@ call plug#begin('~/.vim/plugged')
  Plug 'vim-airline/vim-airline-themes'
  Plug 'junegunn/vim-easy-align'
  Plug 'ekalinin/dockerfile.vim'
- Plug 'sainnhe/sonokai'       "Tema sonokay
  Plug 'ryanoasis/vim-devicons' "Icones dev
  Plug 'sheerun/vim-polyglot' "Highligh de várias lang
  Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -44,7 +43,7 @@ colorscheme catppuccin-frappe " catppuccin-latte, catppuccin-frappe, catppuccin-
 "--------Cores de sintaxe--------
 syntax enable
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme = 'sonokai'
+let g:airline_theme = 'molokai'
 let g:airline_powerline_fonts = 1
 
 "-------- Vim heath check ------
@@ -74,7 +73,7 @@ autocmd InsertEnter * set norelativenumber
 autocmd InsertLeave * set relativenumber
 
 "------Nvim copy selection-------
-set clipboard=unnamedplus
+set clipboard=unnamed
 set guioptions+=a
 
 "--------Adicionar interacao mouse--------
@@ -240,4 +239,3 @@ let g:ale_sign_warning = '--'     " Sinal para avisos
 "    endif
 "endfunction
 "autocmd! CursorHold,CursorHoldI * call HighlightWordUnderCursor()
-
