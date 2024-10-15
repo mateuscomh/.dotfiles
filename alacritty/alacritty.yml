@@ -1087,16 +1087,16 @@ key_bindings:
   - { key: L, mods: Control, chars: "\f" }
   - { key: PageUp, mods: Control, action: ScrollPageUp }
   - { key: PageDown, mods: Control, action: ScrollPageDown }
-  - {
-      key: Home,
-      mods: Shift,
-      action: ScrollToTop,
-      mode: ~Alt
-    }
-  - {
-      key: End,
-      mods: Shift,
-      action: ScrollToBottom,
-      mode: ~Alt
-    }
+    #  - {
+    #      key: Home,
+    #      mods: Shift,
+    #      action: ScrollToTop,
+    #      mode: ~Alt
+    #    }
+    #  - {
+    #      key: End,
+    #      mods: Shift,
+    #      action: ScrollToBottom,
+    #      mode: ~Alt
+    #    }
 theme: Astromouse
