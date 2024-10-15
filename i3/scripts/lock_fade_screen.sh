@@ -33,7 +33,6 @@ end_brightness=0.2
 
 # Etapas de Fade
 steps=35
-delay=0.08
 
 # Restaurar o brilho original e encerrar o script
 restore_brightness() {
@@ -64,7 +63,6 @@ initial_y=$(get_mouse_position | sed -n '2p')
 # Função obter interrupcao por teclado
 get_key_press() {
     device_id=$(xinput list | awk -F 'id=' '/liliums Lily58/ && !/Consumer Control|Mouse|System Control/ {print $2}' | awk '{print $1}')
- 
     key_press=$(timeout 0.05s xinput test "$device_id" | awk '/key press/ { print $3 }') 
     if [[ "$key_press" =~ ^[0-9]+$ ]]; then
         restore_brightness
@@ -81,8 +79,7 @@ while [ "$current" -le 100 ]; do
         -h 'string:hlcolor:#ff4444' \
         -h string:x-dunst-stack-tag:progress-lock \
         --timeout=500 "Bloqueio de Tela ..." "$(date '+%Y-%m-%d %H:%M:%S')"
-    sleep 0.05
-    current=$((current + 1))
+    current=$((current +1 ))
     
     check_mouse_movement
     get_key_press
@@ -100,7 +97,7 @@ while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
         xrandr --output "$output" --brightness "$current_brightness"
     done
     current_brightness=$(echo "$current_brightness - $brightness_step" | bc -l)
-    sleep $delay
+    sleep 0.1
 
     check_mouse_movement
     get_key_press
