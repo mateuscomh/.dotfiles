@@ -67,7 +67,7 @@ set $i3lockscreen bash ~/dotfiles/i3/scripts/lockscreen.sh
 set $setScreenWallpaper ~/dotfiles/i3/wallpaper/horgalaxyR.jpg /home/salaam/dotfiles/i3/wallpaper/horgalaxyL.jpg 
 
 # Lockscreen set
-exec --no-startup-id /usr/bin/xautolock -time 3 -corners +--- -cornersize 20 -cornerredelay 15 -locker "pgrep i3lock || ~/dotfiles/i3/scripts/lock_fade_screen.sh" -killtime 15 -killer "xset dpms force off" 
+exec --no-startup-id /usr/bin/xautolock -time 3 -corners +--- -cornersize 20 -cornerdelay 3 -cornerredelay 10 -locker "pgrep i3lock || ~/dotfiles/i3/scripts/lock_fade_screen.sh" -killtime 15 -killer "xset dpms force off" 
 #exec_always --no-startup-id xautolock -time 4 -notify 10 -corners +--- -cornersize 30 -notifier "notify-send -u critical -t 20000 'Bloqueio de tela...'" -locker '$i3lockscreen && sleep 30' -killtime 20 -killer "xset dpms force off" -detectsleep
 
 # The middle button and a modifer over any part of the window kills the window
@@ -268,7 +268,8 @@ bindsym $mod+Shift+r restart
 bindsym $mod+k exec ~/.screenlayout/dell.sh 
 bindsym $mod+j exec ~/.screenlayout/dell_vert.sh 
 bindsym $mod+Shift+k exec ~/.screenlayout/2dell_vert.sh && feh --bg-fill $setScreenWallpaper
-# Set layoyt keyboar
+
+# Set layoyt keyboard
 bindsym $mod+Shift+t exec setxkbmap -layout us -variant intl
 
 # Kill window
@@ -310,9 +311,6 @@ set $volumestep 5
 
 # Signal used to update the status line
 set $statussig SIGUSR1 
-#i3blocks uses SIGRTMIN+10 by default
-#i3status uses SIGUSR1 by default
-#set $statussig SIGUSR1
 
 # Shutdown menu $mod+x
 mode "exit: [L]ogout, [R]eboot, [S]hutdown, loc[K]" {
@@ -329,8 +327,6 @@ bindsym $mod+x mode "exit: [L]ogout, [R]eboot, [S]hutdown, loc[K]"
 # Disable window titlebars
 for_window [class="^.*"] border pixel 0
 
-# Carregar atalhos de media
-#exec_always --no-startup-id cat ~/.config/i3/i3_media_config
 ###########
 # I3 GAPS #
 
