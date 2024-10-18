@@ -13,6 +13,7 @@
 set -e
 #stty -icanon -echo
 
+
 if pgrep -x "i3lock" > /dev/null; then
     exit 0
 fi
@@ -29,10 +30,10 @@ outputs=($(get_active_outputs))
 
 # Brilho inicial e final
 start_brightness=1.0
-end_brightness=0.2
+end_brightness=0.1
 
 # Etapas de Fade
-steps=35
+steps=40
 
 # Restaurar o brilho original e encerrar o script
 restore_brightness() {
@@ -69,14 +70,13 @@ get_key_press() {
         if [[ "$key_press" =~ ^[0-9]+$ ]]; then
             restore_brightness
         fi
-        sleep 0.05
     done
 }
 
 get_key_press &
 key_monitor_pid=$!
 
-trap restore_brightness SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
+trap SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
 
 # Notifica bloqueio de tela
 current=0
@@ -87,13 +87,14 @@ while [ "$current" -le 100 ]; do
         -h string:x-dunst-stack-tag:progress-lock \
         --timeout=500 "Bloqueio de Tela ..." "$(date '+%Y-%m-%d %H:%M:%S')"
     current=$((current +1 ))
-    sleep 0.05
+    sleep 0.06
     
     check_mouse_movement
-    #get_key_press
+
     if ! kill -0 $key_monitor_pid 2>/dev/null; then
         break
     fi
+
 done
 
 # Loop para diminuir o brilho gradualmente
@@ -108,10 +109,11 @@ while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
     sleep 0.1
 
     check_mouse_movement
+    
     if ! kill -0 $key_monitor_pid 2>/dev/null; then
-        echo "Key press detected, exiting brightness loop."
         break
     fi
+
 done
 
 kill $key_monitor_pid 2>/dev/null
