@@ -17,18 +17,16 @@ if pgrep -x "i3lock" > /dev/null; then
     exit 0
 fi
 
-# Obter a lista de saídas conectadas e ativas
-get_active_outputs() {
-    xrandr --query | awk '/ connected / { 
-        if ($0 ~ /[0-9]+mm x [0-9]+mm$/) 
-            print $1 
-    }'
-}
-
-
-# Função para obter a posição atual do mouse
 get_mouse_position() {
     xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f 2
+}
+
+get_key_press() {
+    device_id=$(xinput list | awk -F 'id=' '/liliums Lily58/ && !/Consumer Control|Mouse|System Control/ {print $2}' | awk '{print $1}')
+    key_press=$(timeout 0.05s xinput test "$device_id" | awk '/key press/ { print $3 }') 
+    if [[ "$key_press" =~ ^[0-9]+$ ]]; then
+        exit 0
+    fi
 }
 
 check_mouse_movement() {
@@ -44,7 +42,6 @@ check_mouse_movement() {
 initial_x=$(get_mouse_position)
 initial_y=$(get_mouse_position)
 
-# Captura interrupções e restaura o brilho original
 trap SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
 
 # Notificação de progresso
@@ -59,4 +56,5 @@ while [ "$current" -le 100 ]; do
     current=$((current + 1))
     
     check_mouse_movement
+    get_key_press
 done

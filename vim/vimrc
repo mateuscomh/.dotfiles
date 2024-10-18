@@ -14,11 +14,10 @@ call plug#begin('~/.vim/plugged')
  Plug 'vim-scripts/loremipsum'
  Plug 'ekalinin/dockerfile.vim'
  Plug 'mg979/vim-visual-multi'
-"Plug 'vim-scripts/AutoComplPop'
 call plug#end()
 
 "------------Tema do vim------------
-colorscheme gruvbox
+"colorscheme gruvbox
 set background=dark
 
 "--------Cores de sintaxe--------

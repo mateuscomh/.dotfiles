@@ -6,14 +6,15 @@ call plug#begin('~/.vim/plugged')
  Plug 'vim-airline/vim-airline-themes'
  Plug 'junegunn/vim-easy-align'
  Plug 'ekalinin/dockerfile.vim'
- Plug 'sainnhe/sonokai'       "Tema sonokay
  Plug 'ryanoasis/vim-devicons' "Icones dev
  Plug 'sheerun/vim-polyglot' "Highligh de várias lang
  Plug 'Xuyuanp/nerdtree-git-plugin'
  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
  Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+ Plug 'dense-analysis/ale'
+ Plug 'jiangmiao/auto-pairs'
+ Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 call plug#end()
-
 
 "------------Tema do nvim------------
 if exists('+termguicolors')
@@ -22,30 +23,38 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
-let g:sonokai_style = 'andromeda'
-let g:sonokai_enable_italic = 1
-let g:sonokai_disable_italic_comment = 0
-let g:sonokai_diagnostic_line_highlight = 0
-let g:sonokai_current_word = 'bold'
-colorscheme sonokai
-
 if (has("nvim")) "Transparent background. Only for nvim
     highlight Normal guibg=NONE ctermbg=NONE
-    highlight EndOfBuffer guibg=NONE ctermbg=NONE
+    highlight EndOfBuffer guibg=NONE ctermbg=Gray
     highlight Visual guibg=#5e8d87 ctermbg=LightYellow 
 endif
+
+"let g:sonokai_style = 'default'
+"let g:sonokai_enable_italic = 1
+"let g:sonokai_disable_italic_comment = 0
+"let g:sonokai_diagnostic_line_highlight = 0
+"let g:sonokai_current_word = 'bold'
+"colorscheme default 
+highlight CursorWord cterm=bold ctermbg=lightyellow guibg=#686b6d
+highlight OtherWords cterm=NONE ctermbg=gray guibg=Gray    " Outras ocorrências
+
+colorscheme catppuccin-frappe " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 
 "--------Cores de sintaxe--------
 syntax enable
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme = 'sonokai'
+let g:airline_theme = 'molokai'
 let g:airline_powerline_fonts = 1
+
+"-------- Vim heath check ------
+let g:loaded_perl_provider = 0
+let g:loaded_ruby_provider = 0
 
 "----------Syntastic --------------
 "let g:syntastic_check_on_open       = 0
 "let g:syntastic_check_on_wq         = 0
 "let g:syntastic_enable_perl_checker = 1
-"let g:syntastic_perl_checkers       = ['perl','podchecker']
+"let g:syntastic_perl_checkers      = ['perl','podchecker']
 "let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_auto_loc_list = 1
 "set statusline+=%#warningmsg#
@@ -63,9 +72,17 @@ autocmd InsertEnter * set norelativenumber
 " ------Insert Mode Relative-------
 autocmd InsertLeave * set relativenumber
 
-"------Insert Mode Cursor--------
+"------Nvim copy selection-------
+set clipboard=unnamed
+set guioptions+=a
+
+"--------Adicionar interacao mouse--------
+set mouse=a
+
+"------Change Cursor Mode--------
 let &t_SI="\e[6 q"
 let &t_EI="\e[2 q"
+let &t_SR="\e[4 q"
 
 "----------Menu suspenso----------
 set wildmenu
@@ -78,9 +95,6 @@ set updatetime=100
 
 "--------Pesquisa recursiva--------
 set path+=**
-
-"--------Adicionar interacao mouse--------
-set mouse=a
 
 "--------Definir titulo editor--------
 set title
@@ -114,7 +128,6 @@ set nolist
 set listchars=tab:›-,space:·,trail:◀,eol:↲
 set fillchars=vert:│,fold:-,eob:~
 
-
 "--------Tabulacao----------
 set tabstop=2
 set shiftwidth=2
@@ -135,37 +148,30 @@ au BufNewFile,BufRead *.py
 au BufNewFile *.py set fileformat=unix
 
 "--------Remapear teclas----------
-"nnoremap <tab> :
-"nnoremap ; :
-"vnoremap ; :
-map j gj
-map k gk
-map <down> gj
-map <up> gk
-inoremap <down> <c-o>gj
-inoremap <up> <c-o>gk
+nnoremap <tab> :
+"map j gj
+"map k gk
+"map <down> gj
+"map <up> gk
+"inoremap <down> <c-o>gj
+"inoremap <up> <c-o>gk
 nnoremap <silent> [ :normal O<CR>
 nnoremap <silent> ] :normal o<CR>
 
-
-"--------Autoclose ----------------
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-
 "----- Nerdtree Options -----
-"nmap <silent> <C-a> :NERDTreeToggle<CR>
-nnoremap <leader>n :NERDTreeToggle<CR>
 " Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let NERDTreeShowHidden=1
 nmap <silent> <Right> l
 nmap <silent> <Left> h
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
 
 "---- Funcoes macro ----
 let mapleader="\<space>"
 nnoremap <leader>; A;<esc>
+nnoremap <leader>a :NERDTreeToggle<CR>
+nnoremap <leader>n :tabnew<CR>
 vnoremap <leader>/ :norm i#<CR>
 vnoremap <leader>? :norm ^x<CR>
 nnoremap <leader>? :silent s/^#//<CR>
@@ -205,3 +211,31 @@ map <f6> :set wrap!<cr>
 vmap < <gv
 vmap > >gv
 
+" Habilita linters para cada linguagem
+let g:ale_linters = {
+\   'yaml': ['yamllint'],
+\   'sh': ['shellcheck'],
+\   'ansible': ['ansible_lint'],
+\   'go': ['golangci-lint'],
+\   'json': ['jsonlint'],
+\   'vim': ['vimt']
+\}
+let g:ale_sign_error = '>>'       " Sinal para erros
+let g:ale_sign_warning = '--'     " Sinal para avisos
+
+"-----Selecao highlight palavras-----
+"function! HighlightWordUnderCursor()
+"    " Limpa os destaques anteriores
+"    match none
+""    2match none
+"
+"    " Verifica se o caractere sob o cursor não é pontuação ou espaço
+"    if getline(".")[col(".")-1] !~# '[[:punct:][:blank:]]'
+"        " Realça a palavra sob o cursor com 'CursorWord'
+"        exec 'match CursorWord /\V\<'.expand('<cword>').'\>/'
+"
+"        " Realça as outras ocorrências com 'OtherWords'
+""        exec '2match OtherWords /\V\<'.expand('<cword>').'\>/'
+"    endif
+"endfunction
+"autocmd! CursorHold,CursorHoldI * call HighlightWordUnderCursor()

@@ -1,10 +1,19 @@
-#!/bin/bash
-stty -icanon -echo
+#!/usr/bin/env bash
 
-# Nome: i3lock-blur-screen
-# Descrição: Script para bloquear a tela usando i3lock com uma imagem de fundo desfocada.
+############################### 
+# Script de notificação com detecção de movimento do mouse
+# 
+# Descrição:
+# Este script exibe notificação com progress bar se detectar e interrompe se
+# detectar movimento do mouse durante a execução.
+#
+# Requisitos:
+# - xrandr, xdotool, dunst
+############################### 
+set -e
+#stty -icanon -echo
 
-# Caminho para a imagem de fundo temporária
+
 if pgrep -x "i3lock" > /dev/null; then
     exit 0
 fi
@@ -17,7 +26,6 @@ get_active_outputs() {
     }'
 }
 
-# Obtenha a lista de saídas ativas
 outputs=($(get_active_outputs))
 
 # Brilho inicial e final
@@ -26,60 +34,89 @@ end_brightness=0.1
 
 # Etapas de Fade
 steps=40
-delay=0.1
 
 # Restaurar o brilho original e encerrar o script
 restore_brightness() {
     for output in "${outputs[@]}"; do
         xrandr --output "$output" --brightness $start_brightness
     done
-    # Matar o processo de monitoramento de teclado se ele estiver em execução
-    if [ -n "$keyboard_pid" ] && ps -p "$keyboard_pid" > /dev/null; then
-        kill "$keyboard_pid"
-    fi
     exit 0
 }
 
-# Função para capturar eventos de movimentação do mouse
+# Função capturar eventos de movimentação do mouse
 check_mouse_movement() {
-    current_x=$(get_mouse_position)
-    current_y=$(get_mouse_position)
+    current_x=$(get_mouse_position | sed -n '1p')
+    current_y=$(get_mouse_position | sed -n '2p')
 
     if [ "$initial_x" != "$current_x" ] || [ "$initial_y" != "$current_y" ]; then
         restore_brightness
     fi
 }
 
-# Função para obter a posição inicial do mouse
+# Função obter a posição inicial do mouse
 get_mouse_position() {
     xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f 2
 }
 
-# Pega a posição inicial do mouse
-initial_x=$(get_mouse_position)
-initial_y=$(get_mouse_position)
+initial_x=$(get_mouse_position | sed -n '1p')
+initial_y=$(get_mouse_position | sed -n '2p')
 
-# Captura interrupções e restaura o brilho original
-trap restore_brightness SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
+# Função obter interrupcao por teclado
+get_key_press() {
+    device_id=$(xinput list | awk -F 'id=' '/liliums Lily58/ && !/Consumer Control|Mouse|System Control/ {print $2}' | awk '{print $1}')
+    while true; do
 
-# Calcula a diferença de brilho por passo
-brightness_step=$(echo "($start_brightness - $end_brightness) / $steps" | bc -l)
+        key_press=$(timeout 0.05s xinput test "$device_id" | awk '/key press/ { print $3 }') 
+        if [[ "$key_press" =~ ^[0-9]+$ ]]; then
+            restore_brightness
+        fi
+    done
+}
 
-# Define o brilho atual como o inicial
-current_brightness=$start_brightness
+get_key_press &
+key_monitor_pid=$!
 
-# Inicia monitoramento de eventos de teclado em segundo plano
+trap SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
+
+# Notifica bloqueio de tela
+current=0
+while [ "$current" -le 100 ]; do
+    dunstify --icon preferences-desktop-screensaver \
+        -h int:value:"$current" \
+        -h 'string:hlcolor:#ff4444' \
+        -h string:x-dunst-stack-tag:progress-lock \
+        --timeout=500 "Bloqueio de Tela ..." "$(date '+%Y-%m-%d %H:%M:%S')"
+    current=$((current +1 ))
+    sleep 0.06
+    
+    check_mouse_movement
+
+    if ! kill -0 $key_monitor_pid 2>/dev/null; then
+        break
+    fi
+
+done
 
 # Loop para diminuir o brilho gradualmente
+brightness_step=$(echo "($start_brightness - $end_brightness) / $steps" | bc -l)
+current_brightness=$start_brightness
+
 while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
     for output in "${outputs[@]}"; do
         xrandr --output "$output" --brightness "$current_brightness"
     done
     current_brightness=$(echo "$current_brightness - $brightness_step" | bc -l)
-    sleep $delay
+    sleep 0.1
 
     check_mouse_movement
+    
+    if ! kill -0 $key_monitor_pid 2>/dev/null; then
+        break
+    fi
+
 done
+
+kill $key_monitor_pid 2>/dev/null
 
 # Mantém o brilho no valor final
 for output in "${outputs[@]}"; do
@@ -89,20 +126,18 @@ done
 sleep 1.0
 
 TEMP_BG='/tmp/lockscreen.png'
-
-# Tira uma captura de tela
 scrot $TEMP_BG
 
 # Aplica o desfoque na captura de tela
 convert $TEMP_BG -filter Gaussian -blur 0x55 $TEMP_BG
 
 # Remove print criado após desbloqueio
-cleanup(){
-  if [ -f "$TEMP_BG" ]; then
-    rm -f "$TEMP_BG"
-  fi
+cleanup() {
+    if [ -n "$TEMP_BG" ] && [ -f "$TEMP_BG" ]; then
+      rm -f "$TEMP_BG"
+    fi
 }
-trap cleanup EXIT
+trap cleanup EXIT SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
 
 # Bloqueia a tela com i3lock-color
 i3lock -i $TEMP_BG \
@@ -117,5 +152,3 @@ i3lock -i $TEMP_BG \
 
 # Restaura o brilho original
 restore_brightness
-exit 0
-
