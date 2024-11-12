@@ -106,7 +106,7 @@ while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
         xrandr --output "$output" --brightness "$current_brightness"
     done
     current_brightness=$(echo "$current_brightness - $brightness_step" | bc -l)
-    sleep 0.1
+    sleep 0.2
 
     check_mouse_movement
     
