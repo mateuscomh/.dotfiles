@@ -29,11 +29,12 @@ get_active_outputs() {
 outputs=($(get_active_outputs))
 
 # Brilho inicial e final
-start_brightness=1.0
+start_brightness=$(xrandr --verbose | grep -i brightness | awk '{print $2}')
+#start_brightness=1.0
 end_brightness=0.1
 
 # Etapas de Fade
-steps=40
+steps=50
 
 # Restaurar o brilho original e encerrar o script
 restore_brightness() {
@@ -106,7 +107,7 @@ while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
         xrandr --output "$output" --brightness "$current_brightness"
     done
     current_brightness=$(echo "$current_brightness - $brightness_step" | bc -l)
-    sleep 0.1
+    sleep 0.3
 
     check_mouse_movement
     

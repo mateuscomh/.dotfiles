@@ -103,7 +103,7 @@ fi
 /gitclones/debfetch/debfetch -p -d
 
 # Configuração do FZF
-[ -f ~/.fzf.bash ] #&& source ~/.fzf.bash
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Funções para lista de tarefas (ToDo)
 export TODO="${HOME}/.todo.txt"
