@@ -4,15 +4,13 @@
 # Script de notificação com detecção de movimento do mouse
 # 
 # Descrição:
-# Este script exibe notificação com progress bar se detectar e interrompe se
-# detectar movimento do mouse durante a execução.
+# - Exibe notificação com barra de progresso antes de bloquear a tela.
+# - Cancela o bloqueio se houver movimento do mouse ou pressionamento de teclas.
 #
 # Requisitos:
 # - xrandr, xdotool, dunst
 ############################### 
 set -e
-#stty -icanon -echo
-
 
 if pgrep -x "i3lock" > /dev/null; then
     exit 0
@@ -27,28 +25,30 @@ get_active_outputs() {
 }
 
 outputs=($(get_active_outputs))
-
-# Brilho inicial e final
-start_brightness=1.0
+start_brightness=$(xrandr --verbose | grep -i brightness | awk '{print $2}' | head -n 1)
 end_brightness=0.1
+steps=50
+TEMP_BG="/tmp/lockscreen.png"
 
-# Etapas de Fade
-steps=40
-
-# Restaurar o brilho original e encerrar o script
+# Função: Restaurar brilho original e sair
 restore_brightness() {
     for output in "${outputs[@]}"; do
-        xrandr --output "$output" --brightness $start_brightness
+        xrandr --output "$output" --brightness "$start_brightness"
     done
+    cleanup
     exit 0
 }
 
-# Função capturar eventos de movimentação do mouse
-check_mouse_movement() {
-    current_x=$(get_mouse_position | sed -n '1p')
-    current_y=$(get_mouse_position | sed -n '2p')
+# Função: Limpar recursos temporários
+cleanup() {
+    [[ -f "$TEMP_BG" ]] && rm -f "$TEMP_BG"
+    pkill -P $$
+}
 
-    if [ "$initial_x" != "$current_x" ] || [ "$initial_y" != "$current_y" ]; then
+# Função: Detectar movimento do mouse
+check_mouse_movement() {
+    current_pos=$(xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f2)
+    if [[ "$current_pos" != "$initial_pos" ]]; then
         restore_brightness
     fi
 }
@@ -63,20 +63,18 @@ initial_y=$(get_mouse_position | sed -n '2p')
 
 # Função obter interrupcao por teclado
 get_key_press() {
+    local device_id
     device_id=$(xinput list | awk -F 'id=' '/liliums Lily58/ && !/Consumer Control|Mouse|System Control/ {print $2}' | awk '{print $1}')
-    while true; do
-
-        key_press=$(timeout 0.05s xinput test "$device_id" | awk '/key press/ { print $3 }') 
-        if [[ "$key_press" =~ ^[0-9]+$ ]]; then
-            restore_brightness
-        fi
+    while :; do
+        xinput test "$device_id" | grep -q "key press" && restore_brightness
     done
 }
 
+initial_pos=$(xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f2)
 get_key_press &
 key_monitor_pid=$!
 
-trap SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
+trap restore_brightness EXIT SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
 
 # Notifica bloqueio de tela
 current=0
@@ -106,7 +104,7 @@ while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
         xrandr --output "$output" --brightness "$current_brightness"
     done
     current_brightness=$(echo "$current_brightness - $brightness_step" | bc -l)
-    sleep 0.2
+    sleep 0.3
 
     check_mouse_movement
     
@@ -116,16 +114,10 @@ while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
 
 done
 
+sleep 1.0
+check_mouse_movement
 kill $key_monitor_pid 2>/dev/null
 
-# Mantém o brilho no valor final
-for output in "${outputs[@]}"; do
-    xrandr --output "$output" --brightness $end_brightness
-done
-
-sleep 1.0
-
-TEMP_BG='/tmp/lockscreen.png'
 scrot $TEMP_BG
 
 # Aplica o desfoque na captura de tela
