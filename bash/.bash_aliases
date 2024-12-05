@@ -7,6 +7,9 @@ alias egrep='egrep --color=auto'
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
+alias clip='xclip -selection clipboard'
+alias igrep='/home/salaam/mydotfiles/scripts/igrep.sh'
+
 
 #Networking
 alias eth0='enp0s25'
@@ -14,6 +17,8 @@ alias morpheusssh='ssh -p 10024 modengo@192.168.2.185'
 alias bladessh='ssh -p 10025 blade@192.168.2.186'
 alias orico01s='sshfs -p 10024 modengo@192.168.2.185:/mnt/Orico01S /mnt/Orico01S/'
 alias orico02t='sshfs -p 10024 modengo@192.168.2.185:/mnt/Orico02T /mnt/Orico02T/'
+alias notes='/home/salaam/mydotfiles/scripts/syncobsidian.sh'
+
 
 #Scripts
 alias pressao='bash /gitclones/pressao/pressao'
