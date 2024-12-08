@@ -16,6 +16,12 @@ if pgrep -x "i3lock" > /dev/null; then
     exit 0
 fi
 
+start_brightness=$(xrandr --verbose | grep -i brightness | awk '{print $2}' | head -n 1)
+end_brightness=0.1
+steps=50
+TEMP_BG="/tmp/lockscreen.png"
+initial_pos=$(xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f2)
+
 # Obter a lista de saídas conectadas e ativas
 get_active_outputs() {
     xrandr --query | awk '/ connected / { 
@@ -25,10 +31,6 @@ get_active_outputs() {
 }
 
 outputs=($(get_active_outputs))
-start_brightness=$(xrandr --verbose | grep -i brightness | awk '{print $2}' | head -n 1)
-end_brightness=0.1
-steps=50
-TEMP_BG="/tmp/lockscreen.png"
 
 # Função: Restaurar brilho original e sair
 restore_brightness() {
@@ -53,15 +55,12 @@ check_mouse_movement() {
     fi
 }
 
-# Função obter a posição inicial do mouse
+# Função: Obter a posição inicial do mouse
 get_mouse_position() {
     xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f 2
 }
 
-initial_x=$(get_mouse_position | sed -n '1p')
-initial_y=$(get_mouse_position | sed -n '2p')
-
-# Função obter interrupcao por teclado
+# Função: Obter interrupcao por teclado
 get_key_press() {
     local device_id
     device_id=$(xinput list | awk -F 'id=' '/liliums Lily58/ && !/Consumer Control|Mouse|System Control/ {print $2}' | awk '{print $1}')
@@ -70,7 +69,6 @@ get_key_press() {
     done
 }
 
-initial_pos=$(xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f2)
 get_key_press &
 key_monitor_pid=$!
 
@@ -111,7 +109,6 @@ while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
     if ! kill -0 $key_monitor_pid 2>/dev/null; then
         break
     fi
-
 done
 
 sleep 1.0
