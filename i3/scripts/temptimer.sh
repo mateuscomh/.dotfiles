@@ -21,7 +21,7 @@ fi
 read -p "Digite a mensagem para exibir ao final do temporizador: " mensagem
 mensagem=${mensagem:-"Tempo Encerrado!"}
 
-echo "Iniciando temporizador por $tempo..."
+echo "Iniciando temporizador $mensagem por $tempo..."
 
 bash -c "timer $tempo" &
 
