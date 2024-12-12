@@ -32,16 +32,16 @@ get_active_outputs() {
 }
 
 mapfile -t outputs < <(get_active_outputs)
-
 # Função: Restaurar brilho original e sair
 restore_brightness() {
+  echo "${outputs[@]}"
   if [[ "$current_brightness" != "$start_brightness" ]]; then 
     for output in "${outputs[@]}"; do
         xrandr --output "$output" --brightness "$start_brightness"
     done
   fi
   cleanup
-  exit 0
+  return 0
 }
 
 # Função: Limpar recursos temporários
@@ -82,13 +82,10 @@ while [ "$current" -le 100 ]; do
       --timeout=500 "Bloqueio de Tela ..." "$(date '+%Y-%m-%d %H:%M:%S')"
   current=$((current +1 ))
   sleep 0.06
-  
   check_mouse_movement
-
   if ! kill -0 $key_monitor_pid 2>/dev/null; then
       break
   fi
-
 done
 
 # Loop para diminuir o brilho gradualmente
@@ -101,21 +98,15 @@ while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
   done
   current_brightness=$(echo "$current_brightness - $brightness_step" | bc -l)
   sleep 0.3
-
   check_mouse_movement
-  
   if ! kill -0 $key_monitor_pid 2>/dev/null; then
       break
   fi
 done
-
 sleep 1.0
 check_mouse_movement
 kill $key_monitor_pid 2>/dev/null
-
 scrot $TEMP_BG
-
-# Aplica o desfoque na captura de tela
 convert $TEMP_BG -filter Gaussian -blur 0x55 $TEMP_BG
 
 # Remove print criado após desbloqueio
@@ -124,7 +115,6 @@ cleanup() {
     rm -f "$TEMP_BG"
   fi
 }
-trap cleanup EXIT SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
 
 # Bloqueia a tela com i3lock-color
 i3lock -i $TEMP_BG \
