@@ -16,6 +16,14 @@ call plug#begin('~/.vim/plugged')
  Plug 'mg979/vim-visual-multi'
 call plug#end()
 
+"--------Tabulacao----------
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set softtabstop=2 
+set autoindent
+set smartindent
+
 "------------Tema do vim------------
 "colorscheme gruvbox
 set background=dark
@@ -97,13 +105,6 @@ set nolist
 set listchars=tab:›-,space:·,trail:◀,eol:↲
 set fillchars=vert:│,fold:-,eob:~,lastline:@
 
-"--------Tabulacao----------
-set tabstop=2
-set shiftwidth=2
-set expandtab
-set softtabstop=2 
-set autoindent
-set smartindent
 
 "--------Compatibilidade.py-----
 au BufNewFile,BufRead *.py
