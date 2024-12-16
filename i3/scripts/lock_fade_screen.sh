@@ -8,7 +8,7 @@
 # - Cancela o bloqueio se houver movimento do mouse ou pressionamento de teclas.
 #
 # Requisitos:
-# - xrandr, xdotool, dunst
+# - xrandr, xdotool, dunst, i3lock, scrot, convert
 ############################### 
 set -e
 
@@ -21,7 +21,6 @@ end_brightness=0.1
 steps=50
 TEMP_BG="/tmp/lockscreen.png"
 initial_pos=$(xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f2)
-current_brightness="$start_brightness"
 
 # Obter a lista de saídas conectadas e ativas
 get_active_outputs() {
@@ -34,14 +33,13 @@ get_active_outputs() {
 mapfile -t outputs < <(get_active_outputs)
 # Função: Restaurar brilho original e sair
 restore_brightness() {
-  echo "${outputs[@]}"
-  if [[ "$current_brightness" != "$start_brightness" ]]; then 
+  if [[ "$start_brightness" == "1.0" ]]; then
     for output in "${outputs[@]}"; do
-        xrandr --output "$output" --brightness "$start_brightness"
+      xrandr --output "$output" --brightness "$start_brightness"
     done
   fi
   cleanup
-  return 0
+  exit 0
 }
 
 # Função: Limpar recursos temporários
