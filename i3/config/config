@@ -103,7 +103,7 @@ bindsym $mod+f fullscreen toggle
 
 # Change container layout (stacked, tabbed, toggle split)
 #bindsym $mod+w layout tabbed
-bindsym $mod+i layout stacking
+bindsym $mod+i layout toggle stacking tabbed splith
 bindsym $mod+t layout toggle split
 
 # Toggle tiling / floating
@@ -157,7 +157,7 @@ assign [class="X-terminal-emulator"] $ws1
 assign [class="Terminator"] $ws1
 assign [class="Google-chrome"] $ws2
 assign [class="Brave-browser"] $ws2
-assign [class="Firefox-esr"] $ws3
+assign [class="firefox-esr"] $ws3
 assign [class="Thunar"] $ws4
 assign [class="Nemo"] $ws4
 assign [class="Nautilus"] $ws4
