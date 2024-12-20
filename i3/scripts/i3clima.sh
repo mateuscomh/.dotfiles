@@ -33,7 +33,7 @@ get_day_of_week() {
 
 # Main function
 main() {
-    FILE="/home/salaam/scripts/Output/i3clima"
+    FILE="${HOME}/scripts/Output/i3clima"
 
     # Fetch weather information and day of the week
     local weather_info

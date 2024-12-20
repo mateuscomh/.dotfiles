@@ -11,7 +11,6 @@ if (( $(id -u) == 0 )); then
 fi
 # Auto detect interfaces
 ifaces=$(ls /sys/class/net | grep -E '(eth|wlan|enp|wlp|eno|net)')
-#ifaces="eno1"
 last_time=0
 last_rx=0
 last_tx=0
@@ -58,8 +57,8 @@ update_rate() {
 }
 
 function network(){
-  downtotal=$(/usr/bin/vnstat -s -i eth0 | grep today | awk {'print $2$3'})
-  uptotal=$(/usr/bin/vnstat -s -i eth0 | grep today | awk {'print $5$6'})
+  downtotal=$(/usr/bin/vnstat -s -i $ifaces | grep today | awk {'print $2$3'})
+  uptotal=$(/usr/bin/vnstat -s -i $ifaces | grep today | awk {'print $5$6'})
 #  ipext=$(cat /scripts/Output/meuip)
 }
 
@@ -84,7 +83,7 @@ function ram() {
 }
 
 function cpu_temp(){
-  temp_line=$( sensors | grep "Tctl:"| grep -oP '\+\K\d+\.\d+')
+  temp_line=$( sensors | grep "CPU:"| grep -oP '\+\K\d+\.\d+')
 }
 
 i3status | while :
@@ -97,5 +96,5 @@ do
     ram
     cpu_temp
 #printf "%s\n" "$clima | ${rate} | DT:($downtotal) UT:($uptotal) | $ipext $used | U:$utime | $line" || exit 1
-printf "%s\n" "$clima | ${rate} | DT:($downtotal) UT:($uptotal) | $used | $temp_line°C | U:$utime | $line" || exit 1
+printf "%s\n" "$clima | ${rate} | D:($downtotal) U:($uptotal) | $used | $temp_line°C | U:$utime | $line" || exit 1
 done
