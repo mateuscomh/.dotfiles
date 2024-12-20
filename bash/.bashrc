@@ -4,9 +4,9 @@
 ########################
 
 # TMUX 
- if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-     exec tmux
- fi
+# if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  #   exec tmux
+ #fi
 
 
 # Configuração do teclado e idioma
@@ -15,7 +15,8 @@
 # Seta repeticao de teclado
 xset r rate 325 15 #Define velocidade de repeticao dos caracteres
 export LANG=C.UTF-8 #Variavel LANG UTF8
-setxkbmap -layout us -variant intl #Layout teclado US-Internacional
+#setxkbmap -layout us -variant intl #Layout teclado US-Internacional
+setxkbmap -layout br -variant abnt2 #Layout teclado US-Internacional
 
 # Opções do shell (shopt)
 shopt -s cmdhist # Ativa o histórico de comandos mais recente para cada processo filho
@@ -104,15 +105,16 @@ fi
 ################################
 
 # Header bash debfetch
-/gitclones/debfetch/debfetch -p 
+${HOME}/bin/debfetch -p 
 
 # Configuração do FZF
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+#[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Adiciona diretório local ao PATH
-PATH="$HOME/.local/bin:$PATH"
+PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
 # Inicializa Atuin (se disponível)
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+. "$HOME/.atuin/bin/env"
 eval "$(atuin init bash --disable-up-arrow)"
 
