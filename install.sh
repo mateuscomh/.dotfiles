@@ -29,6 +29,7 @@ dir=$(pwd)
 if ask "Install symlink for bash" Y; then
  ln -svf "${dir}/bash/.bashrc" "${HOME}/.bashrc"
  ln -svf "${dir}/bash/.bash_logout" "${HOME}/.bash_logout"
+ ln -svf "${dir}/bash/.bash_functions" "${HOME}/.bash_functions"
 fi
 
 if ask "Install symlink for tmux" Y; then
@@ -88,12 +89,15 @@ if ask "Install ranger configs" Y; then
     mkdir -p "$HOME/.config/ranger/"
   fi
 
-  ln -svf "${dir}/ranger" "{$HOME}/.config/ranger"
+  ln -svf "${dir}/ranger" "${HOME}/.config/ranger"
 fi
 
 if ask "Install vim configs?" Y; then
-  ln -svf "${dir}/vim/vimrc" "${HOME}/.vim/vimrc"
+  if [ ! -d "$HOME/.vim" ]; then
+    mkdir -p "$HOME/.vim"
+  fi
 
+  ln -svf "${dir}/vim/vimrc" "${HOME}/.vim/vimrc"
   if [ ! -d "$HOME/.vim/autoload/" ]; then
     mkdir -p "$HOME/.vim/autoload/"
   fi
@@ -112,6 +116,6 @@ if ask "Install alacritty configs" Y; then
     mkdir -p "$HOME/.config/alacritty/"
   fi
 
-  ln -svf "${dir}/alacritty" "{$HOME}/.config/alacritty"
+  ln -svf "${dir}/alacritty" "${HOME}/.config/alacritty"
 fi
 
