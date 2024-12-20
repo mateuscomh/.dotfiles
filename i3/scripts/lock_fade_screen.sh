@@ -59,7 +59,7 @@ check_mouse_movement() {
 # Função: Obter interrupcao por teclado
 get_key_press() {
   local device_id
-  device_id=$(xinput list | awk -F 'id=' '/liliums Lily58/ && !/Consumer Control|Mouse|System Control/ {print $2}' | awk '{print $1}')
+  device_id=$(xinput list --id-only "AT Translated Set 2 keyboard")
   while :; do
       xinput test "$device_id" | grep -q "key press" && restore_brightness
   done
