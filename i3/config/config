@@ -30,8 +30,8 @@ exec --no-startup-id compton -f --backend glx --vsync opengl
 
 # Screen brightness adjust
 #bindsym $mod+shift+p exec /scripts/i3scripts/brilho.sh "r"
-bindsym $mod+shift+i exec /scripts/i3scripts/brilho.sh "-"
-bindsym $mod+shift+o exec /scripts/i3scripts/brilho.sh "+"
+#bindsym $mod+shift+i exec /scripts/i3scripts/brilho.sh "-"
+#bindsym $mod+shift+o exec /scripts/i3scripts/brilho.sh "+"
 bindsym $mod+Shift+s exec xautolock -disable && notify-send -u low -t 4000 'Bloqueio Suspenso'
 bindsym $mod+s exec xautolock -enable && notify-send -u critical -t 4000 'Bloqueio Ativo'
 
@@ -70,7 +70,8 @@ set $setScreenWallpaper ~/dotfiles/i3/wallpaper/horgalaxyR.jpg /home/salaam/dotf
 exec --no-startup-id /usr/bin/xautolock -time 4 -corners +--- -cornersize 20 -cornerdelay 3 -cornerredelay 10 -locker "pgrep i3lock || ~/dotfiles/i3/scripts/lock_fade_screen.sh" -killtime 15 -killer "xset dpms force off" 
 
 # The middle button and a modifer over any part of the window kills the window
-bindsym --whole-window $mod+button2 kill
+#bindsym --whole-window $mod+button2 kill
+exec --no-startup-id picom --config ~/.config/picom.conf --daemon
 
 # Mouse horizontal scroll
 bindsym  --whole-window button6 exec ~/mydotfiles/logid/mousetab.sh down 
@@ -287,7 +288,7 @@ bindsym $mod+u exec /scripts/i3scripts/DesligaSistema.sh
 bindsym $mod+shift+b exec /usr/bin/gnome-calculator
 bindsym $mod+shift+m exec --no-startup-id sudo systemctl restart logid
 bindsym $mod+shift+c exec /usr/bin/speedcrunch
-bindsym $mod+shift+p exec ${HOME}/.config/ocr/flameshot_ocr.sh
+bindsym $mod+shift+p exec ${HOME}/bin/flameshot_ocr.sh
 
 # Move container to the current position of the cursor
 bindsym $mod+m move position mouse

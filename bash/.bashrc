@@ -115,6 +115,7 @@ PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 
 # Inicializa Atuin (se disponível)
 [[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
-. "$HOME/.atuin/bin/env"
+source "$HOME/.atuin/bin/env"
+#source "$HOME/.local/share/blesh/ble.sh"
 eval "$(atuin init bash --disable-up-arrow)"
 
