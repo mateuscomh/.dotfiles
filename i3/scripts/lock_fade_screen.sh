@@ -8,7 +8,8 @@
 # - Cancela o bloqueio se houver movimento do mouse ou pressionamento de teclas.
 #
 # Requisitos:
-# - xrandr, xdotool, dunst, i3lock, scrot, convert
+# - xrandr, xdotool, dunst, i3lock, scrot, convert, awk, xinput, grep
+# Version: 3.1.5
 ############################### 
 set -e
 
@@ -42,9 +43,10 @@ restore_brightness() {
   exit 0
 }
 
-# Função: Limpar recursos temporários
 cleanup() {
-  [[ -f "$TEMP_BG" ]] && rm -f "$TEMP_BG"
+  if [ -n "$TEMP_BG" ] && [ -f "$TEMP_BG" ]; then
+    rm -f "$TEMP_BG"
+  fi
   pkill -P $$
 }
 
@@ -57,15 +59,20 @@ check_mouse_movement() {
 }
 
 # Função: Obter interrupcao por teclado
-get_key_press() {
+check_key_press() {
   local device_id
-  device_id=$(xinput list | awk -F 'id=' '/liliums Lily58/ && !/Consumer Control|Mouse|System Control/ {print $2}' | awk '{print $1}')
+  device_id=$(xinput list |\
+    awk -F 'id=' '/liliums Lily58/ && !/Consumer Control|Mouse|System Control/ {print $2}' |\
+    awk '{print $1}')
+  if [[ -z "$device_id" ]]; then
+    return
+  fi
   while :; do
-      xinput test "$device_id" | grep -q "key press" && restore_brightness
+    xinput test "$device_id" | grep -q "key press" && restore_brightness
   done
 }
 
-get_key_press &
+check_key_press &
 key_monitor_pid=$!
 
 trap restore_brightness EXIT SIGINT SIGTERM SIGHUP SIGABRT SIGUSR1
@@ -78,11 +85,12 @@ while [ "$current" -le 100 ]; do
       -h 'string:hlcolor:#ff4444' \
       -h string:x-dunst-stack-tag:progress-lock \
       --timeout=500 "Bloqueio de Tela ..." "$(date '+%Y-%m-%d %H:%M:%S')"
-  current=$((current +1 ))
+  current=$((current +1))
   sleep 0.06
   check_mouse_movement
   if ! kill -0 $key_monitor_pid 2>/dev/null; then
-      break
+     kill "$key_monitor_pid" 
+     # break
   fi
 done
 
@@ -94,11 +102,13 @@ while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
   for output in "${outputs[@]}"; do
       xrandr --output "$output" --brightness "$current_brightness"
   done
+  dunstify -r 1000 -t 900 -u critical "Bloqueando.." "$(date '+%Y-%m-%d %H:%M:%S')"
   current_brightness=$(echo "$current_brightness - $brightness_step" | bc -l)
   sleep 0.3
   check_mouse_movement
   if ! kill -0 $key_monitor_pid 2>/dev/null; then
-      break
+     kill "$key_monitor_pid" 
+    #break
   fi
 done
 sleep 1.0
@@ -108,11 +118,6 @@ scrot $TEMP_BG
 convert $TEMP_BG -filter Gaussian -blur 0x55 $TEMP_BG
 
 # Remove print criado após desbloqueio
-cleanup() {
-  if [ -n "$TEMP_BG" ] && [ -f "$TEMP_BG" ]; then
-    rm -f "$TEMP_BG"
-  fi
-}
 
 # Bloqueia a tela com i3lock-color
 i3lock -i $TEMP_BG \
