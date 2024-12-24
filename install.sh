@@ -92,6 +92,17 @@ if ask "Install ranger configs" Y; then
   ln -svf "${dir}/ranger" "${HOME}/.config/ranger"
 fi
 
+if ask "Install Neovim configs?" Y; then
+  if [ ! -d "$HOME/.config/nvim" ]; then
+    mkdir -p "$HOME/.config/nvim"
+  fi
+  ln -svf "${dir}/nvim/init.vim" "${HOME}/.config/nvim/init.vim"
+  if [ ! -f "$HOME/.local/share/nvim/site/autoload/plug.vim" ] || [ ! -s "$HOME/.local/share/nvim/site/autoload/plug.vim" ]; then
+  sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  fi
+fi
+
 if ask "Install vim configs?" Y; then
   if [ ! -d "$HOME/.vim" ]; then
     mkdir -p "$HOME/.vim"
@@ -105,7 +116,7 @@ if ask "Install vim configs?" Y; then
   ln -svf "${dir}/vim/autoload/autoload" "${HOME}/.vim/autoload/autoload"
   ln -svf "${dir}/vim/autoload/plug.vim" "${HOME}/.vim/autoload/plug.vim" 
 
-  if [ ! -f "$HOME/.vim/autoload/plug.vim" ] || [ ! -s "$HOME/.vim/autoload/plug.vim" ]; then
+  if [ ! -f "$HOME/.vim/autoload/plug.vim" ] || [ ! -s "$HOME/.vim/autoload'/plug.vim" ]; then
     echo "PlugInstall: curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/mateuscomh/dotfiles/main/vim/autoload/autoload"
   fi
@@ -117,5 +128,16 @@ if ask "Install alacritty configs" Y; then
   fi
 
   ln -svf "${dir}/alacritty" "${HOME}/.config/alacritty"
+fi
+
+if ask "Install bin files(github)?"; then
+  if [ ! -d "$HOME/bin/gitclones" ]; then
+    mkdir -p "$HOME/bin/gitclones"
+  fi
+  listprojects="debfetch diffdate qrshell timershell yourl"
+  for i in $listprojects; do
+    git clone git@github.com:mateuscomh/$i.git "$HOME/bin/gitclones/"
+    ln -svf "$HOME/bin/gitclones/$i/$i.sh" "$HOME/bin/$i"
+  done
 fi
 

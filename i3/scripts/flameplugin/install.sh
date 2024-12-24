@@ -37,10 +37,10 @@ fi
 install_packages "notify-osd flameshot tesseract-ocr-por xclip" $package_manager
 
 # Create the directory if it does not exist
-mkdir -p ~/.config/ocr
+mkdir -p ~/bin/
 
 # Create the flameshot_ocr.sh script
-cat > ~/.config/ocr/flameshot_ocr.sh << 'EOF'
+cat > ~/bin/flameshot_ocr.sh << 'EOF'
 #!/bin/bash
 
 TEMPFILE="$(mktemp /tmp/screenshot-XXXXXX.png)"
@@ -58,6 +58,6 @@ fi
 EOF
 
 # Grant necessary permissions
-chmod +x ~/.config/ocr/flameshot_ocr.sh
+chmod +x ~/bin/flameshot_ocr.sh
 
 echo "Installation completed. The script is located in ~/.config/ocr/flameshot_ocr.sh"
