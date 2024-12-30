@@ -54,7 +54,7 @@ bindsym $mod+n move workspace to output right
 exec_always --no-startup-id xset r rate 250 20
 
 # Customization workspace
-workspace "2:Browsers" output DP-4
+workspace "1:Terminals" output DP-2
 
 # Set lockscreen
 bindsym $mod+l exec $i3lockscreen 
@@ -315,8 +315,8 @@ set $statussig SIGUSR1
 mode "exit: [L]ogout, [R]eboot, [S]hutdown, loc[K]" {
   bindsym l exec --no-startup-id i3-msg exit, mode "default"
   bindsym k exec --no-startup-id $i3lockscreen, mode "default"
-  bindsym r exec --no-startup-id systemctl reboot, mode "default"
-  bindsym s exec  systemctl poweroff
+  bindsym r exec --no-startup-id /usr/sbin/shutdown -r now
+  bindsym s exec --no-startup-id /usr/sbin/shutdown -h now
 
   bindsym Escape mode "default"
   bindsym Return mode "default"

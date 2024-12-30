@@ -26,7 +26,7 @@ cpu_temperature 0 {
 		path = /sys/class/hwmon/hwmon3/temp1_input } 
 
 cpu_usage {
-		format = "%cpu0"
+		format = "🖥️%cpu0"
 		max_threshold = 75
 }
 
@@ -54,13 +54,13 @@ battery all {
 }
 
 tztime local {
-        format = "%d/\%m %H:%M:%S"
+        format = "📅%d/\%m %H:%M:%S"
 }
 
 load {
-        format = "L:%1min|%5min"
+        format = "🔥:%1min|%5min"
 }
 
 disk "/" {
-        format = "S:%avail" 
+        format = "💾:%avail" 
 }
