@@ -114,6 +114,8 @@ check_mouse_movement
 kill $key_monitor_pid 2>/dev/null
 scrot $TEMP_BG
 convert $TEMP_BG -filter Gaussian -blur 0x55 $TEMP_BG
+battery_status=$(acpi -b | awk '{print $3, $4}' | sed 's/,//')
+convert $TEMP_BG -gravity South -pointsize 12 -fill white -annotate +0+50 "$battery_status" $TEMP_BG
 
 # Remove print criado após desbloqueio
 
