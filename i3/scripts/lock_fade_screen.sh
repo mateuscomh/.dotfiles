@@ -25,9 +25,8 @@ initial_pos=$(xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f2)
 
 # Obter a lista de saídas conectadas e ativas
 get_active_outputs() {
-	xrandr --query | awk '/ connected / { 
-      if ($0 ~ /[0-9]+mm x [0-9]+mm$/) 
-          print $1 
+  xrandr --query | awk '/ connected / && /[0-9]+mm x [0-9]+mm$/ { 
+      print $1 
   }'
 }
 
@@ -101,7 +100,7 @@ while (($(echo "$current_brightness > $end_brightness" | bc -l))); do
 	for output in "${outputs[@]}"; do
 		xrandr --output "$output" --brightness "$current_brightness"
 	done
-	dunstify -r 1000 -t 900 -u critical "Bloqueando.." "$(date '+%Y-%m-%d %H:%M:%S')"
+	dunstify -r 1000 -t 900 -u critical "Bloqueando.." "$(date '+%H:%M:%S %d/%m/%Y')"
 	current_brightness=$(echo "$current_brightness - $brightness_step" | bc -l)
 	sleep 0.3
 	check_mouse_movement
