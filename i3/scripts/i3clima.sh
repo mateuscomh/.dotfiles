@@ -3,6 +3,7 @@
 get_weather_info() {
 	local result
 	result=$(curl -s wttr.in\?format=1 | sed 's/ //g')
+	sleep 3
 	if [[ $result =~ [Uu]nknown || ! $result =~ [0-9]+.*C$ ]]; then
 		result=$(curl -s -X GET "https://api.wsclima.com.br/v1/stations/143/detail" \
 			-H "Accept: application/json" \
