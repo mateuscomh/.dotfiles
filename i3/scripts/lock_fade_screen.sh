@@ -82,7 +82,7 @@ while [ "$current" -le 100 ]; do
       -h int:value:"$current" \
       -h 'string:hlcolor:#ff4444' \
       -h string:x-dunst-stack-tag:progress-lock \
-      --timeout=500 "Bloqueio de Tela ..." "$(date '+%Y-%m-%d %H:%M:%S')"
+      --timeout=500 "Bloqueio de Tela ..." "$(date '+%d-%m-%Y %H:%M:%S')"
   current=$((current +1))
   sleep 0.06
   check_mouse_movement
@@ -100,7 +100,7 @@ while (( $(echo "$current_brightness > $end_brightness" | bc -l) )); do
   for output in "${outputs[@]}"; do
       xrandr --output "$output" --brightness "$current_brightness"
   done
-  dunstify -r 1000 -t 900 -u critical "Bloqueando.." "$(date '+%Y-%m-%d %H:%M:%S')"
+  dunstify -r 1000 -t 900 -u critical "Bloqueando.." "$(date '+%d-%m-%Y %H:%M:%S')"
   current_brightness=$(echo "$current_brightness - $brightness_step" | bc -l)
   sleep 0.3
   check_mouse_movement
@@ -118,6 +118,7 @@ battery_status=$(acpi -b | awk '{print $3, $4}' | sed 's/,//')
 convert $TEMP_BG -gravity South -pointsize 12 -fill white -annotate +0+50 "$battery_status" $TEMP_BG
 
 # Remove print criado após desbloqueio
+formatted_date=$(date +"%a, %d/%m/%y")
 
 # Bloqueia a tela com i3lock-color
 i3lock -i $TEMP_BG \
@@ -129,6 +130,7 @@ i3lock -i $TEMP_BG \
   --ring-color=#000000 \
   --ring-width=2 \
   --verif-text="and..."
+  --date-str="$formatted_date"
 
 # Restaura o brilho original
 restore_brightness
