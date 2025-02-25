@@ -19,7 +19,7 @@ fi
 
 start_brightness=$(xrandr --verbose | grep -i brightness | awk '{print $2}' | head -n 1)
 end_brightness=0.1
-steps=50
+steps=60
 TEMP_BG="/tmp/lockscreen.png"
 initial_pos=$(xdotool getmouselocation --shell | grep -E 'X|Y' | cut -d '=' -f2)
 
@@ -105,11 +105,11 @@ calculate_progress() {
 }
 
 # Aplica o brilho inicial imediatamente
-#xrandr_cmd=""
-#for output in "${outputs[@]}"; do
-#    xrandr_cmd+=" --output $output --brightness $current_brightness"
-#done
-#eval xrandr "$xrandr_cmd"
+xrandr_cmd=""
+for output in "${outputs[@]}"; do
+    xrandr_cmd+=" --output $output --brightness $current_brightness"
+done
+eval xrandr "$xrandr_cmd"
 
 # Loop para diminuir o brilho gradualmente
 while (($(echo "$current_brightness > $end_brightness" | bc -l))); do
