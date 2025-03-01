@@ -18,7 +18,7 @@ order += "load"
 order += "disk /"
 order += "wireless _first_"
 #order += "ethernet _first_"
-order += "battery all"
+order += "battery 0"
 order += "tztime local"
 #order += "volume master"
 cpu_temperature 0 {
@@ -48,9 +48,17 @@ ethernet _first_ {
         format_up = "E:UP"
         format_down = "E:DW"
 }
-
-battery all {
-        format = "🔋%status %percentage %remaining"
+battery 0 {
+    format = "%status %percentage %remaining %emptytime"
+    format_percentage = "%.02f%%"  
+    status_chr = "⚡ CHR"
+    status_bat = "🔋 BAT"
+    status_unk = "? UNK"
+    status_full = "☻ FULL"
+    path = "/sys/class/power_supply/BAT0/uevent"  
+    last_full_capacity = true  
+    low_threshold = 80 
+    threshold_type = "percentage" 
 }
 
 tztime local {
@@ -59,6 +67,8 @@ tztime local {
 
 load {
         format = "🔥%1min|%5min"
+#        max_threshold = "0.9"
+#       format_above_threshold = "W: %1min %5min"
 }
 
 disk "/" {
